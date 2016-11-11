@@ -46,7 +46,7 @@ class Game
     Matrix_Map our_matrix{};
     std::map<std::string, Item> item_list{};
     //std::map<std::string, Bomb> bomb_list{};
-    std::map<std::string, Explosion> explosion_list{};
+    //std::map<std::string, Explosion> explosion_list{};
 };
 
 #endif

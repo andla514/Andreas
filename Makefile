@@ -4,7 +4,7 @@ CCC = g++
 # Kompilatorflaggor, lägg till '-g' om kompilering för avlusning ska göras.
 CCFLAGS += -std=c++14 -Wpedantic -Wall -Wextra -Werror -Weffc++
 
-# Objektkodsmoduler som ingår i den kompletta kalkylatorn.
+# Objektkodsmoduler som ingår i den kompletta boombox.
 OBJECTS = Character.o Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o
 
 # Huvudmål - skapas med kommandot 'make' eller 'make boombox'.
@@ -29,12 +29,10 @@ item_test: Item.o test_main.o Item_test.cc
 matrix_test: Matrix_Map.o test_main.o Matrix_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Matrix_Map.o Matrix_test.cc -o matrix_test
 	
-all_test: Bomb.o Explosion.o Game.o Character.o Item.o Matrix_Map.o test_main.o Bomb_test.cc Explosion_test.cc Game_test.cc Item_test.cc Character_test.cc Matrix_test.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) Bomb.o Explosion.o Game.o Character.o Item.o Matrix_Map.o test_main.o Bomb_test.cc Explosion_test.cc Game_test.cc Item_test.cc Character_test.cc Matrix_test.cc -o all_test
+all_test: Bomb.o Explosion.o Item.o Game.o Character.o Matrix_Map.o test_main.o Bomb_test.cc Explosion_test.cc Game_test.cc Item_test.cc Character_test.cc Matrix_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Bomb.o Explosion.o Game.o Character.o Item.o Matrix_Map.o Bomb_test.cc Explosion_test.cc Game_test.cc Item_test.cc Character_test.cc Matrix_test.cc -o all_test
 	
 # Delmål (flaggan -c avbryter innan länkning, objektkodsfil erhålls)
-boombox.o: boombox.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c boombox.cc
 
 Bomb.o: Bomb.h Bomb.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Bomb.cc
@@ -62,7 +60,7 @@ test_main.o: test_main.cc
 	
 # 'make clean' tar bort objektkodsfiler och 'core' (minnesdump).
 clean:
-	del -f *.o *.exed
+	del -f *.o *.exe
 
 # Se upp vid eventuell ändring, '*' får absolut inte finnas för sig!!!
 #
