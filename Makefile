@@ -17,8 +17,8 @@ explosion_test: Explosion.o test_main.o Explosion_test.cc
 bomb_test: Bomb.o test_main.o Bomb_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Bomb.o Bomb_test.cc -o bomb_test
 
-game_test: Game.o Matrix_Map.o test_main.o Game_test.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Game.o matrix_map.o Game_test.cc -o game_test
+game_test: Game.o Matrix_Map.o Item.o test_main.o Game_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Game.o matrix_map.o Item.o Game_test.cc -o game_test
 	
 character_test: Character.o test_main.o Character_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Character.o Character_test.cc -o character_test
@@ -62,12 +62,7 @@ test_main.o: test_main.cc
 	
 # 'make clean' tar bort objektkodsfiler och 'core' (minnesdump).
 clean:
-	del -f *.o *.exe
-
-# 'make zap' tar även bort det körbara programmet och reservkopior (filer
-# som slutar med tecknet '~').
-zap: clean
-	@ \rm -rf boombox *~
+	del -f *.o *.exed
 
 # Se upp vid eventuell ändring, '*' får absolut inte finnas för sig!!!
 #

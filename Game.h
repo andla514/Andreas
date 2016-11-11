@@ -1,6 +1,11 @@
 
 #ifndef GAME_H
 #define GAME_H
+#include <map>
+#include "Bomb.h"
+#include "Item.h"
+#include <string>
+#include "Explosion.h"
 #include "Matrix_Map.h"
 /*
     0   :   Ground
@@ -26,19 +31,22 @@ class Game
     bool is_standing_in_fire(int row, int col);
     bool is_standing_on_item(int row, int col);
     bool can_move_to(int row, int col);
+    bool is_wall(int row, int col);
+    bool is_box(int row, int col);
     // Handle reference lists
-    void add_item();
+    void add_item(int row, int col, Item new_item);
     void add_bomb();
     void add_explosion();
+    Item get_item_at(int row, int col);
     void remove_bomb(int row, int col);
     void remove_explosion(int row, int col);
 
     // Data
     private:
     Matrix_Map our_matrix{};
-    // Referenslista för Item
-    // Referenslista för Bomb
-    // Referenslista för Explosion
+    std::map<std::string, Item> item_list{};
+    //std::map<std::string, Bomb> bomb_list{};
+    std::map<std::string, Explosion> explosion_list{};
 };
 
 #endif
