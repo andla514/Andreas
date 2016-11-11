@@ -1,15 +1,15 @@
-#include "Matrix_Map.h"
+#include "Game.h"
 #include "catch.hpp"
 #include <iostream>
 
 TEST_CASE("Set and get")
 {
-    Matrix_Map our_matrix;
-    CHECK(our_matrix.get_element(0, 0) == 5);
-    our_matrix.set_element(0, 0, 1);
-    CHECK(our_matrix.get_element(0, 0) == 1);
-    CHECK(our_matrix.get_rows() == 19);
-    CHECK(our_matrix.get_columns() == 25);
+    Game our_game;
+    CHECK(our_game.get_element(0, 0) == 5);
+    our_game.set_element(0, 0, 1);
+    CHECK(our_game.get_element(0, 0) == 1);
+    CHECK(our_game.get_rows() == 19);
+    CHECK(our_game.get_columns() == 25);
 
-    our_matrix.draw_graphics();
+    our_game.draw_graphics();
 }

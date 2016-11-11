@@ -11,6 +11,27 @@ OBJECTS = Character.o Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o
 boombox: $(OBJECTS) Makefile
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) $(LDFLAGS) -o boombox $(OBJECTS)
 
+explosion_test: Explosion.o test_main.o Explosion_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) Explosion.o test_main.o Explosion_test.cc -o explosion_test
+	
+bomb_test: Bomb.o test_main.o Bomb_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Bomb.o Bomb_test.cc -o bomb_test
+
+game_test: Game.o Matrix_Map.o test_main.o Game_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Game.o matrix_map.o Game_test.cc -o game_test
+	
+character_test: Character.o test_main.o Character_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Character.o Character_test.cc -o character_test
+	
+item_test: Item.o test_main.o Item_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Item.o Item_test.cc -o item_test
+	
+matrix_test: Matrix_Map.o test_main.o Matrix_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Matrix_Map.o Matrix_test.cc -o matrix_test
+	
+all_test: Bomb.o Explosion.o Game.o Character.o Item.o Matrix_Map.o test_main.o Bomb_test.cc Explosion_test.cc Game_test.cc Item_test.cc Character_test.cc Matrix_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) Bomb.o Explosion.o Game.o Character.o Item.o Matrix_Map.o test_main.o Bomb_test.cc Explosion_test.cc Game_test.cc Item_test.cc Character_test.cc Matrix_test.cc -o all_test
+	
 # Delmål (flaggan -c avbryter innan länkning, objektkodsfil erhålls)
 boombox.o: boombox.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c boombox.cc
@@ -35,6 +56,9 @@ Item.o: Item.h Item.cc
 	
 Matrix_Map.o: Matrix_Map.h Matrix_Map.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Matrix_Map.cc
+	
+test_main.o: test_main.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c test_main.cc	
 	
 # 'make clean' tar bort objektkodsfiler och 'core' (minnesdump).
 clean:
