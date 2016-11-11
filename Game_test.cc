@@ -2,7 +2,7 @@
 #include "catch.hpp"
 #include <iostream>
 
-TEST_CASE("Set and get")
+TEST_CASE("Set and get (Game)")
 {
     Game our_game;
     CHECK(our_game.get_element(0, 0) == 5);

@@ -62,7 +62,7 @@ test_main.o: test_main.cc
 	
 # 'make clean' tar bort objektkodsfiler och 'core' (minnesdump).
 clean:
-	@ \rm -rf *.o *.gch core
+	del -f *.o *.exe
 
 # 'make zap' tar även bort det körbara programmet och reservkopior (filer
 # som slutar med tecknet '~').
