@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "catch.hpp"
 #include <iostream>
+#include "Item.h"
 
 TEST_CASE("Set and get (Game)")
 {
@@ -12,4 +13,11 @@ TEST_CASE("Set and get (Game)")
     CHECK(our_game.get_columns() == 25);
 
     our_game.draw_graphics();
+}
+TEST_CASE("Add and remove item")
+{
+    Game our_game;
+    Item first_item;
+    our_game.add_item(1, 2, first_item);
+    //Item gotten_item = our_game.get_item_at(1, 2);
 }

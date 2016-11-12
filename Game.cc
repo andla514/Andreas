@@ -1,5 +1,6 @@
 #include "Matrix_Map.h"
 #include "Game.h"
+#include "Item.h"
 #include <iostream>
 
 //-----------------CONSTRUCTOR--------------
@@ -25,10 +26,18 @@ bool Game::can_move_to(int row, int col)
     int our_element = get_element(row, col);
     return our_element != 5 && our_element != 1 && our_element != 3;
 }
-//-----------------REFERENCE_LISTS----------
-void Game::add_item()
+bool Game::is_wall(int row, int col)
 {
-    // TODO
+    return get_element(row, col) == 5;
+}
+bool Game::is_box(int row, int col)
+{
+    return get_element(row, col) == 1;
+}
+//-----------------REFERENCE_LISTS----------
+void Game::add_item(int row, int col, Item new_item)
+{
+    item_list.insert(std::pair<std::string, Item>(row + "" + col, new_item));
 }
 void Game::add_bomb()
 {
@@ -45,6 +54,17 @@ void Game::remove_bomb(int, int)
 void Game::remove_explosion(int, int)
 {
     // TODO
+}
+Item Game::get_item_at(int row, int col)
+{
+    std::string our_key = row + "" + col;
+    if(item_list.find(our_key) != item_list.end())
+    {
+        throw std::out_of_range("Item doesn't exist!");
+    }
+    Item our_item = item_list.at(our_key);
+    item_list.erase(our_key);
+    return our_item;
 }
 //-----------------GET/SET------------------
 int Game::get_element(int row, int col)

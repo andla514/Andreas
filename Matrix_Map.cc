@@ -1,5 +1,6 @@
 #include "Matrix_Map.h"
 #include <iostream>
+#include <windows.h>
 
 //-----------------CONSTRUCTOR--------------
 Matrix_Map::Matrix_Map()
@@ -51,11 +52,36 @@ void Matrix_Map::initialize_map()
 //-----------------Graphics-----------------
 void Matrix_Map::draw_graphics()
 {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     for(int r = 0; r < max_rows; r++)
     {
         for(int c = 0; c < max_cols; c++)
         {
-            std::cout << get_element(r, c) << " ";
+            int element = get_element(r, c);
+            int color_number;
+            switch(element)
+            {
+                case 0:
+                    color_number = 8;
+                    break;
+                case 1:
+                    color_number = 6;
+                    break;
+                case 2:
+                    color_number = 10;
+                    break;
+                case 3:
+                    color_number = 12;
+                    break;
+                case 4:
+                    color_number = 6;
+                    break;
+                case 5:
+                    color_number = 13;
+                    break;
+            }
+            SetConsoleTextAttribute(hConsole, color_number);
+            std::cout << element << " ";
         }
         std::cout << std::endl;
     }
