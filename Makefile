@@ -1,15 +1,23 @@
+# Filkataloger där andra delar av programet finns.
+SFML = ../SFML
+
 # Diagnosmeddelanden från kompilatorn (g++) filtreras av gccfilter.
 CCC = g++
 
 # Kompilatorflaggor, lägg till '-g' om kompilering för avlusning ska göras.
-CCFLAGS += -std=c++14 -Wpedantic -Wall -Wextra -Werror -Weffc++
+CCFLAGS += -std=c++14 -Wpedantic -Wall -Wextra -Werror 
+#-Weffc++
+
+# Preprocessorflaggor, -I lägger till en filkatalog i inkluderingssökvägen.
+SFML_installpath = -DSFML_STATIC -I SFML/include 
+SFML_lib = -L SFML/lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
 
 # Objektkodsmoduler som ingår i den kompletta boombox.
 OBJECTS = Character.o Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o
 
 # Huvudmål - skapas med kommandot 'make' eller 'make boombox'.
 boombox: $(OBJECTS) Makefile
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) $(LDFLAGS) -o boombox $(OBJECTS)
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) $(LDFLAGS) $(SFML_lib) -o boombox $(OBJECTS)
 
 explosion_test: Explosion.o test_main.o Explosion_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) Explosion.o test_main.o Explosion_test.cc -o explosion_test
@@ -35,28 +43,28 @@ all_test: Bomb.o Explosion.o Item.o Game.o Character.o Matrix_Map.o test_main.o 
 # Delmål (flaggan -c avbryter innan länkning, objektkodsfil erhålls)
 
 Bomb.o: Bomb.h Bomb.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Bomb.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) $(SFML_installpath) -c Bomb.cc
 	
 Explosion.o: Explosion.h Explosion.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Explosion.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) $(SFML_installpath) -c Explosion.cc
 
 Game.o: Game.h Game.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Game.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) $(SFML_installpath) -c Game.cc
 	
 Main_game.o: Main_game.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Main_game.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) $(SFML_installpath) -c Main_game.cc
 	
 Character.o: Character.h Character.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Character.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) $(SFML_installpath) -c Character.cc
 	
 Item.o: Item.h Item.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Item.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) $(SFML_installpath) -c Item.cc
 	
 Matrix_Map.o: Matrix_Map.h Matrix_Map.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Matrix_Map.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) $(SFML_installpath) -c Matrix_Map.cc
 	
 test_main.o: test_main.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c test_main.cc	
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) $(SFML_installpath) -c test_main.cc	
 	
 # 'make clean' tar bort objektkodsfiler och 'core' (minnesdump).
 clean:

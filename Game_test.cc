@@ -2,6 +2,7 @@
 #include "catch.hpp"
 #include <iostream>
 #include "Item.h"
+#include <memory>
 
 TEST_CASE("Set and get (Game)")
 {
