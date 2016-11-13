@@ -9,7 +9,7 @@ Matrix_Map::Matrix_Map()
     initialize_map();
 }
 
-void Matrix_Map::initialize_map()
+void Matrix_Map::initialize_map() noexcept
 {
     for(int r = 0; r < max_rows; r++)
     {
@@ -50,7 +50,7 @@ void Matrix_Map::initialize_map()
     set_element(max_rows - 3, 1, 0);
 }
 //-----------------Graphics-----------------
-void Matrix_Map::draw_graphics()
+void Matrix_Map::draw_graphics() const noexcept
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     for(int r = 0; r < max_rows; r++)
@@ -88,19 +88,19 @@ void Matrix_Map::draw_graphics()
 }
 
 //-----------------GET/SET------------------
-int Matrix_Map::get_element(int row, int col)
+int Matrix_Map::get_element(int row, int col) const noexcept
 {
     return our_map[row][col];
 }
-void Matrix_Map::set_element(int row, int col, int new_value)
+void Matrix_Map::set_element(int row, int col, int new_value) noexcept
 {
     our_map[row][col] = new_value;
 }
-int Matrix_Map::get_rows()
+int Matrix_Map::get_rows() const noexcept
 {
     return max_rows;
 }
-int Matrix_Map::get_columns()
+int Matrix_Map::get_columns() const noexcept
 {
     return max_cols;
 }

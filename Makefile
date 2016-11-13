@@ -5,7 +5,7 @@ CCC = g++
 CCFLAGS += -std=c++14 -Wpedantic -Wall -Wextra -Werror -Weffc++
 
 # Objektkodsmoduler som ingår i den kompletta boombox.
-OBJECTS = Character.o Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o
+OBJECTS = Character.o Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o Timer.o
 
 # Huvudmål - skapas med kommandot 'make' eller 'make boombox'.
 boombox: $(OBJECTS) Makefile
@@ -57,6 +57,9 @@ Matrix_Map.o: Matrix_Map.h Matrix_Map.cc
 	
 test_main.o: test_main.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c test_main.cc	
+	
+Timer.o: Timer.h Timer.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Timer.cc
 	
 # 'make clean' tar bort objektkodsfiler och 'core' (minnesdump).
 clean:

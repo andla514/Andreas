@@ -20,33 +20,34 @@ class Game
     public:
     Game();
 
-    void draw_graphics();
+    void update() noexcept;
+    void draw_graphics() const noexcept;
 
-    int get_element(int row, int col);
-    void set_element(int row, int col, int new_value);
-    int get_rows();
-    int get_columns();
+    int get_element(int row, int col) const noexcept;
+    void set_element(int row, int col, int new_value) noexcept;
+    int get_rows() const noexcept;
+    int get_columns() const noexcept;
 
     // Bools
-    bool is_standing_in_fire(int row, int col);
-    bool is_standing_on_item(int row, int col);
-    bool can_move_to(int row, int col);
-    bool is_wall(int row, int col);
-    bool is_box(int row, int col);
+    bool is_standing_in_fire(int row, int col) const noexcept;
+    bool is_standing_on_item(int row, int col) const noexcept;
+    bool can_move_to(int row, int col) const noexcept;
+    bool is_wall(int row, int col) const noexcept;
+    bool is_box(int row, int col) const noexcept;
     // Handle reference lists
-    void add_item(int row, int col, Item new_item);
-    void add_bomb();
-    void add_explosion();
+    void add_item(int row, int col, Item new_item) noexcept;
+    void add_bomb(int row, int col, Bomb new_bomb) noexcept;
+    void add_explosion(int row, int col, Explosion new_explosion) noexcept;
     Item get_item_at(int row, int col);
-    void remove_bomb(int row, int col);
-    void remove_explosion(int row, int col);
+    void remove_bomb(int row, int col) noexcept;
+    void remove_explosion(int row, int col) noexcept;
 
     // Data
     private:
     Matrix_Map our_matrix{};
     std::map<std::string, Item> item_list{};
-    //std::map<std::string, Bomb> bomb_list{};
-    //std::map<std::string, Explosion> explosion_list{};
+    std::map<std::string, Bomb> bomb_list{};
+    std::map<std::string, Explosion> explosion_list{};
 };
 
 #endif
