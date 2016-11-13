@@ -1,9 +1,9 @@
-#include "Game.h"
-#include "Character.h"
-#include "Bomb.h"
 //#include <stdio.h>
 #include <memory>
 #include "SFML/Graphics.hpp"
+#include "Game.h"
+#include "Character.h"
+#include "Bomb.h"
 
 #include <utility> //bara för move i testkonstruktorn
 
@@ -11,12 +11,16 @@
 Character::Character()
 {}
 
+/*
 //Testkonstruktor
 Character::Character(std::shared_prt<Game> our_game)
-	: up{sf::Keyboard::W}, down{"sf::Keyboard::S"}, left{"sf::Keyboard::A"},
+	:bombs{1}, xpos{1}, ypos{1}, our_game{std::move(our_game)}
+    up{sf::Keyboard::W}, down{"sf::Keyboard::S"}, left{"sf::Keyboard::A"},
 	right{"sf::Keyboard::D"}, place_bomb{"sf::Keyboard::Tab"}, bombs{1}, xpos{1}, ypos{1}, 
 	our_game{std::move(our_game)}
+
 	{}
+*/
 
 //Behöver operatoröverlagring på game (=)
 /*
@@ -74,32 +78,32 @@ Character(std::shared_prt<Game> our_game, int player_number)
 */
 
 //-----------------FUNCTION--------------
-int Character::get_xpos()
+int Character::get_col()
 {
-	return xpos;
+	return col;
 }
-int Character::get_ypos()
+int Character::get_row()
 {
-	return ypos;
+	return row;
 }
 
 void Character::move_player()
 {
 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && game_ptr->can_move_to(xpos, ypos - 1))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) )//&& game_ptr->can_move_to(col, row - 1))
 	{
-		ypos = ypos - 1;
+		row = row - 1;
 	}
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && game_ptr->can_move_to(xpos, ypos + 1))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) )//&& game_ptr->can_move_to(col, row + 1))
 	{
-		ypos = ypos + 1;
+		row = row + 1;
 	}
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && game_ptr->can_move_to(xpos - 1, ypos))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) )//&& game_ptr->can_move_to(col - 1, row))
 	{
-		xpos = xpos - 1;
+		col = col - 1;
 	}
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) && game_ptr->can_move_to(xpos + 1, ypos))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) )//&& game_ptr->can_move_to(col + 1, row))
 	{
-		xpos = xpos + 1;
+		col = col + 1;
 	}
 }
