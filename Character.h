@@ -1,8 +1,8 @@
 
 #ifndef CHARACTER_H
 #define CHARACTER_H
-#include "Game.h"
 #include "Bomb.h"
+#include "Game.h"
 #include <string>
 #include <memory>
 //#include "SFML/Graphics.hpp" //bara sålänge kontrollerna initializeras här
@@ -11,7 +11,7 @@ class Character
 {
     public:
     Character();
-	//Character(std::shared_ptr<Game>);
+	Character(std::shared_ptr<Game>);
 	
 	//Character(shared_prt<Game> our_game, int player_number);
 	int get_col();

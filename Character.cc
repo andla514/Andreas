@@ -5,13 +5,14 @@
 #include "Character.h"
 #include "Bomb.h"
 
+#include <iostream> //Används ej?
 #include <utility> //bara för move i testkonstruktorn
 
 //-----------------CONSTRUCTOR--------------
 Character::Character()
 {}
 
-/*
+
 //Testkonstruktor
 Character::Character(std::shared_prt<Game> our_game)
 	:bombs{1}, xpos{1}, ypos{1}, our_game{std::move(our_game)}
@@ -20,7 +21,7 @@ Character::Character(std::shared_prt<Game> our_game)
 	our_game{std::move(our_game)}
 
 	{}
-*/
+
 
 //Behöver operatoröverlagring på game (=)
 /*
@@ -90,19 +91,19 @@ int Character::get_row()
 void Character::move_player()
 {
 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) )//&& game_ptr->can_move_to(col, row - 1))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))//&& game_ptr->can_move_to(col, row - 1))
 	{
 		row = row - 1;
 	}
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) )//&& game_ptr->can_move_to(col, row + 1))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))//&& game_ptr->can_move_to(col, row + 1))
 	{
 		row = row + 1;
 	}
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) )//&& game_ptr->can_move_to(col - 1, row))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))//&& game_ptr->can_move_to(col - 1, row))
 	{
 		col = col - 1;
 	}
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) )//&& game_ptr->can_move_to(col + 1, row))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))//&& game_ptr->can_move_to(col + 1, row))
 	{
 		col = col + 1;
 	}
