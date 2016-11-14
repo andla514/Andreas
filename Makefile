@@ -5,18 +5,15 @@ SFML = ../SFML
 CCC = g++
 
 # Kompilatorflaggor, lägg till '-g' om kompilering för avlusning ska göras.
-CCFLAGS += -std=c++14 -Wpedantic -Wall -Wextra -Werror 
-#-Weffc++
+CCFLAGS += -std=c++14 -Wpedantic -Wall 
+#-Weffc++ -Werror -Wextra 
 
 # Preprocessorflaggor, -I lägger till en filkatalog i inkluderingssökvägen.
-SFML_installpath = -DSFML_STATIC -I SFML/include 
-SFML_lib = -L SFML/lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
 EXTRA_TAGS= -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
-SFML_FLAGS= -lsfml-graphics -lsfml-window -lsfml-system
 
 # Objektkodsmoduler som ingår i den kompletta boombox.
 
-OBJECTS = Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o Timer.o
+OBJECTS = Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o Timer.o Item.o
 
 #OBJECTS = Character.o Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o Timer.o
 
@@ -39,14 +36,12 @@ game_test: Game.o Matrix_Map.o Item.o test_main.o Game_test.cc
 character_test: Character.o test_main.o Character_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Character.o Character_test.cc -o character_test
 
-character_test2:Bomb.o Item.o Game.o Matrix_Map.o Main_game.o Explosion.o 
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) Character.cc Character_test.cc -o -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
-	
 item_test: Item.o test_main.o Item_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Item.o Item_test.cc -o item_test
 	
 matrix_test: Matrix_Map.o test_main.o Matrix_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Matrix_Map.o Matrix_test.cc -o matrix_test
+	
 tbtest:
 	$(CCC) $(CCFLAGS) tangenttest.cpp -o tbtest.exe -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
 	
