@@ -15,12 +15,13 @@ Character::Character()
 
 //Testkonstruktor
 Character::Character(std::shared_prt<Game> our_game)
-	:bombs{1}, xpos{1}, ypos{1}, our_game{std::move(our_game)}
-    up{sf::Keyboard::W}, down{"sf::Keyboard::S"}, left{"sf::Keyboard::A"},
-	right{"sf::Keyboard::D"}, place_bomb{"sf::Keyboard::Tab"}, bombs{1}, xpos{1}, ypos{1}, 
-	our_game{std::move(our_game)}
-
+	:bombs{1}, col{1}, row{1}, life{2}, our_game{std::move(our_game)}
 	{}
+
+//    up{sf::Keyboard::W}, down{"sf::Keyboard::S"}, left{"sf::Keyboard::A"},
+//	right{"sf::Keyboard::D"}, place_bomb{"sf::Keyboard::Tab"}, bombs{1}, xpos{1}, ypos{1}, 
+//	our_game{std::move(our_game)}
+//	{}
 
 
 //Behöver operatoröverlagring på game (=)
@@ -79,18 +80,87 @@ Character(std::shared_prt<Game> our_game, int player_number)
 */
 
 //-----------------FUNCTION--------------
-int Character::get_col()
+int Character::get_col() const
 {
 	return col;
 }
-int Character::get_row()
+int Character::get_row() const
 {
 	return row;
 }
 
+void add_bomb(int number)
+{
+	bombs += number;
+}
+
+void increase_exp_rad(int number)
+{
+	Bomb_settings.radius += number;
+}
+
+void increase_exp_time(int number)
+{
+	bomb_settings.explosion_delay += number;
+}
+
+void update()
+{
+	if(is_moving)
+	{
+		smooth_move();
+	}
+	else
+	{
+		move_player();
+	}
+	
+	if(game_ptr->is_standing_in_fire(row, col) && !(is_immortal))
+	{
+		hurt_player();
+		is_immortal = true;
+	}
+	else(!(game_ptr->is_standing_in_fire(row, col)))
+	{
+		is_immortal = false;
+	}
+	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab) && bombs > 0 && !(is_immortal)) 
+	{
+		lay_bomb();
+	}
+	
+	if(game_ptr->is_standing_on_item(row, col))
+	{
+		use_item();
+	}
+	
+}
+
+void lay_bomb()
+{
+		//anropa bomb-construktor
+}
+
+void use_item(Item pickup)
+{
+	pickup.give_power_up(*this)
+}
+
+void smooth_move()
+{
+	
+	
+}
+
+void hurt_player()
+{
+	life -= 1;
+}
+
+/*
 void Character::move_player()
 {
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))//&& game_ptr->can_move_to(col, row - 1))
 	{
 		row = row - 1;
@@ -108,3 +178,4 @@ void Character::move_player()
 		col = col + 1;
 	}
 }
+*/
