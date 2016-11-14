@@ -1,16 +1,17 @@
 
 #ifndef EXPLOSION_H
 #define EXPLOSION_H
-class Explotion;
+class Explosion;
 #include "Game.h"
 #include "Item.h"
 #include "Timer.h"
+#include <memory>
 
 class Explosion
 {
     public:
-    Explosion(int row, int col, Timer explotion_timer, bool has_item, std::shared_ptr<Game> our_game);
-	~Explotion();
+    Explosion(int row, int col, Timer explosion_timer, bool has_item, std::shared_ptr<Game> our_game);
+	~Explosion();
 	
 	void update();
 	
@@ -19,7 +20,7 @@ class Explosion
 	int col{};
 	bool has_item{};
 	std::shared_ptr<Game> my_game;
-	*Timer explotion_timer;
+	Timer explosion_timer;
 	
 	void make_item();
 };
