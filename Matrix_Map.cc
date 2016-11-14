@@ -1,5 +1,6 @@
 #include "Matrix_Map.h"
 #include <iostream>
+#include <windows.h>
 
 //-----------------CONSTRUCTOR--------------
 Matrix_Map::Matrix_Map()
@@ -8,7 +9,7 @@ Matrix_Map::Matrix_Map()
     initialize_map();
 }
 
-void Matrix_Map::initialize_map()
+void Matrix_Map::initialize_map() noexcept
 {
     for(int r = 0; r < max_rows; r++)
     {
@@ -49,32 +50,57 @@ void Matrix_Map::initialize_map()
     set_element(max_rows - 3, 1, 0);
 }
 //-----------------Graphics-----------------
-void Matrix_Map::draw_graphics()
+void Matrix_Map::draw_graphics() const noexcept
 {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     for(int r = 0; r < max_rows; r++)
     {
         for(int c = 0; c < max_cols; c++)
         {
-            std::cout << get_element(r, c) << " ";
+            int element = get_element(r, c);
+            int color_number;
+            switch(element)
+            {
+                case 0:
+                    color_number = 8;
+                    break;
+                case 1:
+                    color_number = 6;
+                    break;
+                case 2:
+                    color_number = 10;
+                    break;
+                case 3:
+                    color_number = 12;
+                    break;
+                case 4:
+                    color_number = 6;
+                    break;
+                case 5:
+                    color_number = 13;
+                    break;
+            }
+            SetConsoleTextAttribute(hConsole, color_number);
+            std::cout << element << " ";
         }
         std::cout << std::endl;
     }
 }
 
 //-----------------GET/SET------------------
-int Matrix_Map::get_element(int row, int col)
+int Matrix_Map::get_element(int row, int col) const noexcept
 {
     return our_map[row][col];
 }
-void Matrix_Map::set_element(int row, int col, int new_value)
+void Matrix_Map::set_element(int row, int col, int new_value) noexcept
 {
     our_map[row][col] = new_value;
 }
-int Matrix_Map::get_rows()
+int Matrix_Map::get_rows() const noexcept
 {
     return max_rows;
 }
-int Matrix_Map::get_columns()
+int Matrix_Map::get_columns() const noexcept
 {
     return max_cols;
 }
