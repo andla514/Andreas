@@ -4,10 +4,9 @@
 //-----------------CONSTRUCTOR--------------
 Bomb::Bomb(int row, int col, Bomb_settings our_settings, std::shared_ptr<Game> our_game,
 	std::shared_ptr<Character> my_creator)
-	: row_pos{row}, col_pos{col}, my_game{our_game}, my_creator{my_creator}
+	: row_pos{row}, col_pos{col},detonation_timer{Timer(our_settings.detonation_delay)}, my_game{our_game}, my_creator{my_creator}
 {
 	my_settings = our_settings;
-	detonation_timer = Timer(my_settings.detonation_delay);
 }
 
 
@@ -45,7 +44,7 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		else 
 		{
 			my_game->set_element(row, col, 4);
-			my_game->add_explosion(row, col, Explosion(row, col, Timer(my_settings.explosion_delay),
+			my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
 									false, my_game));
 			distance--;
 		}
@@ -68,11 +67,11 @@ void Bomb::box_spawn(int row, int col)
 	int random_value {rand() % 100};
 	if (random_value < 30)
 	{
-		my_game->add_explosion(row, col, Explosion(row, col, (Timer(my_settings.explosion_delay)), true, my_game));
+		my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay, true, my_game));
 	}
 	else
 	{
-		my_game->add_explosion(row, col, Explosion(row, col, (Timer(my_settings.explosion_delay)), false, my_game));
+		my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay, false, my_game));
 	}
 }
 	

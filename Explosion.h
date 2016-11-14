@@ -6,11 +6,12 @@ class Explosion;
 #include "Item.h"
 #include "Timer.h"
 #include <memory>
+#include <stdlib.h>
 
 class Explosion
 {
     public:
-    Explosion(int row, int col, Timer explosion_timer, bool has_item, std::shared_ptr<Game> our_game);
+    Explosion(int row, int col, int explosion_delay, bool has_item, std::shared_ptr<Game> our_game);
 	~Explosion();
 	
 	void update();

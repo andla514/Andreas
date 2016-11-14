@@ -1,8 +1,8 @@
 #include "Explosion.h"
 
 //-----------------CONSTRUCTOR--------------
-Explosion::Explosion(int row, int col, Timer explotion_timer, bool has_item, std::shared_ptr<Game> our_game)
-	: row{row}, col{col}, explosion_timer{explosion_timer}, has_item{has_item}, my_game{my_game}
+Explosion::Explosion(int row, int col, int explosion_delay, bool has_item, std::shared_ptr<Game> our_game)
+	: row{row}, col{col},explosion_timer{Timer(2)}, has_item{has_item}, my_game{my_game}
 {}
 
 //-----------------Destructor---------------

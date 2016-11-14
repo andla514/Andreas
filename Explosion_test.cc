@@ -7,6 +7,5 @@
 
 TEST_CASE("")
 {
-	Timer t(2);
-    Explosion our_explosion(1, 1, t, false, std::make_shared<Game>());
+    Explosion our_explosion(1, 1, 2, false, std::make_shared<Game>());
 }
