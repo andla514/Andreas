@@ -1,85 +1,99 @@
 #include "Matrix_Map.h"
 #include "Game.h"
 #include "Item.h"
+#include "Bomb.h"
+#include "Explosion.h"
 #include <iostream>
 
 //-----------------CONSTRUCTOR--------------
 Game::Game()
 {}
+//-----------------Physics------------------
+void Game::update() noexcept
+{
+    for(auto it = bomb_list.begin(); it != bomb_list.end(); ++it)
+    {
+        //it->second.update();
+    }
+    for(auto it = explosion_list.begin(); it != explosion_list.end(); ++it)
+    {
+        //it->second.update();
+    }
+}
 //-----------------Graphics-----------------
-void Game::draw_graphics()
+void Game::draw_graphics() const noexcept
 {
     our_matrix.draw_graphics();
     // TODO
 }
 //-----------------BOOLS--------------------
-bool Game::is_standing_in_fire(int row, int col)
+bool Game::is_standing_in_fire(int row, int col) const noexcept
 {
     return get_element(row, col) == 4;
 }
-bool Game::is_standing_on_item(int row, int col)
+bool Game::is_standing_on_item(int row, int col) const noexcept
 {
     return get_element(row, col) == 2;
 }
-bool Game::can_move_to(int row, int col)
+bool Game::can_move_to(int row, int col) const noexcept
 {
     int our_element = get_element(row, col);
     return our_element != 5 && our_element != 1 && our_element != 3;
 }
-bool Game::is_wall(int row, int col)
+bool Game::is_wall(int row, int col) const noexcept
 {
     return get_element(row, col) == 5;
 }
-bool Game::is_box(int row, int col)
+bool Game::is_box(int row, int col) const noexcept
 {
     return get_element(row, col) == 1;
 }
 //-----------------REFERENCE_LISTS----------
-void Game::add_item(int row, int col, Item new_item)
+void Game::add_item(int row, int col, Item new_item) noexcept
 {
-    item_list.insert(std::pair<std::string, Item>(row + "" + col, new_item));
+    item_list.insert(std::pair<std::string, Item>(std::to_string(row) + "," + std::to_string(col), new_item));
 }
-void Game::add_bomb()
+void Game::add_bomb(int row, int col, Bomb new_bomb) noexcept
 {
-    // TODO
+    bomb_list.insert(std::pair<std::string, Bomb>(std::to_string(row) + "," + std::to_string(col), new_bomb));
 }
-void Game::add_explosion()
+void Game::add_explosion(int row, int col, Explosion new_explosion) noexcept
 {
-    // TODO
+    explosion_list.insert(std::pair<std::string, Explosion>(std::to_string(row) + "," + std::to_string(col), new_explosion));
 }
-void Game::remove_bomb(int, int)
+void Game::remove_bomb(int row, int col) noexcept
 {
-    // TODO
+    bomb_list.erase(std::to_string(row) + "," + std::to_string(col));
 }
-void Game::remove_explosion(int, int)
+void Game::remove_explosion(int row, int col) noexcept
 {
-    // TODO
+    explosion_list.erase(std::to_string(row) + "," + std::to_string(col));
 }
 Item Game::get_item_at(int row, int col)
 {
-    std::string our_key = row + "" + col;
-    if(item_list.find(our_key) != item_list.end())
+    std::string our_key{std::to_string(row) + "," + std::to_string(col)};
+    if(item_list.find(our_key) == item_list.end())
     {
         throw std::out_of_range("Item doesn't exist!");
     }
-    Item our_item = item_list.at(our_key);
+    Item our_item {item_list.at(our_key)};
     item_list.erase(our_key);
     return our_item;
 }
 //-----------------GET/SET------------------
-int Game::get_element(int row, int col)
+int Game::get_element(int row, int col)  const noexcept
 {
     return our_matrix.get_element(row, col);
 }
-void Game::set_element(int row, int col, int new_value)
+void Game::set_element(int row, int col, int new_value) noexcept
 {
     our_matrix.set_element(row, col, new_value);
 }
-int Game::get_rows()
+int Game::get_rows()  const noexcept
 {
     return our_matrix.get_rows();
 }
-int Game::get_columns()
+int Game::get_columns()  const noexcept
 {
     return our_matrix.get_columns();
 }
