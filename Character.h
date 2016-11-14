@@ -5,7 +5,9 @@
 #include "Game.h"
 #include <string>
 #include <memory>
-//#include "SFML/Graphics.hpp" //bara sålänge kontrollerna initializeras här
+
+//bara sålänge kontrollerna initializeras här
+//#include "SFML/Graphics.hpp"
 
 class Character
 {
@@ -13,7 +15,7 @@ class Character
     Character();
 	~Character() = default;
 	Character(std::shared_ptr<Game>);
-	//Character(std::shared_prt<Game>, int);
+	//Character(std::shared_prt<Game> our_game, int player_number);
 	
 	void add_bomb(int number);
 	int get_col() const;
@@ -29,8 +31,8 @@ class Character
 	
 	private:
 	std::shared_ptr<Game> game_ptr{};
-	int life{};
-	int bombs{};
+	int life{2};
+	int bombs{1};
 	int col{};
 	int row{};
 	int player_number{};
