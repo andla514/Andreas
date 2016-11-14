@@ -15,11 +15,11 @@ EXTRA_TAGS= -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-window-s -lsfml-sys
 SFML_FLAGS= -lsfml-graphics -lsfml-window -lsfml-system
 
 # Objektkodsmoduler som ingår i den kompletta boombox.
-<<<<<<< HEAD
-OBJECTS = Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o
-=======
-OBJECTS = Character.o Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o Timer.o
->>>>>>> refs/remotes/origin/master
+
+OBJECTS = Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o Timer.o
+
+#OBJECTS = Character.o Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o Timer.o
+
 
 # Huvudmål - skapas med kommandot 'make' eller 'make boombox'.
 boombox: $(OBJECTS) Makefile
