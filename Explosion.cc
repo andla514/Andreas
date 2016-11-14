@@ -2,8 +2,8 @@
 #include "Explosion.h"
 
 //-----------------CONSTRUCTOR--------------
-Explosion::Explosion(int row, int col, bool has_item, std::shared_ptr<Game> our_game)
-	: row{row}, col{col}, has_item{has_item}, my_game{my_game}
+Explosion::Explosion(int row, int col, Timer explotion_timer, bool has_item, std::shared_ptr<Game> our_game)
+	: row{row}, col{col}, explotion_timer{explotion_timer}, has_item{has_item}, my_game{my_game}
 {}
 
 //-----------------Destructor---------------
@@ -18,7 +18,6 @@ Explotion::~Explotion()
 	{
 		my_game.set_element(row, col, 0);
 	}
-	my_game.remove_explotion_at(row, col);
 }
 
 //-----------------Functions----------------
@@ -34,4 +33,7 @@ void Explotion::make_item()
 }
 
 void Explotion::update()
-{}
+{
+	if (explotion_timer.is_done())
+		my_game.remove_explotion(row, col);
+}

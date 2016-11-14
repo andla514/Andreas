@@ -7,16 +7,15 @@
 Bomb::Bomb(int row, int col, Bomb_settings our_settings, std::shared_ptr<Game> our_game,
 	std::shared_ptr<Character> my_creator)
 	: row-pos{row}, col-pos{col}, my_settings{our_settings}, my_game{our_game}, 
-	my_creator{my_creator}
+	my_creator{my_creator}, detonation_timer{Timer(my_settings.detonation_timer)}
 {}
 
-Bomb::~Bomb()
-{
-	my_game.remove_bomb_at(row_pos, col_pos);
-}
 
 void Bomb::update()
-{}
+{
+	if (detonation_timer.is_done())
+		detonate();
+}
 
 // Calculate and creates explotions in the correct places
 void Bomb::detonate()
@@ -38,13 +37,16 @@ void Bomb::spread_explotions (std::string direction, int distance)
 		{
 			distance = 0;
 		}
-		else if (my_game.is box(row,col))
+		else if (my_game.is_box(row,col))
 		{
 			box_spawn(row, col);
+			distance = 0;
 		}
 		else 
 		{
 			my_game.set_element(row, col, 4);
+			Explotion(row, col, Timer(my_settings.explotion_delay()), false, my_game)
+			distance--;
 		}
 		
 		if (direction = "right")
@@ -64,6 +66,8 @@ void Bomb::box_spawn(int row, int col)
 {
 	int random_value {rand() % 100}
 	if (random_value < 30)
-		
+		Explotion(row, col, Timer(my_settings.explotion_delay()), true, my_game)
+	else
+		Explotion(row, col, Timer(my_settings.explotion_delay()), false, my_game)
 }
 	
