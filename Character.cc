@@ -13,13 +13,13 @@ Character::Character()
 {
 }
 
-
+/*
 //Testkonstruktor
 Character::Character(std::shared_prt<Game> our_game)
 	: game_ptr{std::move(our_game)}, col{1}, row{1}, player_number{1}
 {
 }
-	
+*/	
 	//: bombs{1}, col{1}, row{1}, life{2}, game_ptr{std::move(our_game)}, player_number{1}
 	//{}
 

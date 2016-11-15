@@ -14,7 +14,7 @@ class Character
     public:
     Character();
 	~Character() = default;
-	Character(std::shared_ptr<Game>);
+	//Character(std::shared_ptr<Game>);
 	//Character(std::shared_prt<Game> our_game, int player_number);
 	
 	void add_bomb(int number);

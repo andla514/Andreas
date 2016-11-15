@@ -33,8 +33,8 @@ bomb_test: Bomb.o test_main.o Bomb_test.cc
 game_test: Game.o Matrix_Map.o Item.o test_main.o Game_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Game.o matrix_map.o Item.o Game_test.cc -o game_test
 	
-character_test: Character.o test_main.o Character_test.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Character.o Character_test.cc -o character_test
+character_test: Character.cc Game.o Matrix_Map.o Bomb.o Item.o Explosion.o test_main.o  Character_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) Character.cc Game.o Matrix_Map.o Bomb.o Item.o Explosion.o test_main.o  Character_test.cc -o character_test -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
 
 item_test: Item.o test_main.o Item_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Item.o Item_test.cc -o item_test
