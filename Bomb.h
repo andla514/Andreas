@@ -19,13 +19,10 @@ struct Bomb_settings
 class Bomb
 {
     public:
-	
-	
-    Bomb(int row, int col, Bomb_settings our_settings, std::shared_ptr<Game> ourgame,
-	std::shared_ptr<Character> my_creator);
+	// Constructor/destructor
+    Bomb(int row, int col, Bomb_settings our_settings, Game* ourgame,
+	Character* my_creator);
 	~Bomb() = default;
-	
-	
 	
 	void update();
 	void detonate();
@@ -35,8 +32,8 @@ class Bomb
 	int row_pos{};
 	int col_pos{};
 	Bomb_settings my_settings;
-	std::shared_ptr<Game> my_game{};
-	std::shared_ptr<Character> my_creator{};
+	Game* my_game{};
+	Character* my_creator{};
 	Timer detonation_timer;
 	
 	void spread_explosions(std::string direction, int distance);

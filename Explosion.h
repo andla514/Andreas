@@ -11,7 +11,7 @@ class Explosion;
 class Explosion
 {
     public:
-    Explosion(int row, int col, int explosion_delay, bool has_item, std::shared_ptr<Game> our_game);
+    Explosion(int row, int col, int explosion_delay, bool has_item, Game* our_game);
 	~Explosion();
 	
 	void update();
@@ -20,7 +20,7 @@ class Explosion
 	int row{};
 	int col{};
 	bool has_item{};
-	std::shared_ptr<Game> my_game;
+	Game* my_game;
 	Timer explosion_timer;
 	
 	void make_item();
