@@ -15,7 +15,7 @@ class Character
     Character();
 	~Character() = default;
 	//Character(std::shared_ptr<Game>);
-	//Character(std::shared_prt<Game> our_game, int player_number);
+	Character(std::shared_ptr<Game> our_game, int player_number);
 	
 	void add_bomb(int number);
 	int get_col() const;
@@ -33,8 +33,8 @@ class Character
 	std::shared_ptr<Game> game_ptr{};
 	int life{2};
 	int bombs{1};
-	int col{};
-	int row{};
+	int col{1};
+	int row{1};
 	int player_number{};
 	//struct Bomb_settings{3, 5, 3};
 	bool is_moving{false};

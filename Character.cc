@@ -15,8 +15,8 @@ Character::Character()
 
 /*
 //Testkonstruktor
-Character::Character(std::shared_prt<Game> our_game)
-	: game_ptr{std::move(our_game)}, col{1}, row{1}, player_number{1}
+Character::Character(std::shared_ptr<Game> our_game)
+	: game_ptr{std::move(our_game)}, player_number{1}
 {
 }
 */	
@@ -24,12 +24,12 @@ Character::Character(std::shared_prt<Game> our_game)
 	//{}
 
 
-/*
-Character(std::shared_prt<Game> our_game, int player_number)
-    : bombs{1}, col{1}, row{1}, life{2}, game_ptr{std::move(our_game)}, player_number{player_number}
+
+Character::Character(std::shared_ptr<Game> our_game, int player_number)
+    : game_ptr{our_game}, player_number{player_number}
 {
 }
-*/
+
 
 //-----------------FUNCTION--------------
 int Character::get_col() const
