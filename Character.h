@@ -5,7 +5,7 @@
 #include "Game.h"
 #include <string>
 #include <memory>
-#include "SFML/Graphics.hpp"
+#include "SFML/Graphics.hpp" //bör vara SFML/Window.hpp?
 //#include <Keyboard.hpp>
 
 class Character

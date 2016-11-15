@@ -1,6 +1,6 @@
 //#include <stdio.h>
 #include <memory>
-#include "SFML/Graphics.hpp"
+#include "SFML/Graphics.hpp" //bör vara SFML/Window.hpp?
 #include "Game.h"
 #include "Character.h"
 #include "Bomb.h"
@@ -26,6 +26,7 @@ Character::Character(std::shared_ptr<Game> our_game, int player_number)
 	left = sf::Keyboard::A;
 	right = sf::Keyboard::D;
 	bomb = sf::Keyboard::Tab;
+	break;
 
     case 2:
 	col = our_game->get_columns() - 1;
@@ -35,6 +36,7 @@ Character::Character(std::shared_ptr<Game> our_game, int player_number)
 	left = sf::Keyboard::Left;
 	right = sf::Keyboard::Right;
 	bomb = sf::Keyboard::Tab;
+	break;
 
     case 3:
 	col = our_game->get_columns() - 1;
@@ -44,6 +46,7 @@ Character::Character(std::shared_ptr<Game> our_game, int player_number)
 	left = sf::Keyboard::Numpad4;
 	right = sf::Keyboard::Numpad6;
 	bomb = sf::Keyboard::Tab;
+	break;
 
     case 4:
 	col = 1;
@@ -52,6 +55,7 @@ Character::Character(std::shared_ptr<Game> our_game, int player_number)
 	down = sf::Keyboard::G;
 	left = sf::Keyboard::F;
 	bomb = sf::Keyboard::Tab;
+	break;
     }
 }
 
