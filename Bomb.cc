@@ -2,9 +2,9 @@
 
 
 //-----------------CONSTRUCTOR--------------
-Bomb::Bomb(int row, int col, Bomb_settings our_settings, Game* our_game,
+Bomb::Bomb(int row, int col, Bomb_settings our_settings, std::shared_ptr<Game> our_game,
 	Character* my_creator)
-	: row_pos{row}, col_pos{col},detonation_timer{Timer(our_settings.detonation_delay)}, my_game{our_game}, my_creator{my_creator}
+	: row_pos{row}, col_pos{col},detonation_timer{Timer(our_settings.detonation_delay)}, my_game{our_game}, my_creator{std::move(my_creator)}
 {
 	my_settings = our_settings;
 }
@@ -84,4 +84,3 @@ void Bomb::box_spawn(int row, int col)
 		my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay, false, my_game));
 	}
 }
-	

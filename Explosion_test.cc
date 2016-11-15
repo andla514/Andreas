@@ -8,8 +8,5 @@ using namespace std;
 
 TEST_CASE("")
 {
-	Game G ();
-	Game* g;
-	g = &G;
-    Explosion our_explosion(1, 1, 2, false, g);
+    Explosion our_explosion(1, 1, 2, false, std::make_shared<Game> ());
 }
