@@ -5,16 +5,14 @@
 #include "Game.h"
 #include <string>
 #include <memory>
-
-//bara sålänge kontrollerna initializeras här
-//#include "SFML/Graphics.hpp"
+#include "SFML/Graphics.hpp"
+//#include <Keyboard.hpp>
 
 class Character
 {
     public:
     Character();
 	~Character() = default;
-	//Character(std::shared_ptr<Game>);
 	Character(std::shared_ptr<Game> our_game, int player_number);
 	
 	void add_bomb(int number);
@@ -30,6 +28,11 @@ class Character
 	void move_player();
 	
 	private:
+	sf::Keyboard::Key  up;
+	sf::Keyboard::Key down;
+	sf::Keyboard::Key left;
+	sf::Keyboard::Key right;
+	sf::Keyboard::Key bomb;
 	std::shared_ptr<Game> game_ptr{};
 	int life{2};
 	int bombs{1};
