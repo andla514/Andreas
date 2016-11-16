@@ -107,7 +107,7 @@ void Character::update()
 	   		is_immortal = false;
 		}
 
-		make_bomb();
+		lay_bomb();
 
 		if (game_ptr->is_standing_on_item(row, col))
 		{
@@ -116,7 +116,7 @@ void Character::update()
     }
 }
 
-void Character::make_bomb()
+void Character::lay_bomb()
 {
     if (sf::Keyboard::isKeyPressed(bomb) && bombs > 0 && !(is_immortal))
     {

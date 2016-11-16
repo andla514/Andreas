@@ -24,7 +24,7 @@ class Character
 	void hurt_player();
 	void smooth_move();
 	void use_item(Item pickup);
-	void make_bomb();
+	void lay_bomb();
 	void move_player();
 	
 	private:
