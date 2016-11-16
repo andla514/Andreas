@@ -1,0 +1,21 @@
+# Filkataloger där andra delar av programet finns.
+SFML = ../SFML
+
+# Diagnosmeddelanden från kompilatorn (g++) filtreras av gccfilter.
+CCC = g++
+
+# Kompilatorflaggor, lägg till '-g' om kompilering för avlusning ska göras.
+CCFLAGS += -std=c++14 
+#-Wpedantic -Wall -Wextra -Werror 
+
+# Preprocessorflaggor, -I lägger till en filkatalog i inkluderingssökvägen.
+EXTRA_TAGS= -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-window-s -lsfml-system-s -lopen#gl32 -lwinmm -lgdi32 -lfreetype -ljpeg
+
+all:
+	g++ -std=c++14 tangenttest.cpp -o test.exe -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
+next:	
+	$(CCC) $(CCFLAGS) $(EXTRA_TAGS) tangenttest.cpp -o test.exe 
+try:
+	$(CCC) $(CCFLAGS) tangenttest.cpp -o test.exe -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
+clean:
+	del -f *.o *.exe
