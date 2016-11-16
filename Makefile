@@ -11,11 +11,11 @@ OBJECTS = Character.o Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o 
 boombox: $(OBJECTS) Makefile
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) $(LDFLAGS) -o boombox $(OBJECTS)
 
-explosion_test: Explosion.o test_main.o Game.o Item.o Bomb.o Character.o Matrix_Map.o Explosion_test.cc 
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) Explosion.o test_main.o Game.o Item.o Bomb.o Character.o Matrix_Map.o Explosion_test.cc -o explosion_test
+explosion_test: Explosion.o test_main.o Game.o Item.o Bomb.o Character.o Matrix_Map.o Timer.o Explosion_test.cc 
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) Explosion.o test_main.o Game.o Item.o Bomb.o Character.o Matrix_Map.o Timer.o Explosion_test.cc -o explosion_test
 	
-bomb_test: Bomb.o test_main.o Bomb_test.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Bomb.o Bomb_test.cc -o bomb_test
+bomb_test: Bomb.o test_main.o Game.o Item.o Explosion.o Character.o Matrix_Map.o Timer.o Bomb_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Bomb.o Game.o Item.o Explosion.o Character.o Matrix_Map.o Timer.o Bomb_test.cc -o bomb_test
 
 game_test: Game.o Matrix_Map.o Item.o test_main.o Game_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Game.o matrix_map.o Item.o Game_test.cc -o game_test

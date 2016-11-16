@@ -1,14 +1,21 @@
 #include "Explosion.h"
+#include <iostream>
 
 //-----------------CONSTRUCTOR--------------
-Explosion::Explosion(int row, int col, int explosion_delay, bool has_item, std::shared_ptr<Game> our_game)
-	: row{row}, col{col}, explosion_timer{Timer(explosion_delay)}, has_item{has_item}, my_game{our_game}
+Explosion::Explosion(int row, int col, int explosion_delay, bool was_box, std::shared_ptr<Game> our_game)
+	: row{row}, col{col}, explosion_timer{Timer(explosion_delay)}, was_box{was_box}, my_game{our_game}
 {}
 
 //-----------------Destructor---------------
+
+/*
+* ~Explosion()
+*/
 Explosion::~Explosion()
 {
-	if (has_item)
+	int random_value {rand() % 100};
+	
+	if (was_box && random_value <= 30)
 	{
 		my_game->set_element(row, col, 2);
 		make_item();
@@ -16,6 +23,7 @@ Explosion::~Explosion()
 	else
 	{
 		my_game->set_element(row, col, 0);
+		std::cout << "ändrade element till 0";
 	}
 }
 
@@ -46,7 +54,8 @@ void Explosion::make_item()
 		//Item temp_item = Item_Inc_Exp_Timer(row, col);
 	}
 	//my_game->add_item(temp_item);
-	//my_game->set_element(row, col, 2);
+	my_game->set_element(row, col, 2);
+	std::cout << "Lägger ett item";
 }
 
 /*

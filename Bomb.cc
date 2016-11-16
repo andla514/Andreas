@@ -1,13 +1,12 @@
 #include "Bomb.h"
-
+#include <iostream>
 
 //-----------------CONSTRUCTOR--------------
 Bomb::Bomb(int row, int col, Bomb_settings our_settings, std::shared_ptr<Game> our_game,
-	Character* my_creator)
-	: row_pos{row}, col_pos{col},detonation_timer{Timer(our_settings.detonation_delay)}, my_game{our_game}, my_creator{std::move(my_creator)}
-{
-	my_settings = our_settings;
-}
+	int my_creator)
+	: row_pos{row}, col_pos{col},my_settings{our_settings.radius, our_settings.detonation_delay, our_settings.explosion_delay}, 
+		detonation_timer{Timer(our_settings.detonation_delay)}, my_game{our_game}, my_creator{my_creator}
+{}
 
 
 void Bomb::update()
@@ -39,13 +38,21 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		}
 		else if (my_game->is_box(row, col))
 		{
-			box_spawn(row, col);
+			my_game->set_element(row, col, 4);
+			my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
+									true, my_game));
 			distance = 0;
+			std::cout << "Explosion" << row << col;   // Felsök
 		}
+		// Lägg till fall då den spränger en annan bomb
 		else if (my_game->is_standing_on_item(row, col))
 		{
+			my_game->set_element(row, col, 4);
 			//my_game->remove_item(row, col);
+			my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
+									false, my_game));
 			distance --;
+			std::cout << "Explosion" << row << col;   // Felsök
 		}
 		else 
 		{
@@ -53,6 +60,7 @@ void Bomb::spread_explosions (std::string direction, int distance)
 			my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
 									false, my_game));
 			distance --;
+			std::cout << "Explosion" << row << col;   // Felsök
 		}
 		
 		if (direction == "right")
@@ -72,15 +80,23 @@ void Bomb::spread_explosions (std::string direction, int distance)
 * void box_spawn(int row, int col)
 * Randomly selects if the destroyed box contained an item or not
 */
-void Bomb::box_spawn(int row, int col)
+/*void Bomb::box_spawn(int row, int col)
 {
 	int random_value {rand() % 100};
 	if (random_value < 30)
 	{
-		my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay, true, my_game));
 	}
 	else
 	{
 		my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay, false, my_game));
 	}
 }
+*/
+/*
+* Character* get_creator()
+* Fetches a pointer to the creator of this bomb.
+*/
+/*Character& Bomb::get_creator()
+{
+	my_game->get_Character(my_creator);
+}*/
