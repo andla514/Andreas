@@ -1,7 +1,7 @@
 
 #ifndef CHARACTER_H
 #define CHARACTER_H
-class Game;
+class Character;
 #include "Bomb.h"
 #include "Game.h"
 #include <string>

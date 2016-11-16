@@ -4,6 +4,7 @@
 #include "Bomb.h"
 #include "Explosion.h"
 #include <iostream>
+#include <memory>
 
 //-----------------CONSTRUCTOR--------------
 Game::Game()
@@ -18,6 +19,10 @@ void Game::update() noexcept
     for(auto it = explosion_list.begin(); it != explosion_list.end(); ++it)
     {
         //it->second.update();
+    }
+    for(auto it = character_list.begin(); it != character_list.end(); ++it)
+    {
+        it->second.update();
     }
 }
 //-----------------Graphics-----------------
@@ -79,6 +84,17 @@ Item Game::get_item_at(int row, int col)
     Item our_item {item_list.at(our_key)};
     item_list.erase(our_key);
     return our_item;
+}
+void Game::add_characters(int number_of_players, std::shared_ptr<Game> our_game)
+{
+    for(int i = 0; i < number_of_players; i++)
+    {
+        character_list.insert(std::pair<int, Character>(i + 1, Character{our_game, i + 1}));
+    }
+}
+Character & Game::get_character_reference(int player_number)
+{
+    return character_list.at(player_number);
 }
 //-----------------GET/SET------------------
 int Game::get_element(int row, int col)  const noexcept
