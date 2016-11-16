@@ -1,6 +1,6 @@
 //#include <stdio.h>
 #include <memory>
-#include "SFML/Graphics.hpp" //bör vara SFML/Window.hpp?
+#include "SFML/Graphics.hpp"
 #include "Game.h"
 #include "Character.h"
 #include "Bomb.h"

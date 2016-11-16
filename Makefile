@@ -9,20 +9,18 @@ CCFLAGS += -std=c++14 -Wpedantic -Wall
 #-Weffc++ -Werror -Wextra 
 
 # Preprocessorflaggor, -I lägger till en filkatalog i inkluderingssökvägen.
-EXTRA_TAGS= -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
+EXTRA_TAGS += -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
 
 # Objektkodsmoduler som ingår i den kompletta boombox.
 
-OBJECTS = Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o Timer.o Item.o
+OBJECTS = Bomb.o Matrix_Map.o Character.o Game.o Main_game.cc Explosion.o Timer.o Item.o
 
 #OBJECTS = Character.o Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o Timer.o
 
 
 # Huvudmål - skapas med kommandot 'make' eller 'make boombox'.
 boombox: $(OBJECTS) Makefile
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) $(LDFLAGS) Character.cc -o boombox $(OBJECTS) -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
-	#$(OBJECTS) Makefile
-	#$(CCC) $(CPPFLAGS) $(CCFLAGS) $(LDFLAGS) $(EXTRA_TAGS) -o boombox $(OBJECTS)
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) $(LDFLAGS) $(OBJECTS) -o boombox $(EXTRA_TAGS)
 
 explosion_test: Explosion.o test_main.o Explosion_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) Explosion.o test_main.o Explosion_test.cc -o explosion_test
@@ -33,9 +31,9 @@ bomb_test: Bomb.o test_main.o Bomb_test.cc
 game_test: Game.o Matrix_Map.o Item.o test_main.o Game_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Game.o matrix_map.o Item.o Game_test.cc -o game_test
 	
-character_test: Character.cc Game.o Matrix_Map.o Bomb.o Item.o Explosion.o test_main.o  Character_test.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) Character.cc Game.o Matrix_Map.o Bomb.o Item.o Explosion.o test_main.o  Character_test.cc -o character_test -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
-
+character_test: Character.o Game.o Matrix_Map.o Bomb.o Item.o Explosion.o test_main.o  Character_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) Game.o Character.o Matrix_Map.o Bomb.o Item.o Explosion.o test_main.o Character_test.cc -o character_test $(EXTRA_TAGS)
+	
 item_test: Item.o test_main.o Item_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Item.o Item_test.cc -o item_test
 	
@@ -51,22 +49,22 @@ all_test: Bomb.o Explosion.o Item.o Game.o Character.o Matrix_Map.o test_main.o 
 # Delmål (flaggan -c avbryter innan länkning, objektkodsfil erhålls)
 
 Bomb.o: Bomb.h Bomb.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Bomb.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Bomb.cc $(EXTRA_TAGS)
 	
 Explosion.o: Explosion.h Explosion.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Explosion.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Explosion.cc $(EXTRA_TAGS)
 
 Game.o: Game.h Game.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Game.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Game.cc $(EXTRA_TAGS)
 	
 Main_game.o: Main_game.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Main_game.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Main_game.cc $(EXTRA_TAGS)
 	
 Character.o: Character.h Character.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Character.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Character.cc $(EXTRA_TAGS)
 	
 Item.o: Item.h Item.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Item.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Item.cc $(EXTRA_TAGS)
 	
 Matrix_Map.o: Matrix_Map.h Matrix_Map.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Matrix_Map.cc

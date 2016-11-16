@@ -79,6 +79,10 @@ void Matrix_Map::draw_graphics() const noexcept
                 case 5:
                     color_number = 13;
                     break;
+                    // FÖR ATT TESTA
+                case 6:
+                    color_number = 7;
+                    break;
             }
             SetConsoleTextAttribute(hConsole, color_number);
             std::cout << element << " ";
