@@ -9,7 +9,7 @@ CCFLAGS += -std=c++14 -Wpedantic -Wall
 #-Weffc++ -Werror -Wextra 
 
 # Preprocessorflaggor, -I lägger till en filkatalog i inkluderingssökvägen.
-EXTRA_TAGS += -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
+EXTRA_TAGS += -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
 
 # Objektkodsmoduler som ingår i den kompletta boombox.
 
@@ -41,7 +41,7 @@ matrix_test: Matrix_Map.o test_main.o Matrix_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Matrix_Map.o Matrix_test.cc -o matrix_test
 	
 tbtest:
-	$(CCC) $(CCFLAGS) tangenttest.cpp -o tbtest.exe -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -ljpeg
+	$(CCC) $(CCFLAGS) tangenttest.cpp -o tbtest.exe $(EXTRA_TAGS)
 	
 all_test: Bomb.o Explosion.o Item.o Game.o Character.o Matrix_Map.o test_main.o Bomb_test.cc Explosion_test.cc Game_test.cc Item_test.cc Character_test.cc Matrix_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Bomb.o Explosion.o Game.o Character.o Item.o Matrix_Map.o Bomb_test.cc Explosion_test.cc Game_test.cc Item_test.cc Character_test.cc Matrix_test.cc -o all_test

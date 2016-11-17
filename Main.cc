@@ -14,6 +14,7 @@ Main::Main()
 {
     our_game = std::make_unique<Game>();
     our_game->add_characters(3, our_game);
+    our_window.create(sf::VideoMode{800, 600}, "Boombox");
 }
 
 void Main::start_non_graphic()
