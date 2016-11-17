@@ -60,7 +60,7 @@ Game.o: Game.h Game.cc
 Main_game.o: Main_game.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Main_game.cc $(EXTRA_TAGS)
 	
-Main.o: Main.h Main.cc
+Main.o: Main.hpp Main.cpp
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Main.cc $(EXTRA_TAGS)
 	
 Character.o: Character.h Character.cc
