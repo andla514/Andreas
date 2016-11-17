@@ -1,6 +1,6 @@
 //#include <stdio.h>
 #include <memory>
-#include "SFML/Graphics.hpp" //bör vara SFML/Window.hpp?
+#include "SFML/Graphics.hpp"
 #include "Game.h"
 #include "Character.h"
 #include "Bomb.h"
@@ -29,8 +29,8 @@ Character::Character(std::shared_ptr<Game> our_game, int player_number)
 	break;
 
     case 2:
-	col = our_game->get_columns() - 1;
-	row = our_game->get_rows() - 1;
+	col = our_game->get_columns() - 2;
+	row = our_game->get_rows() - 2;
 	up = sf::Keyboard::Up;
 	down = sf::Keyboard::Down;
 	left = sf::Keyboard::Left;
@@ -39,7 +39,7 @@ Character::Character(std::shared_ptr<Game> our_game, int player_number)
 	break;
 
     case 3:
-	col = our_game->get_columns() - 1;
+	col = our_game->get_columns() - 2;
 	row = 1;
 	up = sf::Keyboard::Numpad8;
 	down = sf::Keyboard::Numpad5;
@@ -50,7 +50,7 @@ Character::Character(std::shared_ptr<Game> our_game, int player_number)
 
     case 4:
 	col = 1;
-	row = our_game->get_rows() - 1;
+	row = our_game->get_rows() - 2;
 	up = sf::Keyboard::T;
 	down = sf::Keyboard::G;
 	left = sf::Keyboard::F;
@@ -141,32 +141,43 @@ void Character::hurt_player()
 
 void Character::move_player()
 {
-    int curr_col{col};
-    int curr_row{row};
+    int col_inc{0};
+	int row_inc{0};
 
-    if (sf::Keyboard::isKeyPressed(up) && game_ptr->can_move_to(col, row - 1))
+    if (sf::Keyboard::isKeyPressed(up))
     {
-		row = row - 1;
+		row_inc -= 1;
     }
-    if (sf::Keyboard::isKeyPressed(down) && game_ptr->can_move_to(col, row + 1))
+    if (sf::Keyboard::isKeyPressed(down))
     {
-		row = row + 1;
+		row_inc += 1;
     }
-    if (sf::Keyboard::isKeyPressed(left) && game_ptr->can_move_to(col - 1, row))
+    if (sf::Keyboard::isKeyPressed(left))
     {
-		col = col - 1;
+		col_inc -= 1;
     }
-    if (sf::Keyboard::isKeyPressed(right) && game_ptr->can_move_to(col + 1, row))
+    if (sf::Keyboard::isKeyPressed(right))
     {
-		col = col + 1;
+		col_inc += 1;
     }
 
-    if (curr_col == col && curr_row == row)
+    if (col_inc == 0 && row_inc == 0)
     {
 		is_moving = false;
     }
-    else
+    else if((col_inc == 0 || row_inc == 0) && game_ptr->can_move_to(row + row_inc, col + col_inc))
     {
+		row += row_inc;
+		col += col_inc;
 		is_moving = true;
-    }
+    } else if(game_ptr->can_move_to(row + row_inc, col))
+	{
+		row += row_inc;
+		is_moving = true;
+	} else if(game_ptr->can_move_to(row, col + col_inc))
+	{
+		col += col_inc;
+		is_moving = true;
+	}
+
 }

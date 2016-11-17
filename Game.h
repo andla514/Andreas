@@ -5,9 +5,11 @@ class Game;
 #include <map>
 #include "Bomb.h"
 #include "Item.h"
+#include "Character.h"
 #include <string>
 #include "Explosion.h"
 #include "Matrix_Map.h"
+#include <memory>
 /*
     0   :   Ground
     1   :   Box
@@ -42,6 +44,8 @@ class Game
     Item get_item_at(int row, int col);
     void remove_bomb(int row, int col) noexcept;
     void remove_explosion(int row, int col) noexcept;
+    void add_characters(int number_of_players, std::shared_ptr<Game> our_game);
+    Character & get_character_reference(int player_number);
 
     // Data
     private:
@@ -49,6 +53,7 @@ class Game
     std::map<std::string, Item> item_list{};
     std::map<std::string, Bomb> bomb_list{};
     std::map<std::string, Explosion> explosion_list{};
+    std::map<int, Character> character_list{};
 };
 
 #endif
