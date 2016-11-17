@@ -1,5 +1,6 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
+#include "SFML/Window.hpp"
 // shift + alt + f => auto indent
 int main()
 {
