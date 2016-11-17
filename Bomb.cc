@@ -62,6 +62,7 @@ void Bomb::spread_explosions (std::string direction, int distance)
 			distance --;
 			std::cout << "Explosion" << row << col;   // Felsök
 		}
+		//Lägg till fall då en explosion överlappar en annan.
 		else 
 		{
 			my_game->set_element(row, col, 4);
@@ -86,7 +87,7 @@ void Bomb::spread_explosions (std::string direction, int distance)
 
 
 /*
-* Character* get_creator()
+* Character& get_creator()
 * Fetches a pointer to the creator of this bomb.
 */
 Character& Bomb::get_creator()

@@ -12,11 +12,11 @@ TEST_CASE("Explosion test")
     
 	SECTION("Destructor and update()")
 	{
-	Explosion our_explosion(1, 1, 0, false, G);
-	G->add_explosion(1, 1, our_explosion);
+	
+	G->add_explosion(1, 1, Explosion (1, 1, 0, false, G));
 	G->set_element(1, 1, 4);
 	CHECK(G->get_element(1, 1) == 4);
-	our_explosion.update();
+	(G->get_explosion_reference(1, 1)).our_explosion.update();
 	}
 	
 	CHECK(G->get_element(1, 1) == 0);

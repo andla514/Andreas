@@ -12,7 +12,7 @@ class Explosion
 {
     public:
     Explosion(int row, int col, int explosion_delay, bool was_box, std::shared_ptr<Game> our_game);
-	~Explosion();
+	~Explosion() = default;
 	
 	void update();
 	

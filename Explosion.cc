@@ -6,25 +6,6 @@ Explosion::Explosion(int row, int col, int explosion_delay, bool was_box, std::s
 	: row{row}, col{col}, explosion_timer{Timer(explosion_delay)}, was_box{was_box}, my_game{our_game}
 {}
 
-//-----------------Destructor---------------
-
-/*
-* ~Explosion()
-*/
-Explosion::~Explosion()
-{
-	int random_value {rand() % 100};
-	
-	if (was_box && random_value <= 30)
-	{
-		my_game->set_element(row, col, 2);
-		make_item();
-	}
-	else
-	{
-		my_game->set_element(row, col, 0);
-	}
-}
 
 //-----------------Functions----------------
 
@@ -64,5 +45,19 @@ void Explosion::make_item()
 void Explosion::update()
 {
 	if (explosion_timer.is_done())
+	{
 		my_game->remove_explosion(row, col);
+		
+		int random_value {rand() % 100};
+	
+		if (was_box && random_value <= 30)
+		{
+			my_game->set_element(row, col, 2);
+			make_item();
+		}
+		else
+		{
+		my_game->set_element(row, col, 0);
+		}
+	}
 }
