@@ -22,7 +22,7 @@ void Bomb::detonate()
 	spread_explosions ("left", my_settings.radius);
 	spread_explosions ("up", my_settings.radius);
 	spread_explosions ("down", my_settings.radius);
-	get_creator()->add_bomb(1);
+	get_creator().add_bomb(1);
 }
 
 void Bomb::spread_explosions (std::string direction, int distance)
