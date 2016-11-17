@@ -112,7 +112,8 @@ void Character::update()
 
 		if (game_ptr->is_standing_on_item(row, col))
 		{
-	    	use_item(game_ptr->get_item_at(row, col));
+	    	use_item(game_ptr->get_item_reference(row, col));
+			game_ptr->remove_item(row, col);
 		}
     }
 }
