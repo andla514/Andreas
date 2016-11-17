@@ -65,6 +65,7 @@ void Game::add_bomb(int row, int col, Bomb && new_bomb) noexcept
 void Game::add_explosion(int row, int col, Explosion && new_explosion) noexcept
 {
     explosion_list.insert(std::pair<std::string, Explosion>(std::to_string(row) + "," + std::to_string(col), std::move(new_explosion)));
+    std::cout << "Lägger till bomb på position: (" << row << "," << col << ")" << std::endl;
 }
 void Game::remove_bomb(int row, int col) noexcept
 {

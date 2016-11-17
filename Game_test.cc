@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Bomb.h"
 #include "catch.hpp"
 #include <iostream>
 #include "Item.h"
@@ -13,7 +14,7 @@ TEST_CASE("Set and get (Game)")
     CHECK(our_game.get_rows() == 19);
     CHECK(our_game.get_columns() == 25);
     //our_game.draw_graphics();
-}
+}/*
 TEST_CASE("Add and remove item")
 {
     Game our_game;
@@ -22,22 +23,16 @@ TEST_CASE("Add and remove item")
     our_game.add_item(1, 2, first_item);
     our_game.get_item_at(1, 2);
     REQUIRE_THROWS(our_game.get_item_at(1, 2));
-}
+}*/
 TEST_CASE("Add and remove bomb")
 {
-    /*
     Game our_game;
-    Bomb our_bomb{1};
-    Bomb our_bomb2{2};
     our_game.update();
     our_game.remove_bomb(1, 1);
-    our_game.add_bomb(1, 1, our_bomb);
+    our_game.add_bomb(1, 1, Bomb{3});
     our_game.update();
-    our_game.add_bomb(2, 2, our_bomb2);
+    CHECK(our_game.get_bomb_reference(1,1).number == 3);
     our_game.update();
-    our_game.remove_bomb(1, 1);
-    our_game.update();
-    */
 }
 TEST_CASE("Bools (Game)")
 {
