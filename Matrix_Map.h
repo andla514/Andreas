@@ -1,6 +1,7 @@
 
 #ifndef MATRIX_MAP_H
 #define MATRIX_MAP_H
+#include "SFML/Graphics.hpp"
 /*
     0   :   Ground
     1   :   Box
@@ -14,7 +15,7 @@ class Matrix_Map
     public:
     Matrix_Map();
 
-    void draw_graphics() const noexcept;
+    void draw_graphics(sf::RenderWindow &) const noexcept;
 
     int get_element(int row, int col) const noexcept;
     void set_element(int row, int col, int new_value) noexcept;
