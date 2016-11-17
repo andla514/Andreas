@@ -53,6 +53,10 @@ bool Game::is_box(int row, int col) const noexcept
 {
     return get_element(row, col) == 1;
 }
+bool Game::is_bomb(int row, int col) const noexcept
+{
+    return get_element(row, col) == 3;
+}
 //-----------------REFERENCE_LISTS----------
 void Game::add_item(int row, int col, Item && new_item) noexcept
 {
@@ -65,6 +69,7 @@ void Game::add_bomb(int row, int col, Bomb && new_bomb) noexcept
 void Game::add_explosion(int row, int col, Explosion && new_explosion) noexcept
 {
     explosion_list.insert(std::pair<std::string, Explosion>(std::to_string(row) + "," + std::to_string(col), std::move(new_explosion)));
+    std::cout << "Lägger till bomb på position: (" << row << "," << col << ")" << std::endl;
 }
 void Game::remove_bomb(int row, int col) noexcept
 {
@@ -100,7 +105,10 @@ Bomb & Game::get_bomb_reference(int row, int col)
 {
     return bomb_list.at(std::to_string(row) + "," + std::to_string(col));
 }
-
+Explosion & Game::get_explosion_reference(int row, int col)
+{
+    return explosion_list.at(std::to_string(row) + "," + std::to_string(col));
+}
 //-----------------GET/SET------------------
 int Game::get_element(int row, int col)  const noexcept
 {
