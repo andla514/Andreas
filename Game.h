@@ -10,6 +10,7 @@ class Game;
 #include "Explosion.h"
 #include "Matrix_Map.h"
 #include <memory>
+#include "SFML/Graphics.hpp"
 /*
     0   :   Ground
     1   :   Box
@@ -24,7 +25,7 @@ class Game
     Game();
 
     void update() noexcept;
-    void draw_graphics() const noexcept;
+    void draw_graphics(sf::RenderWindow &);
 
     int get_element(int row, int col) const noexcept;
     void set_element(int row, int col, int new_value) noexcept;
@@ -37,23 +38,26 @@ class Game
     bool can_move_to(int row, int col) const noexcept;
     bool is_wall(int row, int col) const noexcept;
     bool is_box(int row, int col) const noexcept;
+    bool is_bomb(int row, int col) const noexcept;
     // Handle reference lists
-    void add_item(int row, int col, Item && new_item) noexcept;
-    void add_bomb(int row, int col, Bomb && new_bomb) noexcept;
-    void add_explosion(int row, int col, Explosion && new_explosion) noexcept;
-    Item get_item_at(int row, int col);
+    void add_item(int row, int col, std::unique_ptr<Item> && new_item);
+    void add_bomb(int row, int col, std::unique_ptr<Bomb> && new_bomb);
+    void add_explosion(int row, int col, std::unique_ptr<Explosion> && new_explosion);
+    void remove_item(int row, int col) noexcept;
     void remove_bomb(int row, int col) noexcept;
     void remove_explosion(int row, int col) noexcept;
     void add_characters(int number_of_players, std::shared_ptr<Game> our_game);
     Character & get_character_reference(int player_number);
     Bomb & get_bomb_reference(int row, int col);
+    Item & get_item_reference(int row, int col);
+    Explosion & get_explosion_reference(int row, int col);
 
     // Data
     private:
     Matrix_Map our_matrix{};
-    std::map<std::string, Item> item_list{};
-    std::map<std::string, Bomb> bomb_list{};
-    std::map<std::string, Explosion> explosion_list{};
+    std::map<std::string, std::unique_ptr<Item>> item_list{};
+    std::map<std::string, std::unique_ptr<Bomb>> bomb_list{};
+    std::map<std::string, std::unique_ptr<Explosion>> explosion_list{};
     std::map<int, Character> character_list{};
 };
 

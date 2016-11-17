@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Character.h"
 #include "Bomb.h"
+#include "Item.h"
 
 //#include <iostream> //Används ej?
 //#include <utility>  //bara för move i testkonstruktorn
@@ -111,9 +112,15 @@ void Character::update()
 
 		if (game_ptr->is_standing_on_item(row, col))
 		{
-	    	use_item(game_ptr->get_item_at(row, col));
+	    	use_item(game_ptr->get_item_reference(row, col));
+			game_ptr->remove_item(row, col);
 		}
     }
+}
+
+void Character::draw_graphics(sf::RenderWindow & our_window)
+{
+	// TODO
 }
 
 void Character::make_bomb()
@@ -124,7 +131,7 @@ void Character::make_bomb()
     }
 }
 
-void Character::use_item(Item pickup)
+void Character::use_item(Item & pickup)
 {
     //pickup.give_power_up(*this)
 }

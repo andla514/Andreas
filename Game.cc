@@ -5,6 +5,7 @@
 #include "Explosion.h"
 #include <iostream>
 #include <memory>
+#include "SFML/Graphics.hpp"
 
 //-----------------CONSTRUCTOR--------------
 Game::Game()
@@ -13,6 +14,10 @@ Game::Game()
 void Game::update() noexcept
 {
     for(auto it = bomb_list.begin(); it != bomb_list.end(); ++it)
+    {
+        //it->second.update();
+    }
+    for(auto it = item_list.begin(); it != item_list.end(); ++it)
     {
         //it->second.update();
     }
@@ -26,9 +31,17 @@ void Game::update() noexcept
     }
 }
 //-----------------Graphics-----------------
-void Game::draw_graphics() const noexcept
+void Game::draw_graphics(sf::RenderWindow & our_window)
 {
-    our_matrix.draw_graphics();
+    our_matrix.draw_graphics(our_window);
+    for(auto it = item_list.begin(); it != item_list.end(); ++it)
+    {
+        //it->draw_graphics(our_window)
+    }
+    for(auto it = character_list.begin(); it != character_list.end(); ++it)
+    {
+        it->second.draw_graphics(our_window);
+    }
     // TODO
 }
 //-----------------BOOLS--------------------
@@ -53,18 +66,22 @@ bool Game::is_box(int row, int col) const noexcept
 {
     return get_element(row, col) == 1;
 }
+bool Game::is_bomb(int row, int col) const noexcept
+{
+    return get_element(row, col) == 3;
+}
 //-----------------REFERENCE_LISTS----------
-void Game::add_item(int row, int col, Item && new_item) noexcept
+void Game::add_item(int row, int col, std::unique_ptr<Item> && new_item)
 {
-    item_list.insert(std::pair<std::string, Item>(std::to_string(row) + "," + std::to_string(col), std::move(new_item)));
+    item_list.insert(std::pair<std::string, std::unique_ptr<Item>>(std::to_string(row) + "," + std::to_string(col), std::move(new_item)));
 }
-void Game::add_bomb(int row, int col, Bomb && new_bomb) noexcept
+void Game::add_bomb(int row, int col, std::unique_ptr<Bomb> && new_bomb)
 {
-    bomb_list.insert(std::pair<std::string, Bomb>(std::to_string(row) + "," + std::to_string(col), std::move(new_bomb)));
+    bomb_list.insert(std::pair<std::string, std::unique_ptr<Bomb>>(std::to_string(row) + "," + std::to_string(col), std::move(new_bomb)));
 }
-void Game::add_explosion(int row, int col, Explosion && new_explosion) noexcept
+void Game::add_explosion(int row, int col, std::unique_ptr<Explosion> && new_explosion)
 {
-    explosion_list.insert(std::pair<std::string, Explosion>(std::to_string(row) + "," + std::to_string(col), std::move(new_explosion)));
+    explosion_list.insert(std::pair<std::string, std::unique_ptr<Explosion>>(std::to_string(row) + "," + std::to_string(col), std::move(new_explosion)));
 }
 void Game::remove_bomb(int row, int col) noexcept
 {
@@ -74,16 +91,9 @@ void Game::remove_explosion(int row, int col) noexcept
 {
     explosion_list.erase(std::to_string(row) + "," + std::to_string(col));
 }
-Item Game::get_item_at(int row, int col)
+void Game::remove_item(int row, int col) noexcept
 {
-    std::string our_key{std::to_string(row) + "," + std::to_string(col)};
-    if(item_list.find(our_key) == item_list.end())
-    {
-        throw std::out_of_range("Item doesn't exist!");
-    }
-    Item our_item {item_list.at(our_key)};
-    item_list.erase(our_key);
-    return our_item;
+    item_list.erase(std::to_string(row) + "," + std::to_string(col));
 }
 void Game::add_characters(int number_of_players, std::shared_ptr<Game> our_game)
 {
@@ -96,7 +106,18 @@ Character & Game::get_character_reference(int player_number)
 {
     return character_list.at(player_number);
 }
-
+Bomb & Game::get_bomb_reference(int row, int col)
+{
+    return *bomb_list.at(std::to_string(row) + "," + std::to_string(col));
+}
+Item & Game::get_item_reference(int row, int col)
+{
+    return *item_list.at(std::to_string(row) + "," + std::to_string(col));
+}
+Explosion & Game::get_explosion_reference(int row, int col)
+{
+    return *explosion_list.at(std::to_string(row) + "," + std::to_string(col));
+}
 //-----------------GET/SET------------------
 int Game::get_element(int row, int col)  const noexcept
 {
