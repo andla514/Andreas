@@ -96,6 +96,10 @@ Character & Game::get_character_reference(int player_number)
 {
     return character_list.at(player_number);
 }
+Bomb & Game::get_bomb_reference(int row, int col)
+{
+    return bomb_list.at(row + "," + col);
+}
 
 //-----------------GET/SET------------------
 int Game::get_element(int row, int col)  const noexcept
