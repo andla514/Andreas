@@ -99,7 +99,8 @@ void Character::update()
 		make_bomb();
 		if (game_ptr->is_standing_on_item(row, col))
 		{
-	    	use_item(game_ptr->get_item_at(row, col));
+	    	use_item(game_ptr->get_item_reference(row, col));
+			game_ptr->remove_item(row, col);
 		}
     }
 }
@@ -110,9 +111,9 @@ void Character::make_bomb()
 	//anropa bomb-construktor
     }
 }
-void Character::use_item(Item pickup)
+void Character::use_item(Item& pickup)
 {
-    //pickup.give_power_up(*this)
+    //pickup.give_power_up(*this);
 }
 void Character::smooth_move()
 {
