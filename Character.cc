@@ -115,6 +115,7 @@ void Character::update()
 	    	use_item(game_ptr->get_item_at(row, col));
 		}
     }
+    
 }
 
 void Character::make_bomb()

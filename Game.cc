@@ -75,7 +75,7 @@ void Game::remove_explosion(int row, int col) noexcept
 {
     explosion_list.erase(std::to_string(row) + "," + std::to_string(col));
 }
-Item Game::get_item_at(int row, int col)
+Item & Game::get_item_at(int row, int col)
 {
     std::string our_key{std::to_string(row) + "," + std::to_string(col)};
     if(item_list.find(our_key) == item_list.end())

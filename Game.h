@@ -41,7 +41,7 @@ class Game
     void add_item(int row, int col, Item && new_item) noexcept;
     void add_bomb(int row, int col, Bomb && new_bomb) noexcept;
     void add_explosion(int row, int col, Explosion && new_explosion) noexcept;
-    Item get_item_at(int row, int col);
+    Item & get_item_at(int row, int col);
     void remove_bomb(int row, int col) noexcept;
     void remove_explosion(int row, int col) noexcept;
     void add_characters(int number_of_players, std::shared_ptr<Game> our_game);

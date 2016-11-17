@@ -35,8 +35,7 @@ character_test: Character.o Game.o Matrix_Map.o Bomb.o Item.o Explosion.o test_m
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) Game.o Character.o Matrix_Map.o Bomb.o Item.o Explosion.o test_main.o Character_test.cc -o character_test $(EXTRA_TAGS)
 	
 item_test: Item.o test_main.o Item_test.cc Character.o
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Character.o Item.o Item_test.cc -o item_test
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Character.o Item.o Item_test.cc -o item_test
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Character.o Item.o Item_test.cc -o item_test $(EXTRA_TAGS)
 	
 matrix_test: Matrix_Map.o test_main.o Matrix_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Matrix_Map.o Matrix_test.cc -o matrix_test
