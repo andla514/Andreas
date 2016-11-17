@@ -24,7 +24,7 @@ class Character
 	void update();
 	void hurt_player();
 	void smooth_move();
-	void use_item(Item pickup);
+	void use_item(Item & pickup);
 	void make_bomb();
 	void move_player();
 	

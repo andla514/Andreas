@@ -126,7 +126,7 @@ void Character::make_bomb()
     }
 }
 
-void Character::use_item(Item pickup)
+void Character::use_item(Item & pickup)
 {
     //pickup.give_power_up(*this)
 }

@@ -58,9 +58,9 @@ bool Game::is_bomb(int row, int col) const noexcept
     return get_element(row, col) == 3;
 }
 //-----------------REFERENCE_LISTS----------
-void Game::add_item(int row, int col, Item && new_item) noexcept
+void Game::add_item(int row, int col, std::unique_ptr<Item> && new_item) noexcept
 {
-    item_list.insert(std::pair<std::string, Item*>(std::to_string(row) + "," + std::to_string(col), new Item(std::move(new_item))));
+    item_list.insert(std::pair<std::string, std::unique_ptr<Item>>(std::to_string(row) + "," + std::to_string(col), std::move(new_item)));
 }
 void Game::add_bomb(int row, int col, Bomb && new_bomb) noexcept
 {
