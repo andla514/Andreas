@@ -53,10 +53,14 @@ bool Game::is_box(int row, int col) const noexcept
 {
     return get_element(row, col) == 1;
 }
+bool Game::is_bomb(int row, int col) const noexcept
+{
+    return get_element(row, col) == 3;
+}
 //-----------------REFERENCE_LISTS----------
 void Game::add_item(int row, int col, Item && new_item) noexcept
 {
-    item_list.insert(std::pair<std::string, Item>(std::to_string(row) + "," + std::to_string(col), std::move(new_item)));
+    item_list.insert(std::pair<std::string, Item*>(std::to_string(row) + "," + std::to_string(col), new Item(std::move(new_item))));
 }
 void Game::add_bomb(int row, int col, Bomb && new_bomb) noexcept
 {
@@ -65,6 +69,7 @@ void Game::add_bomb(int row, int col, Bomb && new_bomb) noexcept
 void Game::add_explosion(int row, int col, Explosion && new_explosion) noexcept
 {
     explosion_list.insert(std::pair<std::string, Explosion>(std::to_string(row) + "," + std::to_string(col), std::move(new_explosion)));
+    std::cout << "Lägger till bomb på position: (" << row << "," << col << ")" << std::endl;
 }
 void Game::remove_bomb(int row, int col) noexcept
 {
@@ -74,16 +79,9 @@ void Game::remove_explosion(int row, int col) noexcept
 {
     explosion_list.erase(std::to_string(row) + "," + std::to_string(col));
 }
-Item Game::get_item_at(int row, int col)
+void Game::remove_item(int row, int col) noexcept
 {
-    std::string our_key{std::to_string(row) + "," + std::to_string(col)};
-    if(item_list.find(our_key) == item_list.end())
-    {
-        throw std::out_of_range("Item doesn't exist!");
-    }
-    Item our_item {item_list.at(our_key)};
-    item_list.erase(our_key);
-    return our_item;
+    item_list.erase(std::to_string(row) + "," + std::to_string(col));
 }
 void Game::add_characters(int number_of_players, std::shared_ptr<Game> our_game)
 {
@@ -100,7 +98,14 @@ Bomb & Game::get_bomb_reference(int row, int col)
 {
     return bomb_list.at(std::to_string(row) + "," + std::to_string(col));
 }
-
+Item & Game::get_item_reference(int row, int col)
+{
+    return *item_list.at(std::to_string(row) + "," + std::to_string(col));
+}
+Explosion & Game::get_explosion_reference(int row, int col)
+{
+    return explosion_list.at(std::to_string(row) + "," + std::to_string(col));
+}
 //-----------------GET/SET------------------
 int Game::get_element(int row, int col)  const noexcept
 {
