@@ -54,17 +54,17 @@ bool Game::is_box(int row, int col) const noexcept
     return get_element(row, col) == 1;
 }
 //-----------------REFERENCE_LISTS----------
-void Game::add_item(int row, int col, Item new_item) noexcept
+void Game::add_item(int row, int col, Item && new_item) noexcept
 {
-    item_list.insert(std::pair<std::string, Item>(std::to_string(row) + "," + std::to_string(col), new_item));
+    item_list.insert(std::pair<std::string, Item>(std::to_string(row) + "," + std::to_string(col), std::move(new_item)));
 }
-void Game::add_bomb(int row, int col, Bomb new_bomb) noexcept
+void Game::add_bomb(int row, int col, Bomb && new_bomb) noexcept
 {
-    bomb_list.insert(std::pair<std::string, Bomb>(std::to_string(row) + "," + std::to_string(col), new_bomb));
+    bomb_list.insert(std::pair<std::string, Bomb>(std::to_string(row) + "," + std::to_string(col), std::move(new_bomb)));
 }
-void Game::add_explosion(int row, int col, Explosion new_explosion) noexcept
+void Game::add_explosion(int row, int col, Explosion && new_explosion) noexcept
 {
-    explosion_list.insert(std::pair<std::string, Explosion>(std::to_string(row) + "," + std::to_string(col), new_explosion));
+    explosion_list.insert(std::pair<std::string, Explosion>(std::to_string(row) + "," + std::to_string(col), std::move(new_explosion)));
 }
 void Game::remove_bomb(int row, int col) noexcept
 {
@@ -96,6 +96,11 @@ Character & Game::get_character_reference(int player_number)
 {
     return character_list.at(player_number);
 }
+Bomb & Game::get_bomb_reference(int row, int col)
+{
+    return bomb_list.at(std::to_string(row) + "," + std::to_string(col));
+}
+
 //-----------------GET/SET------------------
 int Game::get_element(int row, int col)  const noexcept
 {
