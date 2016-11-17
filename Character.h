@@ -22,9 +22,10 @@ class Character
 	void increase_exp_rad(int number);
 	void increase_exp_time(int number);
 	void update();
+	void draw_graphics(sf::RenderWindow &);
 	void hurt_player();
 	void smooth_move();
-	void use_item(Item pickup);
+	void use_item(Item & pickup);
 	void make_bomb();
 	void move_player();
 	

@@ -28,14 +28,14 @@ explosion_test: Explosion.o test_main.o Game.o Item.o Bomb.o Character.o Matrix_
 bomb_test: Bomb.o test_main.o Game.o Item.o Explosion.o Character.o Matrix_Map.o Timer.o Bomb_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Bomb.o Game.o Item.o Explosion.o Character.o Matrix_Map.o Timer.o Bomb_test.cc -o bomb_test $(EXTRA_TAGS)
 
-game_test: test_main.o Game.o matrix_map.o Character.o Bomb.o Explosion.o Item.o Game_test.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Game.o matrix_map.o Character.o Bomb.o Explosion.o Item.o Game_test.cc -o game_test $(EXTRA_TAGS)
+game_test: test_main.o Bomb.o Matrix_Map.o Character.o Game.o Explosion.o Timer.o Item.o Game_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Bomb.o Matrix_Map.o Character.o Game.o Explosion.o Timer.o Item.o Game_test.cc -o game_test $(EXTRA_TAGS)z
 	
 character_test: Character.o Game.o Matrix_Map.o Bomb.o Item.o Explosion.o test_main.o  Character_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) Game.o Character.o Matrix_Map.o Bomb.o Item.o Explosion.o test_main.o Character_test.cc -o character_test $(EXTRA_TAGS)
 	
-item_test: Item.o test_main.o Item_test.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Item.o Item_test.cc -o item_test
+item_test: test_main.o Bomb.o Matrix_Map.o Character.o Game.o Explosion.o Timer.o Item.o Item_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Bomb.o Matrix_Map.o Character.o Game.o Explosion.o Timer.o Item.o Item_test.cc -o item_test $(EXTRA_TAGS)
 	
 matrix_test: Matrix_Map.o test_main.o Matrix_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Matrix_Map.o Matrix_test.cc -o matrix_test
@@ -70,7 +70,7 @@ Item.o: Item.h Item.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Item.cc $(EXTRA_TAGS)
 	
 Matrix_Map.o: Matrix_Map.h Matrix_Map.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Matrix_Map.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Matrix_Map.cc $(EXTRA_TAGS)
 	
 test_main.o: test_main.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c test_main.cc	

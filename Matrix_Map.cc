@@ -1,6 +1,7 @@
 #include "Matrix_Map.h"
 #include <iostream>
 #include <windows.h>
+#include "SFML/Graphics.hpp"
 
 //-----------------CONSTRUCTOR--------------
 Matrix_Map::Matrix_Map()
@@ -50,7 +51,7 @@ void Matrix_Map::initialize_map() noexcept
     set_element(max_rows - 3, 1, 0);
 }
 //-----------------Graphics-----------------
-void Matrix_Map::draw_graphics() const noexcept
+void Matrix_Map::draw_graphics(sf::RenderWindow & our_window) const noexcept
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     for(int r = 0; r < max_rows; r++)

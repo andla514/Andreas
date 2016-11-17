@@ -41,14 +41,18 @@ void Main::start_non_graphic()
                 old_value[i] = our_game->get_element(our_character.get_row(), our_character.get_col());
                 our_game->set_element(our_character.get_row(), our_character.get_col(), 6);
             }
-
-            our_game->draw_graphics();
+            // Draws all graphics
+            our_window.clear();
+            our_game->draw_graphics(our_window);
+            our_window.display();
+            //our_game->draw_graphics();
 
             for(int i = 0; i < 3; i++)
             {
                 Character our_character = our_game->get_character_reference(i + 1);
                 our_game->set_element(our_character.get_row(), our_character.get_col(), old_value[i]);
             }
+
             game_timer.restart();
         }
         sf::sleep(sf::milliseconds(2));
