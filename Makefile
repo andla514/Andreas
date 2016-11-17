@@ -13,7 +13,7 @@ EXTRA_TAGS += -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-window-s -lsfml-s
 
 # Objektkodsmoduler som ingår i den kompletta boombox.
 
-OBJECTS = Main.o Bomb.o Matrix_Map.o Character.o Game.o Main_game.cc Explosion.o Timer.o Item.o
+OBJECTS = Bomb.o Matrix_Map.o Character.o Game.o Main.o Main_game.cc Explosion.o Timer.o Item.o
 
 #OBJECTS = Character.o Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o Timer.o
 
@@ -28,14 +28,15 @@ explosion_test: Explosion.o test_main.o Game.o Item.o Bomb.o Character.o Matrix_
 bomb_test: Bomb.o test_main.o Game.o Item.o Explosion.o Character.o Matrix_Map.o Timer.o Bomb_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Bomb.o Game.o Item.o Explosion.o Character.o Matrix_Map.o Timer.o Bomb_test.cc -o bomb_test $(EXTRA_TAGS)
 
-game_test: test_main.o Game.o matrix_map.o Character.o Bomb.o Explosion.o Item.o Game_test.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Game.o matrix_map.o Character.o Bomb.o Explosion.o Item.o Game_test.cc -o game_test $(EXTRA_TAGS)
+game_test: Game.o Matrix_Map.o Item.o test_main.o Game_test.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Game.o matrix_map.o Item.o Game_test.cc -o game_test
 	
 character_test: Character.o Game.o Matrix_Map.o Bomb.o Item.o Explosion.o test_main.o  Character_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) Game.o Character.o Matrix_Map.o Bomb.o Item.o Explosion.o test_main.o Character_test.cc -o character_test $(EXTRA_TAGS)
 	
-item_test: Item.o test_main.o Item_test.cc
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Item.o Item_test.cc -o item_test
+item_test: Item.o test_main.o Item_test.cc Character.o
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Character.o Item.o Item_test.cc -o item_test
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Character.o Item.o Item_test.cc -o item_test
 	
 matrix_test: Matrix_Map.o test_main.o Matrix_test.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) test_main.o Matrix_Map.o Matrix_test.cc -o matrix_test
