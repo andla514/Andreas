@@ -13,7 +13,7 @@ EXTRA_TAGS += -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-window-s -lsfml-s
 
 # Objektkodsmoduler som ingår i den kompletta boombox.
 
-OBJECTS = Bomb.o Matrix_Map.o Character.o Game.o Main.o Main_game.cc Explosion.o Timer.o Item.o
+OBJECTS = Main.o Bomb.o Matrix_Map.o Character.o Game.o Main_game.cc Explosion.o Timer.o Item.o
 
 #OBJECTS = Character.o Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o Timer.o
 

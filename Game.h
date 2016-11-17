@@ -38,14 +38,15 @@ class Game
     bool is_wall(int row, int col) const noexcept;
     bool is_box(int row, int col) const noexcept;
     // Handle reference lists
-    void add_item(int row, int col, Item new_item) noexcept;
-    void add_bomb(int row, int col, Bomb new_bomb) noexcept;
-    void add_explosion(int row, int col, Explosion new_explosion) noexcept;
+    void add_item(int row, int col, Item && new_item) noexcept;
+    void add_bomb(int row, int col, Bomb && new_bomb) noexcept;
+    void add_explosion(int row, int col, Explosion && new_explosion) noexcept;
     Item get_item_at(int row, int col);
     void remove_bomb(int row, int col) noexcept;
     void remove_explosion(int row, int col) noexcept;
     void add_characters(int number_of_players, std::shared_ptr<Game> our_game);
     Character & get_character_reference(int player_number);
+    Bomb & get_bomb_reference(int row, int col);
 
     // Data
     private:
