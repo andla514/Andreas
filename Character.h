@@ -4,6 +4,7 @@
 class Character;
 #include "Bomb.h"
 #include "Game.h"
+#include "Item.h"
 #include <string>
 #include <memory>
 #include "SFML/Graphics.hpp"

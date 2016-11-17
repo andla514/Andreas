@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Character.h"
 #include "Bomb.h"
+#include "Item.h"
 
 //#include <iostream> //Används ej?
 //#include <utility>  //bara för move i testkonstruktorn
