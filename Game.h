@@ -37,6 +37,7 @@ class Game
     bool can_move_to(int row, int col) const noexcept;
     bool is_wall(int row, int col) const noexcept;
     bool is_box(int row, int col) const noexcept;
+    bool is_bomb(int row, int col) const noexcept;
     // Handle reference lists
     void add_item(int row, int col, Item && new_item) noexcept;
     void add_bomb(int row, int col, Bomb && new_bomb) noexcept;
@@ -47,6 +48,7 @@ class Game
     void add_characters(int number_of_players, std::shared_ptr<Game> our_game);
     Character & get_character_reference(int player_number);
     Bomb & get_bomb_reference(int row, int col);
+    Explosion & get_explosion_reference(int row, int col);
 
     // Data
     private:
