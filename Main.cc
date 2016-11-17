@@ -7,6 +7,7 @@
 #include <thread>
 #include <chrono>
 #include <memory>
+#include "SFML/Graphics.hpp"
 
 //-----------------CONSTRUCTOR--------------
 Main::Main()

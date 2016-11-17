@@ -9,6 +9,7 @@
 #include <thread>
 #include <chrono>
 #include <memory>
+#include "SFML/Graphics.hpp"
 
 class Main
 {
