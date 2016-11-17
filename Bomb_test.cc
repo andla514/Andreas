@@ -29,6 +29,7 @@ TEST_CASE("Bomb test")
 		G->add_bomb(1, 2, Bomb (1, 2, s2, G, 2));
 		G->set_element(1, 2, 3);
 		G->get_bomb_reference(1, 2).update();
+		G->get_bomb_reference(1, 2).update();
 		CHECK(G->get_element(1, 2) == 4);
 	}
 }

@@ -23,7 +23,6 @@ Explosion::~Explosion()
 	else
 	{
 		my_game->set_element(row, col, 0);
-		std::cout << "ändrade element till 0";
 	}
 }
 
