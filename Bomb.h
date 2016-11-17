@@ -37,7 +37,7 @@ class Bomb
 	
 	// Private functions
 	void spread_explosions(std::string direction, int distance);
-	//Character& get_creator();	
+	Character& get_creator();	
 };
 
 

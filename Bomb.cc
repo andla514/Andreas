@@ -22,7 +22,7 @@ void Bomb::detonate()
 	spread_explosions ("left", my_settings.radius);
 	spread_explosions ("up", my_settings.radius);
 	spread_explosions ("down", my_settings.radius);
-	//my_creator->add_bomb(1);
+	get_creator()->add_bomb(1);
 }
 
 void Bomb::spread_explosions (std::string direction, int distance)
@@ -44,7 +44,15 @@ void Bomb::spread_explosions (std::string direction, int distance)
 			distance = 0;
 			std::cout << "Explosion" << row << col;   // Felsök
 		}
-		// Lägg till fall då den spränger en annan bomb
+/*		else if (my_game->is_bomb(row,col))
+		{
+			my_game->get_bomb_reference->detonate();
+			my_game->remove_bomb(row, col);
+			my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
+									false, my_game));
+			distance --;
+		}
+		*/
 		else if (my_game->is_standing_on_item(row, col))
 		{
 			my_game->set_element(row, col, 4);
@@ -76,27 +84,12 @@ void Bomb::spread_explosions (std::string direction, int distance)
 	}
 }
 
-/*
-* void box_spawn(int row, int col)
-* Randomly selects if the destroyed box contained an item or not
-*/
-/*void Bomb::box_spawn(int row, int col)
-{
-	int random_value {rand() % 100};
-	if (random_value < 30)
-	{
-	}
-	else
-	{
-		my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay, false, my_game));
-	}
-}
-*/
+
 /*
 * Character* get_creator()
 * Fetches a pointer to the creator of this bomb.
 */
-/*Character& Bomb::get_creator()
+Character& Bomb::get_creator()
 {
-	my_game->get_Character(my_creator);
-}*/
+	return my_game->get_character_reference(my_creator);
+}
