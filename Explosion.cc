@@ -47,7 +47,7 @@ void Explosion::update()
 	if (explosion_timer.is_done())
 	{
 		my_game->remove_explosion(row, col);
-		
+	
 		int random_value {rand() % 100};
 	
 		if (was_box && random_value <= 30)
@@ -57,7 +57,16 @@ void Explosion::update()
 		}
 		else
 		{
-		my_game->set_element(row, col, 0);
+			my_game->set_element(row, col, 0);
 		}
 	}
+}
+
+/*
+* int time_left()
+* Returns the time left on explosion_timer
+*/
+int Explosion::time_left()
+{
+	return explosion_timer.time_left();
 }

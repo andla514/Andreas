@@ -13,11 +13,18 @@ TEST_CASE("Explosion test")
 	SECTION("Destructor and update()")
 	{
 	
-	G->add_explosion(1, 1, Explosion (1, 1, 0, false, G));
+	G->add_explosion(1, 1, Explosion (1, 1, -1, false, G));
 	G->set_element(1, 1, 4);
 	CHECK(G->get_element(1, 1) == 4);
-	(G->get_explosion_reference(1, 1)).our_explosion.update();
+	(G->get_explosion_reference(1, 1)).update();
 	}
 	
 	CHECK(G->get_element(1, 1) == 0);
+	
+	SECTION("Time_left")
+	{
+		G->add_explosion(1, 2, Explosion (1, 2, 1, false, G));
+		CHECK(round((G->get_explosion_reference(1, 2)).time_left()) <=1000);
+		CHECK(round((G->get_explosion_reference(1, 2)).time_left()) >=950);
+	}
 }
