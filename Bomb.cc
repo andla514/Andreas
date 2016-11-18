@@ -1,5 +1,6 @@
 #include "Bomb.h"
 #include <iostream>
+#include <memory>
 
 //-----------------CONSTRUCTOR--------------
 Bomb::Bomb(int row, int col, Bomb_settings our_settings, std::shared_ptr<Game> our_game,
@@ -8,23 +9,45 @@ Bomb::Bomb(int row, int col, Bomb_settings our_settings, std::shared_ptr<Game> o
 		detonation_timer{Timer(our_settings.detonation_delay)}, my_game{our_game}, my_creator{my_creator}
 {}
 
-
+/*
+* void update()
+* Checks if it's time to detonate
+*/
 void Bomb::update()
 {
 	if (detonation_timer.is_done())
 		detonate();
 }
 
-// Calculate and creates explosions in the correct places
+/*
+* void detonate()
+* Calculate and creates explosions in the correct places
+*/
 void Bomb::detonate()
 {
 	spread_explosions ("right", my_settings.radius);
 	spread_explosions ("left", my_settings.radius);
 	spread_explosions ("up", my_settings.radius);
 	spread_explosions ("down", my_settings.radius);
-	//my_creator->add_bomb(1);
+	get_creator().add_bomb(1);
 }
 
+/*
+* void explode (int row, int col, bool item_bool)
+* Creates a Explosion object
+*/
+void Bomb::explode(int row, int col, bool item_bool)
+{
+	my_game->set_element(row, col, 4);
+	my_game->add_explosion(row, col, (std::make_unique<Explosion>(row, col, my_settings.explosion_delay,
+										item_bool, my_game)));
+}
+
+/*
+* void spread_explosions(string direction, int distance)
+* Creates explosions in a given direction for a given distance.
+* The function handles several exceptions that requires different solutions
+*/
 void Bomb::spread_explosions (std::string direction, int distance)
 {
 	int row{row_pos};
@@ -32,35 +55,50 @@ void Bomb::spread_explosions (std::string direction, int distance)
 	
 	while (distance > 0)
 	{
+		// Current place is a wall
 		if (my_game->is_wall(row, col))
 		{
 			distance = 0;
 		}
+		// Current place is a box
 		else if (my_game->is_box(row, col))
 		{
-			my_game->set_element(row, col, 4);
-			//my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
-			//						true, my_game));
+			explode(row, col, true);
 			distance = 0;
-			std::cout << "Explosion" << row << col;   // Felsök
 		}
-		// Lägg till fall då den spränger en annan bomb
+		// Current place is a bomb
+		else if (my_game->is_bomb(row, col) && distance != my_settings.radius)
+		{
+			(my_game->get_bomb_reference(row, col)).detonate();
+			my_game->remove_bomb(row, col);
+			explode(row, col, false);
+			distance --;
+		}
+		// Current place is an item
 		else if (my_game->is_standing_on_item(row, col))
 		{
-			my_game->set_element(row, col, 4);
+			explode(row, col, false);
 			my_game->remove_item(row, col);
-			//my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
-			//						false, my_game));
 			distance --;
-			std::cout << "Explosion" << row << col;   // Felsök
 		}
+		// Current place is an explosion
+		else if (my_game->is_standing_in_fire(row, col))
+		{
+			if ((my_game->get_explosion_reference(row, col)).time_left() <= 1000 * my_settings.explosion_delay)
+			{
+				bool temp = (my_game->get_explosion_reference(row, col)).get_was_box();
+				my_game->remove_explosion(row, col);
+				my_game->add_explosion(row, col, std::make_unique<Explosion>(Explosion(row, col, my_settings.explosion_delay,
+									temp, my_game)));
+				distance --;
+			}
+			else
+				distance --;
+		}	
 		else 
 		{
-			my_game->set_element(row, col, 4);
-			//my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
-			//						false, my_game));
+			explode(row, col, false);
 			distance --;
-			std::cout << "Explosion" << row << col;   // Felsök
 		}
 		
 		if (direction == "right")
@@ -76,27 +114,12 @@ void Bomb::spread_explosions (std::string direction, int distance)
 	}
 }
 
+
 /*
-* void box_spawn(int row, int col)
-* Randomly selects if the destroyed box contained an item or not
-*/
-/*void Bomb::box_spawn(int row, int col)
-{
-	int random_value {rand() % 100};
-	if (random_value < 30)
-	{
-	}
-	else
-	{
-		my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay, false, my_game));
-	}
-}
-*/
-/*
-* Character* get_creator()
+* Character& get_creator()
 * Fetches a pointer to the creator of this bomb.
 */
-/*Character& Bomb::get_creator()
+Character& Bomb::get_creator()
 {
-	my_game->get_Character(my_creator);
-}*/
+	return my_game->get_character_reference(my_creator);
+}

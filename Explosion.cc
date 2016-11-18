@@ -1,31 +1,12 @@
 #include "Explosion.h"
 #include <iostream>
+#include <memory>
 
 //-----------------CONSTRUCTOR--------------
-Explosion::Explosion(int row, int col, int explosion_delay, bool was_box, std::shared_ptr<Game> our_game)
-	: row{row}, col{col}, explosion_timer{Timer(explosion_delay)}, was_box{was_box}, my_game{our_game}
+Explosion::Explosion(int row_pos, int col_pos, int explosion_delay, bool was_box, std::shared_ptr<Game> our_game)
+	: row{row_pos}, col{col_pos}, explosion_timer{Timer(explosion_delay)}, was_box{was_box}, my_game{our_game}
 {}
 
-//-----------------Destructor---------------
-
-/*
-* ~Explosion()
-*/
-Explosion::~Explosion()
-{
-	int random_value {rand() % 100};
-	
-	if (was_box && random_value <= 30)
-	{
-		my_game->set_element(row, col, 2);
-		make_item();
-	}
-	else
-	{
-		my_game->set_element(row, col, 0);
-		std::cout << "ändrade element till 0";
-	}
-}
 
 //-----------------Functions----------------
 
@@ -39,21 +20,21 @@ void Explosion::make_item()
 	
 	if (random_value >= 0 && random_value < 30)
 	{
-		//Item temp_item = Item_Inc_Bomb(row, col);
+		my_game->add_item(row, col, std::make_unique<Item_Inc_Bombs>(row, col));
 	}
 	else if (random_value >= 30 && random_value < 70)
 	{
-		//Item temp_item = Item_Inc_Rad(row, col);
+		my_game->add_item(row, col, std::make_unique<Item_Inc_Exp_Rad>(row, col));
 	}
 	else if (random_value >= 70 && random_value < 80)
 	{
-		//Item temp_item = Item_Inc_Life(row, col);
+		my_game->add_item(row, col, std::make_unique<Item_Inc_Life>(row, col));
 	}
 	else if (random_value >= 80 && random_value < 100)
 	{
-		//Item temp_item = Item_Inc_Exp_Timer(row, col);
+		my_game->add_item(row, col, std::make_unique<Item_Inc_Exp_Time>(row, col));
 	}
-	//my_game->add_item(temp_item);
+	
 	my_game->set_element(row, col, 2);
 	std::cout << "Lägger ett item";
 }
@@ -65,5 +46,36 @@ void Explosion::make_item()
 void Explosion::update()
 {
 	if (explosion_timer.is_done())
+	{
+	
+		int random_value {rand() % 100};
+		if (was_box && random_value <= 30)
+		{
+			my_game->set_element(row, col, 2);
+			make_item();
+		}
+		else
+		{
+			my_game->set_element(row, col, 0);
+		}
 		my_game->remove_explosion(row, col);
+	}
+}
+
+/*
+* int time_left()
+* Returns the time left on explosion_timer
+*/
+int Explosion::time_left()
+{
+	return explosion_timer.time_left();
+}
+
+/*
+* bool get_was_box()
+* Returns vas_box
+*/
+bool Explosion::get_was_box() const
+{
+	return was_box;
 }
