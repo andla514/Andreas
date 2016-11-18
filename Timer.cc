@@ -14,6 +14,21 @@ bool Timer::is_done()
 {
     return elapsed_time() > duration;
 }
+
+int Timer::fraction_of_completion()
+{
+    return static_cast<int>(fraction * completion());
+}
+double Timer::completion()
+{
+    double to_return{elapsed_time() / duration};
+    if(to_return >= 1)
+    {
+        return 1;
+    }
+    return to_return;
+}
+
 double Timer::elapsed_time()
 {
     if(!is_stopped)
