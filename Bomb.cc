@@ -64,9 +64,7 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		// Current place is a box
 		else if (my_game->is_box(row, col))
 		{
-
 			explode(row, col, true);
-
 			distance = 0;
 		}
 		// Current place is a bomb
@@ -80,10 +78,8 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		// Current place is an item
 		else if (my_game->is_standing_on_item(row, col))
 		{
-
 			explode(row, col, false);
 			my_game->remove_item(row, col);
-
 			distance --;
 		}
 		// Current place is an explosion
@@ -102,9 +98,7 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		}	
 		else 
 		{
-
 			explode(row, col, false);
-
 			distance --;
 		}
 		
