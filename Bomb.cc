@@ -52,8 +52,8 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		else if (my_game->is_box(row, col))
 		{
 			my_game->set_element(row, col, 4);
-			my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
-									true, my_game));
+			my_game->add_explosion(row, col, make_unique<Explosion>(Explosion(row, col, my_settings.explosion_delay,
+									true, my_game)));
 			distance = 0;
 			std::cout << "Explosion" << row << col;   // Felsök
 		}
@@ -62,8 +62,8 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		{
 			(my_game->get_bomb_reference(row, col)).detonate();
 			my_game->remove_bomb(row, col);
-			my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
-									false, my_game));
+			my_game->add_explosion(row, col, make_unique<Explosion>(Explosion(row, col, my_settings.explosion_delay,
+									false, my_game)));
 			distance --;
 		}
 		// Current place is an item
@@ -71,8 +71,8 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		{
 			my_game->set_element(row, col, 4);
 			//my_game->remove_item(row, col);
-			my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
-									false, my_game));
+			my_game->add_explosion(row, col, make_unique<Explosion>(Explosion(row, col, my_settings.explosion_delay,
+									false, my_game)));
 			distance --;
 			std::cout << "Explosion" << row << col;   // Felsök
 		}
@@ -82,8 +82,8 @@ void Bomb::spread_explosions (std::string direction, int distance)
 			if ((my_game->get_explosion_reference(row, col)).time_left() <= 1000 * my_settings.explosion_delay)
 			{
 				my_game->remove_explosion(row, col);
-				my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
-									false, my_game));
+				my_game->add_explosion(row, col, make_unique<Explosion>(Explosion(row, col, my_settings.explosion_delay,
+									false, my_game)));
 				distance --;
 			}
 			else
@@ -92,8 +92,8 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		else 
 		{
 			my_game->set_element(row, col, 4);
-			my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
-									false, my_game));
+			my_game->add_explosion(row, col, make_unique<Explosion>(Explosion(row, col, my_settings.explosion_delay,
+									false, my_game)));
 			distance --;
 			std::cout << "Explosion" << row << col;   // Felsök
 		}

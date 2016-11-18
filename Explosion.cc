@@ -19,19 +19,19 @@ void Explosion::make_item()
 	
 	if (random_value >= 0 && random_value < 30)
 	{
-		//my_game->add_item(Item_Inc_Bomb(row, col));
+		//my_game->add_item(make_unique<Item>(Item_Inc_Bomb(row, col));
 	}
 	else if (random_value >= 30 && random_value < 70)
 	{
-		//my_game->add_item(Item_Inc_Rad(row, col));
+		//my_game->add_item(make_unique<Item>(Item_Inc_Rad(row, col));
 	}
 	else if (random_value >= 70 && random_value < 80)
 	{
-		//my_game->add_item(Item_Inc_Life(row, col));
+		//my_game->add_item(make_unique<Item>(Item_Inc_Life(row, col)));
 	}
 	else if (random_value >= 80 && random_value < 100)
 	{
-		//my_game->add_item(Item_Inc_Exp_Timer(row, col));
+		//my_game->add_item(make_unique>Item>(Item_Inc_Exp_Timer(row, col));
 	}
 	
 	my_game->set_element(row, col, 2);
