@@ -39,8 +39,8 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		else if (my_game->is_box(row, col))
 		{
 			my_game->set_element(row, col, 4);
-			my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
-									true, my_game));
+			//my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
+			//						true, my_game));
 			distance = 0;
 			std::cout << "Explosion" << row << col;   // Felsök
 		}
@@ -48,17 +48,17 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		else if (my_game->is_standing_on_item(row, col))
 		{
 			my_game->set_element(row, col, 4);
-			//my_game->remove_item(row, col);
-			my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
-									false, my_game));
+			my_game->remove_item(row, col);
+			//my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
+			//						false, my_game));
 			distance --;
 			std::cout << "Explosion" << row << col;   // Felsök
 		}
 		else 
 		{
 			my_game->set_element(row, col, 4);
-			my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
-									false, my_game));
+			//my_game->add_explosion(row, col, Explosion(row, col, my_settings.explosion_delay,
+			//						false, my_game));
 			distance --;
 			std::cout << "Explosion" << row << col;   // Felsök
 		}
