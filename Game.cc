@@ -6,6 +6,7 @@
 #include <iostream>
 #include <memory>
 #include "SFML/Graphics.hpp"
+#include <stdexcept>
 
 //-----------------CONSTRUCTOR--------------
 Game::Game()
@@ -108,15 +109,30 @@ Character & Game::get_character_reference(int player_number)
 }
 Bomb & Game::get_bomb_reference(int row, int col)
 {
-    return *bomb_list.at(std::to_string(row) + "," + std::to_string(col));
+    std::string our_key{std::to_string(row) + "," + std::to_string(col)};
+    if (bomb_list.find(our_key) == bomb_list.end())
+    {
+        throw std::logic_error("No bomb at these coordinates");
+    }
+    return *bomb_list.at(our_key);
 }
 Item & Game::get_item_reference(int row, int col)
 {
-    return *item_list.at(std::to_string(row) + "," + std::to_string(col));
+    std::string our_key{std::to_string(row) + "," + std::to_string(col)};
+    if (item_list.find(our_key) == item_list.end())
+    {
+        throw std::logic_error("No item at these coordinates");
+    }
+    return *item_list.at(our_key);
 }
 Explosion & Game::get_explosion_reference(int row, int col)
 {
-    return *explosion_list.at(std::to_string(row) + "," + std::to_string(col));
+    std::string our_key{std::to_string(row) + "," + std::to_string(col)};
+    if (explosion_list.find(our_key) == explosion_list.end())
+    {
+        throw std::logic_error("No explosion at these coordinates");
+    }
+    return *explosion_list.at(our_key);
 }
 //-----------------GET/SET------------------
 int Game::get_element(int row, int col)  const noexcept
