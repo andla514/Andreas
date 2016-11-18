@@ -7,7 +7,7 @@
 #include "Item.h"
 #include "Timer.h"
 
-//#include <iostream> //Används ej?
+#include <iostream> //Används ej? felsökning
 //#include <utility>  //bara för move i testkonstruktorn
 
 //-----------------CONSTRUCTOR--------------
@@ -184,6 +184,16 @@ void Character::smooth_move()
 	double time{my_timer.elapsed_time() / walk_time};
 	int curr_step = step * time;
 
+/*
+	if(my_timer.is_done() && sf::Keyboard::isKeyPressed(last_key))
+	{
+		is_moving = true;
+		my_timer.restart();
+		xpos = 64 * col;
+		ypos = 64 * row;
+		step = 64;
+	}
+	*/
 	if(my_timer.is_done())
 	{
 		is_moving = false;
@@ -223,49 +233,75 @@ void Character::move_player()
 
     if (sf::Keyboard::isKeyPressed(up))
     {
-	row_inc -= 1;
+		row_inc -= 1;
     }
     if (sf::Keyboard::isKeyPressed(down))
     {
-	row_inc += 1;
+		row_inc += 1;
     }
     if (sf::Keyboard::isKeyPressed(left))
     {
-	col_inc -= 1;
+		col_inc -= 1;
     }
     if (sf::Keyboard::isKeyPressed(right))
     {
-	col_inc += 1;
+		col_inc += 1;
     }
 
     if (col_inc == 0 && row_inc == 0)
     {
-	is_moving = false;
+		is_moving = false;
     }
 	else if (col_inc == 0 && row_inc != 0 && game_ptr->can_move_to(row + row_inc, col))
     {
-	row += row_inc;
-	is_moving = true;
-	my_timer.restart();
+		std::cout << "fall 1";
+		row += row_inc;
+		is_moving = true;
+		if(row > 0)
+			move_dir = 2;
+		else
+			move_dir = 1;
+		my_timer.restart();
+
     }
 	else if (col_inc != 0 && row_inc == 0 && game_ptr->can_move_to(row, col + col_inc))
     {
-	col += col_inc;
-	is_moving = true;
-	my_timer.restart();
+		std::cout << "fall 2";
+		col += col_inc;
+		is_moving = true;
+		if(col_inc > 0)
+			move_dir = 4;
+		else 
+			move_dir = 3;
+		my_timer.restart();
+
     }
     else if (game_ptr->can_move_to(row + row_inc, col))
     {
-	row += row_inc;
-	is_moving = true;
-	my_timer.restart();
+		std::cout << row_inc << " " << col_inc << " fall 3 \n";
+		row += row_inc;
+		is_moving = true;
+		if(row > 0)
+			move_dir = 2;
+		else
+			move_dir = 1;
+		my_timer.restart();
     }
     else if (game_ptr->can_move_to(row, col + col_inc))
     {
-	col += col_inc;
-	is_moving = true;
-	my_timer.restart();
+		std::cout << "fall 4";
+		col += col_inc;
+		is_moving = true;
+		if(col_inc > 0)
+			move_dir = 4;
+		else 
+			move_dir = 3;
+		my_timer.restart();
     }
+	else
+	{
+			is_moving = false;
+	}
 	/*
 	move_dir: 
 	1 => up
@@ -274,12 +310,27 @@ void Character::move_player()
 	4 => right
 	*/
 
+	/*
 	if(col_inc > 0)
+	{
 		move_dir = 4;
+		//last_key = sf::Keyboard::Key(right);
+	}
 	else if(col_inc < 0)
+	{
 		move_dir = 3;
+		//last_key = sf::Keyboard::Key(left);
+	}
 	else if(row > 0)
+	{
 		move_dir = 2;
+		//last_key = sf::Keyboard::Key(down);
+		
+	}
 	else if(row < 0)
+	{
 		move_dir = 1;
+		//last_key = sf::Keyboard::Key(up);
+	}
+	*/
 }

@@ -58,7 +58,7 @@ bool Game::is_standing_on_item(int row, int col) const noexcept
 bool Game::can_move_to(int row, int col) const noexcept
 {
     int our_element = get_element(row, col);
-    return our_element != 5 && our_element != 1 && our_element != 3;
+    return our_element == 5 && our_element == 1 && our_element == 3;
 }
 bool Game::is_wall(int row, int col) const noexcept
 {

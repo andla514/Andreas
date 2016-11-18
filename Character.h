@@ -32,11 +32,12 @@ class Character
 	
 	private:
 	void set_keys(int player_number);
-	sf::Keyboard::Key  up;
+	sf::Keyboard::Key up;
 	sf::Keyboard::Key down;
 	sf::Keyboard::Key left;
 	sf::Keyboard::Key right;
 	sf::Keyboard::Key bomb;
+	//sf::Keyboard::Key last_key;
 	std::shared_ptr<Game> game_ptr{};
 	int move_dir{};
 	int life{2};

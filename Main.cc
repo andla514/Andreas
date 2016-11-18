@@ -56,6 +56,6 @@ void Main::start_non_graphic()
 */
             game_timer.restart();
         }
-        sf::sleep(sf::milliseconds(2));
+        sf::sleep(sf::milliseconds(15));
     }
 }
