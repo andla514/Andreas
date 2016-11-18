@@ -36,6 +36,7 @@ class Bomb
 	int my_creator{};
 	
 	// Private functions
+	void explode(int row, int col, bool item_bool);
 	void spread_explosions(std::string direction, int distance);
 	Character& get_creator();	
 };

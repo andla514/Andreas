@@ -11,12 +11,13 @@ class Explosion;
 class Explosion
 {
     public:
-    Explosion(int row, int col, int explosion_delay, bool was_box, std::shared_ptr<Game> our_game);
+    Explosion(int row_pos, int col_pos, int explosion_delay, bool was_box, std::shared_ptr<Game> our_game);
 	~Explosion()= default;
 	
 	void update();
 	int time_left();
-	
+	bool get_was_box() const; 
+
 	private:
 	int row{};
 	int col{};
