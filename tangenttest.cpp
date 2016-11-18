@@ -5,19 +5,68 @@
 int main()
 {
     // Create the window
-    sf::RenderWindow Window;
-    Window.create(sf::VideoMode{800, 600}, "Keyboard test");
+    sf::RenderWindow window;
+    sf::RenderWindow window2;
+    int width{800};
+    unsigned height{608};
+    window.create(sf::VideoMode{800, height}, "Keyboard test");
+    window2.create(sf::VideoMode{800, height}, "Keyboard test");
     float ballsize{20};
+
+    sf::Texture texture;
+    if (!texture.create(width, height))
+        return -1;
+
+    sf::Texture texture2;
+    if (!texture2.loadFromFile("floor.jpg"))
+    {
+        return 2;
+    }
+
+    window2.clear(sf::Color::Blue);
+
+    sf::Sprite sprite2(texture2);
+    
     /*
-    //test
-    while (Window.isOpen())
+    while (i < width)
     {
         sf::Event Event;
-        while (Window.pollEvent(Event))
+        while (window.pollEvent(Event))
         {
             if (Event.type == sf::Event::Closed)
             {
-                Window.close();
+                window.close();
+            }
+        }
+
+
+        // Draw things
+        sprite2.setPosition(i ,0);
+        window2.draw(sprite2);
+        i += 32;
+
+
+        // show the newly drawn things
+        window2.display();
+
+        // wait before drawing the next frame
+        sf::sleep(sf::milliseconds(200));
+    }
+    */
+    
+    
+
+    
+    /*
+    //test
+    while (window.isOpen())
+    {
+        sf::Event Event;
+        while (window.pollEvent(Event))
+        {
+            if (Event.type == sf::Event::Closed)
+            {
+                window.close();
             }
 
             if(Event.type == sf::Event::KeyPressed)
@@ -29,9 +78,25 @@ int main()
             }
         }
 
-        Window.display();
+        window.display();
     }
 */
+
+    for(int i{-16}; i <= width; i += 16)
+    {
+        sprite2.setPosition(i ,0);
+        window2.draw(sprite2);
+        sprite2.setPosition(i ,576);
+        window2.draw(sprite2);
+        window2.display();
+        sf::sleep(sf::milliseconds(50));
+        //texture.update(window);
+    }
+
+    texture.update(window2);
+    window2.close();
+    sf::Sprite sprite(texture);
+    sprite.setPosition(0 ,0);
 
     // create ball
     sf::CircleShape ball{ballsize};
@@ -55,14 +120,14 @@ int main()
     ball2.setPosition(100, 100);
 
     //Main loop
-    while (Window.isOpen())
+    while (window.isOpen())
     {
         sf::Event Event;
-        while (Window.pollEvent(Event))
+        while (window.pollEvent(Event))
         {
             if (Event.type == sf::Event::Closed)
             {
-                Window.close();
+                window.close();
             }
         }
 
@@ -100,14 +165,15 @@ int main()
         }
 
         // Clear screen
-        Window.clear();
+        window.clear();
 
         // Draw things
-        Window.draw(ball);
-        Window.draw(ball2);
+        window.draw(sprite);
+        window.draw(ball);
+        window.draw(ball2);
 
         // show the newly drawn things
-        Window.display();
+        window.display();
 
         // wait before drawing the next frame
         sf::sleep(sf::milliseconds(2));
