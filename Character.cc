@@ -164,8 +164,16 @@ void Character::use_item(Item &pickup)
 
 void Character::smooth_move()
 {
+	/*
+	move_dir: 
+	1 => up
+	2 => down
+	3 => left
+	4 => right
+	*/
 	double time{my_timer.elapsed_time() / walk_time};
-	
+	int curr_step{step * time;}
+
 	if(my_timer.is_done())
 	{
 		is_moving = false;
@@ -173,10 +181,24 @@ void Character::smooth_move()
 		ypos = 64 * row;
 		step = 64;
 	}
-	else if(move_dir = 1)
+	else if(move_dir == 1)
 	{
-	xpos -= step * time;
+		ypos -= curr_step;
 	}
+	else if(move_dir == 2)
+	{
+		ypos += curr_step;
+	}
+	else if(move_dir == 3)
+	{
+		xpos += curr_step;
+	}
+	else if(move_dir == 4)
+	{
+		xpos -= curr_step;
+	}
+
+	step -= curr_step;
 }
 
 void Character::hurt_player()
