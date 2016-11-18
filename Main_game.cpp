@@ -1,4 +1,4 @@
-//#include "Main.h"
+#include "Main.h"
 #include "SFML/Graphics.hpp"
 
 int main()
