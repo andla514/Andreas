@@ -43,8 +43,8 @@ class Character
 	int bombs{1};
 	int col{1};
 	int row{1};
-	int xpos{1};
-	int ypos{1};
+	int xpos{};
+	int ypos{};
 	int step{64};
 	double walk_time {0.3};
 	Timer my_timer{walk_time}; 

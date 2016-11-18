@@ -36,8 +36,8 @@ move_dir:
     case 1:
 	col = 1;
 	row = 1;	
-	xpos{col * 64};
-	ypos{row * 64};
+	xpos = col * 64;
+	ypos = row * 64;
 	up = sf::Keyboard::W;
 	down = sf::Keyboard::S;
 	left = sf::Keyboard::A;
@@ -49,8 +49,8 @@ move_dir:
     case 2:
 	col = game_ptr->get_columns() - 2;
 	row = game_ptr->get_rows() - 2;
-	xpos{col * 64};
-	ypos{row * 64};
+	xpos = col * 64;
+	ypos = row * 64;
 	up = sf::Keyboard::Up;
 	down = sf::Keyboard::Down;
 	left = sf::Keyboard::Left;
@@ -62,8 +62,8 @@ move_dir:
     case 3:
 	col = game_ptr->get_columns() - 2;
 	row = 1;
-	xpos{col * 64};
-	ypos{row * 64};
+	xpos = col * 64;
+	ypos = row * 64;
 	up = sf::Keyboard::Numpad8;
 	down = sf::Keyboard::Numpad5;
 	left = sf::Keyboard::Numpad4;
@@ -75,8 +75,8 @@ move_dir:
     case 4:
 	col = 1;
 	row = game_ptr->get_rows() - 2;
-	xpos{col * 64};
-	ypos{row * 64};
+	xpos = col * 64;
+	ypos = row * 64;
 	up = sf::Keyboard::T;
 	down = sf::Keyboard::G;
 	left = sf::Keyboard::F;
@@ -152,7 +152,7 @@ void Character::draw_graphics(sf::RenderWindow &our_window)
 	sf::CircleShape ball{32};
 	ball.setFillColor(sf::Color::Blue);
 	ball.setTextureRect(sf::IntRect{0, 0, 64, 64});
-	ball.setPosition(col * 64, row * 64);
+	ball.setPosition(xpos, ypos);
 	our_window.draw(ball);
 }
 
@@ -182,7 +182,7 @@ void Character::smooth_move()
 	4 => right
 	*/
 	double time{my_timer.elapsed_time() / walk_time};
-	int curr_step{step * time;}
+	int curr_step = step * time;
 
 	if(my_timer.is_done())
 	{

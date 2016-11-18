@@ -22,7 +22,7 @@ Main::Main()
 void Main::start_non_graphic()
 {
 
-    //int old_value [3];
+    int old_value [3];
     game_timer.restart();
     while (is_running)
     {
