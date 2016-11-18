@@ -109,27 +109,33 @@ Character & Game::get_character_reference(int player_number)
 }
 Bomb & Game::get_bomb_reference(int row, int col)
 {
-    if (bomb_list.find(std::to_string(row) + "," + std::to_string(col)) = bomb_list.end())
-    throw std::logic_error("No bomb at these coordinates");
-    else
-    return *bomb_list.at(std::to_string(row) + "," + std::to_string(col));
+    std::string our_key{std::to_string(row) + "," + std::to_string(col)};
+    if (bomb_list.find(our_key) == bomb_list.end())
+    {
+        throw std::logic_error("No bomb at these coordinates");
+    }
+    return *bomb_list.at(our_key);
 }
 <<<<<<< HEAD
 =======
 Item & Game::get_item_reference(int row, int col)
 {
-    if (item_list.find(std::to_string(row) + "," + std::to_string(col)) = item_list.end())
-    throw std::logic_error("No item at these coordinates");
-    else
-    return *item_list.at(std::to_string(row) + "," + std::to_string(col));
+    std::string our_key{std::to_string(row) + "," + std::to_string(col)};
+    if (item_list.find(our_key) == item_list.end())
+    {
+        throw std::logic_error("No item at these coordinates");
+    }
+    return *item_list.at(our_key);
 }
 >>>>>>> d24423e8c2042e9a8779755a7b64691ec9eba2d5
 Explosion & Game::get_explosion_reference(int row, int col)
 {
-    if (explosion_list.find(std::to_string(row) + "," + std::to_string(col)) = explosion_list.end())
-    throw std::logic_error("No explosion at these coordinates");
-    else
-    return *explosion_list.at(std::to_string(row) + "," + std::to_string(col));
+    std::string our_key{std::to_string(row) + "," + std::to_string(col)};
+    if (explosion_list.find(our_key) == explosion_list.end())
+    {
+        throw std::logic_error("No explosion at these coordinates");
+    }
+    return *explosion_list.at(our_key);
 }
 //-----------------GET/SET------------------
 int Game::get_element(int row, int col)  const noexcept
