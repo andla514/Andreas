@@ -20,42 +20,40 @@ Main::Main()
 
 void Main::start_non_graphic()
 {
-	
-	sf::Event Event;
-        while (Window.pollEvent(Event))
-        {
-            if (Event.type == sf::Event::Closed)
-            {
-                Window.close();
-            }
-        }
-		
-		// Clear screen
-        Window.clear();
-		
-		// show the newly drawn things
-        Window.display();
-	
-	
 
-    int old_value [3];
+    sf::Event Event;
+    while (our_window.pollEvent(Event))
+    {
+        if (Event.type == sf::Event::Closed)
+        {
+            our_window.close();
+        }
+    }
+
+    // Clear screen
+    our_window.clear();
+
+    // show the newly drawn things
+    our_window.display();
+
+    int old_value[3];
     game_timer.restart();
-    while(is_running)
+    while (is_running)
     {
 
         system("CLS");
         our_game->update();
 
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             Character our_character = our_game->get_character_reference(i + 1);
             old_value[i] = our_game->get_element(our_character.get_row(), our_character.get_col());
             our_game->set_element(our_character.get_row(), our_character.get_col(), 6);
         }
 
-        our_game->draw_graphics();
+        our_game->draw_graphics(our_window);
 
-    for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             Character our_character = our_game->get_character_reference(i + 1);
             our_game->set_element(our_character.get_row(), our_character.get_col(), old_value[i]);
@@ -70,40 +68,39 @@ void Main::start_non_graphic()
         game_timer.restart();
     }
 
-        sf::Event our_event;
-        while (our_window.pollEvent(our_event))
+    sf::Event our_event;
+    while (our_window.pollEvent(our_event))
+    {
+        if (our_event.type == sf::Event::Closed)
         {
-            if (our_event.type == sf::Event::Closed)
-            {
-                our_window.close();
-            }
+            our_window.close();
         }
-        
-        if(game_timer.is_done())
-        {
-            system("CLS");
-            our_game->update();
-
-            for(int i = 0; i < 3; i++)
-            {
-                Character our_character = our_game->get_character_reference(i + 1);
-                old_value[i] = our_game->get_element(our_character.get_row(), our_character.get_col());
-                our_game->set_element(our_character.get_row(), our_character.get_col(), 6);
-            }
-            // Draws all graphics
-            our_window.clear();
-            our_game->draw_graphics(our_window);
-            our_window.display();
-            //our_game->draw_graphics();
-
-            for(int i = 0; i < 3; i++)
-            {
-                Character our_character = our_game->get_character_reference(i + 1);
-                our_game->set_element(our_character.get_row(), our_character.get_col(), old_value[i]);
-            }
-
-            game_timer.restart();
-        }
-        sf::sleep(sf::milliseconds(2));
     }
+
+    if (game_timer.is_done())
+    {
+        system("CLS");
+        our_game->update();
+
+        for (int i = 0; i < 3; i++)
+        {
+            Character our_character = our_game->get_character_reference(i + 1);
+            old_value[i] = our_game->get_element(our_character.get_row(), our_character.get_col());
+            our_game->set_element(our_character.get_row(), our_character.get_col(), 6);
+        }
+        // Draws all graphics
+        our_window.clear();
+        our_game->draw_graphics(our_window);
+        our_window.display();
+        //our_game->draw_graphics();
+
+        for (int i = 0; i < 3; i++)
+        {
+            Character our_character = our_game->get_character_reference(i + 1);
+            our_game->set_element(our_character.get_row(), our_character.get_col(), old_value[i]);
+        }
+
+        game_timer.restart();
+    }
+    sf::sleep(sf::milliseconds(2));
 }
