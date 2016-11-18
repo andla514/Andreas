@@ -17,7 +17,7 @@ void Game::update() noexcept
     our_matrix.update();
     for(auto it = bomb_list.begin(); it != bomb_list.end(); ++it)
     {
-        //it->second.update();
+        it->second->update();
     }
     for(auto it = item_list.begin(); it != item_list.end(); ++it)
     {
@@ -25,7 +25,7 @@ void Game::update() noexcept
     }
     for(auto it = explosion_list.begin(); it != explosion_list.end(); ++it)
     {
-        //it->second.update();
+        it->second->update();
     }
     for(auto it = character_list.begin(); it != character_list.end(); ++it)
     {
@@ -75,6 +75,7 @@ bool Game::is_bomb(int row, int col) const noexcept
 //-----------------REFERENCE_LISTS----------
 void Game::add_item(int row, int col, std::unique_ptr<Item> && new_item)
 {
+        std::cout << "Adding item at: " << row << "," << col << std::endl;
     item_list.insert(std::pair<std::string, std::unique_ptr<Item>>(std::to_string(row) + "," + std::to_string(col), std::move(new_item)));
 }
 void Game::add_bomb(int row, int col, std::unique_ptr<Bomb> && new_bomb)

@@ -30,6 +30,7 @@ void Bomb::detonate()
 	spread_explosions ("up", my_settings.radius);
 	spread_explosions ("down", my_settings.radius);
 	get_creator().add_bomb(1);
+	my_game->remove_bomb(row_pos, col_pos);
 }
 
 /*

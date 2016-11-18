@@ -45,9 +45,10 @@ void Explosion::make_item()
 */
 void Explosion::update()
 {
+	std::cout << "Timer: " << explosion_timer.time_left() << std::endl;
 	if (explosion_timer.is_done())
 	{
-	
+		std::cout << "Tar bort" << std::endl;
 		int random_value {rand() % 100};
 		if (was_box && random_value <= 30)
 		{

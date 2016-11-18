@@ -165,9 +165,9 @@ void Matrix_Map::draw_graphics(sf::RenderWindow & our_window) const noexcept
                     break;
             }
             SetConsoleTextAttribute(hConsole, color_number);
-            std::cout << element << " ";
+            //std::cout << element << " ";
         }
-        std::cout << std::endl;
+        //std::cout << std::endl;
     }
 }
 
