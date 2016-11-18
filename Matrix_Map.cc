@@ -3,12 +3,91 @@
 #include <windows.h>
 #include "SFML/Graphics.hpp"
 
-//-----------------CONSTRUCTOR--------------
+//-----------------CONSTRUCTOR-------------------
 Matrix_Map::Matrix_Map()
 : max_rows{sizeof our_map / sizeof our_map[0]}, max_cols{sizeof our_map[0] / sizeof(int)}
 {
     initialize_map();
 }
+//-----------------UPDATE------------------------
+void Matrix_Map::update() noexcept
+{
+    if(sprite_changer.is_done())
+    {
+        sprite_changer.restart();
+        if(++current_explosion >= 5)
+        {
+            current_explosion = 0;
+        }
+        if(++current_bomb >= 3)
+        {
+            current_bomb = 0;
+        }
+    }
+}
+
+//-----------------GET/SET-----------------------
+int Matrix_Map::get_element(int row, int col) const
+{
+    if(row >= max_rows || col >= max_cols || row < 0 || col < 0)
+    {
+        throw std::out_of_range("Getting element out of range in Matrix_Map!");
+    }
+    return our_map[row][col];
+}
+void Matrix_Map::set_element(int row, int col, int new_value)
+{
+    if(row >= max_rows || col >= max_cols || row < 0 || col < 0)
+    {
+        throw std::out_of_range("Setting element out of range in Matrix_Map!");
+    }
+    our_map[row][col] = new_value;
+}
+int Matrix_Map::get_rows() const noexcept
+{
+    return max_rows;
+}
+int Matrix_Map::get_columns() const noexcept
+{
+    return max_cols;
+}
+
+//-----------------Graphics----------------------
+void Matrix_Map::draw_graphics(sf::RenderWindow & our_window) const
+{
+    // Draws standard background
+    our_window.draw(sf::Sprite{background});
+    // Creates the sprites needed
+    sf::Sprite explosion_sprite{explosions[current_explosion]};
+    sf::Sprite bomb_sprite{bombs[current_bomb]};
+    sf::Sprite box_sprite{box};
+    
+    // Draws all bomb-, explosion- and box-tiles
+    for(int r = 0; r < max_rows; r++)
+    {
+        for(int c = 0; c < max_cols; c++)
+        {
+            int element = get_element(r, c);
+            switch(element)
+            {
+                case 1:
+                    box_sprite.setPosition(64 * c, 64 * r);
+                    our_window.draw(box_sprite);
+                    break;
+                case 3:
+                    bomb_sprite.setPosition(64 * c + 9, 64 * r + 9);
+                    our_window.draw(bomb_sprite);
+                    break;
+                case 4:
+                    explosion_sprite.setPosition(64 * c + 9, 64 * r + 9);
+                    our_window.draw(explosion_sprite);
+                    break;
+            }
+        }
+    }
+}
+
+//-----------------INITIALIZATION----------------
 
 void Matrix_Map::load_permanent_textures()
 {
@@ -52,14 +131,14 @@ void Matrix_Map::initialize_map() noexcept
     ///////////////////////////////////////////////////
 
     load_permanent_textures();
-
-    std::cout << "Max rows: " << max_rows << std::endl;
+    
     for(int r = 0; r < max_rows; r++)
     {
         for(int c = 0; c < max_cols; c++)
         {
             ground.setPosition(64 * c, 64 * r);
             temp_texture.draw(ground);
+            // Make Wall-tile
             if((r == 0 || c == 0  || r == max_rows - 1 || c == max_cols - 1)
                 || (r % 2 == 0 && c % 2 == 0))
             {
@@ -67,124 +146,34 @@ void Matrix_Map::initialize_map() noexcept
                 wall.setPosition(64 * c, 64 * r);
                 temp_texture.draw(wall);
             }
+            // Make Box-tile
             else if(rand() % 100 + 1 < 70)
             {
                 set_element(r, c, 1);
             }
         }
     }
-
-    set_element(5, 4, 3);
-    set_element(6, 3, 4);
+    // Save background texture
     temp_texture.display();
-    //temp_texture.getTexture().copyToImage().saveToFile("test.png");
     background = temp_texture.getTexture();
 
-
-    // Player 1 spawn
+    //  Clear Player 1 spawn
     set_element(1, 1, 0);
     set_element(1, 2, 0);
     set_element(2, 1, 0);
 
-    // Player 2 spawn
+    // Clear Player 2 spawn
     set_element(1, max_cols - 2, 0);
     set_element(1, max_cols - 3, 0);
     set_element(2, max_cols - 2, 0);
 
-    // Player 3 spawn
+    // Clear Player 3 spawn
     set_element(max_rows - 2, max_cols - 2, 0);
     set_element(max_rows - 2, max_cols - 3, 0);
     set_element(max_rows - 3, max_cols - 2, 0);
 
-    // Player 4 spawn
+    // Clear Player 4 spawn
     set_element(max_rows - 2, 1, 0);
     set_element(max_rows - 2, 2, 0);
     set_element(max_rows - 3, 1, 0);
-}
-
-void Matrix_Map::update()
-{
-    if(sprite_changer.is_done())
-    {
-        sprite_changer.restart();
-        if(++current_explosion >= 5)
-        {
-            current_explosion = 0;
-        }
-        if(++current_bomb >= 3)
-        {
-            current_bomb = 0;
-        }
-    }
-}
-//-----------------Graphics-----------------
-void Matrix_Map::draw_graphics(sf::RenderWindow & our_window) const noexcept
-{
-    our_window.draw(sf::Sprite{background});
-    sf::Sprite explosion_sprite{explosions[current_explosion]};
-    sf::Sprite bomb_sprite{bombs[current_bomb]};
-    sf::Sprite box_sprite{box};
-    std::cout << "Test2" << std::endl;
-    
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    for(int r = 0; r < max_rows; r++)
-    {
-        for(int c = 0; c < max_cols; c++)
-        {
-            int element = get_element(r, c);
-            int color_number;
-            switch(element)
-            {
-                case 0:
-                    color_number = 8;
-                    break;
-                case 1:
-                    box_sprite.setPosition(64 * c, 64 * r);
-                    our_window.draw(box_sprite);
-                    color_number = 6;
-                    break;
-                case 2:
-                    color_number = 10;
-                    break;
-                case 3:
-                    color_number = 12;
-                    bomb_sprite.setPosition(64 * c + 9, 64 * r + 9);
-                    our_window.draw(bomb_sprite);
-                    break;
-                case 4:
-                    color_number = 6;
-                    explosion_sprite.setPosition(64 * c + 9, 64 * r + 9);
-                    our_window.draw(explosion_sprite);
-                    break;
-                case 5:
-                    color_number = 13;
-                    break;
-                    // FÖR ATT TESTA
-                case 6:
-                    color_number = 7;
-                    break;
-            }
-            SetConsoleTextAttribute(hConsole, color_number);
-            //std::cout << element << " ";
-        }
-        //std::cout << std::endl;
-    }
-}
-
-//-----------------GET/SET------------------
-int Matrix_Map::get_element(int row, int col) const noexcept
-{
-    return our_map[row][col];
-}
-void Matrix_Map::set_element(int row, int col, int new_value) noexcept
-{
-    our_map[row][col] = new_value;
-}
-int Matrix_Map::get_rows() const noexcept
-{
-    return max_rows;
-}
-int Matrix_Map::get_columns() const noexcept
-{
-    return max_cols;
 }
