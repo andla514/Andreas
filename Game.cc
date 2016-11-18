@@ -6,6 +6,7 @@
 #include <iostream>
 #include <memory>
 #include "SFML/Graphics.hpp"
+#include <stdexcept>
 
 //-----------------CONSTRUCTOR--------------
 Game::Game()
@@ -108,14 +109,23 @@ Character & Game::get_character_reference(int player_number)
 }
 Bomb & Game::get_bomb_reference(int row, int col)
 {
+    if (bomb_list.find(std::to_string(row) + "," + std::to_string(col)) = bomb_list.end())
+    throw std::logic_error("No bomb at these coordinates");
+    else
     return *bomb_list.at(std::to_string(row) + "," + std::to_string(col));
 }
 Item & Game::get_item_reference(int row, int col)
 {
+    if (item_list.find(std::to_string(row) + "," + std::to_string(col)) = item_list.end())
+    throw std::logic_error("No item at these coordinates");
+    else
     return *item_list.at(std::to_string(row) + "," + std::to_string(col));
 }
 Explosion & Game::get_explosion_reference(int row, int col)
 {
+    if (explosion_list.find(std::to_string(row) + "," + std::to_string(col)) = explosion_list.end())
+    throw std::logic_error("No explosion at these coordinates");
+    else
     return *explosion_list.at(std::to_string(row) + "," + std::to_string(col));
 }
 //-----------------GET/SET------------------
