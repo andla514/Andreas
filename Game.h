@@ -49,10 +49,7 @@ class Game
     void add_characters(int number_of_players, std::shared_ptr<Game> our_game);
     Character & get_character_reference(int player_number);
     Bomb & get_bomb_reference(int row, int col);
-<<<<<<< HEAD
-=======
     Item & get_item_reference(int row, int col);
->>>>>>> d24423e8c2042e9a8779755a7b64691ec9eba2d5
     Explosion & get_explosion_reference(int row, int col);
 
     // Data

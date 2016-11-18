@@ -1,5 +1,6 @@
 #include "Explosion.h"
 #include <iostream>
+#include <memory>
 
 //-----------------CONSTRUCTOR--------------
 Explosion::Explosion(int row, int col, int explosion_delay, bool was_box, std::shared_ptr<Game> our_game)

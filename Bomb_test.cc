@@ -44,3 +44,15 @@ TEST_CASE("Uppdate")
 	(G->get_bomb_reference(1, 2)).update();
 	CHECK(G->get_element(1, 2) == 4);
 }
+
+TEST_CASE("Detonate bomb from explotion")
+{
+	shared_ptr<Game> G = make_shared<Game> ();
+	G->add_characters(2, G);
+	Bomb_settings s {2, 1, 1};
+
+	G->add_bomb(1, 1, Bomb {1, 1, s, G, 2});
+	G->add_bomb(1, 2, Bomb {1, 2, s, G, 2});
+	(G->get_bomb_referemce(1, 1)).detonate();
+	CHECK_THROWS(G->get_bomb_reference(1, 2));
+}
