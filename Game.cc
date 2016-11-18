@@ -116,8 +116,6 @@ Bomb & Game::get_bomb_reference(int row, int col)
     }
     return *bomb_list.at(our_key);
 }
-<<<<<<< HEAD
-=======
 Item & Game::get_item_reference(int row, int col)
 {
     std::string our_key{std::to_string(row) + "," + std::to_string(col)};
@@ -127,7 +125,6 @@ Item & Game::get_item_reference(int row, int col)
     }
     return *item_list.at(our_key);
 }
->>>>>>> d24423e8c2042e9a8779755a7b64691ec9eba2d5
 Explosion & Game::get_explosion_reference(int row, int col)
 {
     std::string our_key{std::to_string(row) + "," + std::to_string(col)};
