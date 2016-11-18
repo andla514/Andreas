@@ -22,7 +22,7 @@ class Main
     sf::RenderWindow our_window;
     std::shared_ptr<Game> our_game;
     bool is_running{true};
-    Timer game_timer{1};
+    Timer game_timer{0.016};
 };
 
 #endif

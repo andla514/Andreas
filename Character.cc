@@ -55,7 +55,7 @@ move_dir:
 	down = sf::Keyboard::Down;
 	left = sf::Keyboard::Left;
 	right = sf::Keyboard::Right;
-	bomb = sf::Keyboard::Tab;
+	bomb = sf::Keyboard::RShift;
 	move_dir = 1;
 	break;
 
@@ -68,7 +68,7 @@ move_dir:
 	down = sf::Keyboard::Numpad5;
 	left = sf::Keyboard::Numpad4;
 	right = sf::Keyboard::Numpad6;
-	bomb = sf::Keyboard::Tab;
+	bomb = sf::Keyboard::Add;
 	move_dir = 2;
 	break;
 
@@ -80,7 +80,8 @@ move_dir:
 	up = sf::Keyboard::T;
 	down = sf::Keyboard::G;
 	left = sf::Keyboard::F;
-	bomb = sf::Keyboard::Tab;
+	right = sf::Keyboard::H;
+	bomb = sf::Keyboard::Space;
 	move_dir = 1;
 	break;
     }
@@ -115,44 +116,53 @@ void Character::update()
 {
     if (life > 0)
     {
-	if (is_moving)
-	{
-	    smooth_move();
-	}
-	else
-	{
-	    move_player();
-	}
+		if (is_moving)
+		{
+			smooth_move();
+		}
+		else
+		{
+			move_player();
+		}
+			
+		if (game_ptr->is_standing_in_fire(row, col) && !(is_immortal))
+		{
+	    	hurt_player();
+	    	is_immortal = true;
+		}
+		else if (!(game_ptr->is_standing_in_fire(row, col)))
+		{
+	   		is_immortal = false;
+		}
 
-	if (game_ptr->is_standing_in_fire(row, col) && !(is_immortal))
-	{
-	    hurt_player();
-	    is_immortal = true;
-	}
-	else if (!(game_ptr->is_standing_in_fire(row, col)))
-	{
-	    is_immortal = false;
-	}
+		make_bomb();
 
-	make_bomb();
-
-	if (game_ptr->is_standing_on_item(row, col))
-	{
-	    use_item(game_ptr->get_item_reference(row, col));
-	    game_ptr->remove_item(row, col);
-	}
+		if (game_ptr->is_standing_on_item(row, col))
+		{
+	    	use_item(game_ptr->get_item_reference(row, col));
+			game_ptr->remove_item(row, col);
+			game_ptr->set_element(row, col, 0);
+		}
     }
 }
 
 void Character::draw_graphics(sf::RenderWindow &our_window)
 {
     // TODO
+	sf::CircleShape ball{32};
+	ball.setFillColor(sf::Color::Blue);
+	ball.setTextureRect(sf::IntRect{0, 0, 64, 64});
+	ball.setPosition(col * 64, row * 64);
+	our_window.draw(ball);
 }
 
 void Character::make_bomb()
 {
-    if (sf::Keyboard::isKeyPressed(bomb) && bombs > 0 && !(is_immortal))
+    if (sf::Keyboard::isKeyPressed(bomb) )//&& bombs > 0 && !(is_immortal))
     {
+		game_ptr->set_element(row, col, 3);
+		Bomb_settings settings{2, 2, 1};
+		game_ptr->add_bomb(row, col, std::make_unique<Bomb>(row, col, settings, game_ptr, player_number));
 	//anropa bomb-construktor
     }
 }

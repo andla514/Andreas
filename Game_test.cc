@@ -11,8 +11,8 @@ TEST_CASE("Set and get (Game)")
     CHECK(our_game.get_element(0, 0) == 5);
     our_game.set_element(0, 0, 1);
     CHECK(our_game.get_element(0, 0) == 1);
-    CHECK(our_game.get_rows() == 19);
-    CHECK(our_game.get_columns() == 25);
+    CHECK(our_game.get_rows() == 15);
+    CHECK(our_game.get_columns() == 21);
     //our_game.draw_graphics();
 }
 TEST_CASE("Add and remove item")
@@ -27,6 +27,8 @@ TEST_CASE("Add and remove item")
     CHECK(dynamic_cast<Item_Inc_Exp_Rad*>(&our_game.get_item_reference(1, 2)));
     CHECK(dynamic_cast<Item_Inc_Life*>(&our_game.get_item_reference(1, 3)));
     CHECK(dynamic_cast<Item_Inc_Exp_Time*>(&our_game.get_item_reference(1, 4)));
+
+    our_game.remove_item(1, 1);
 }
 /*
 TEST_CASE("Add and remove bomb")
