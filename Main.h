@@ -6,8 +6,6 @@
 #include "Timer.h"
 #include <stdlib.h>
 #include <iostream>
-#include <thread>
-#include <chrono>
 #include <memory>
 #include "SFML/Graphics.hpp"
 

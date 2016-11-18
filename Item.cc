@@ -1,8 +1,9 @@
 
 #include "Item.h"
-// #include "Game.h"
-// #include "Character.h"
-// #include "Bomb.h"
+
+#include "Game.h"
+#include "Character.h"
+#include "Bomb.h"
 
 
 // --------------------------------------------------------------------------------------
@@ -25,6 +26,7 @@ void Item_Inc_Bombs::give_power_up(Character & character)
 void Item_Inc_Bombs::draw_graphics()
 {}
 
+
 // --------------------------------------------------------------------------------------
 // Item_Inc_Exp_Rad
 // --------------------------------------------------------------------------------------
@@ -46,7 +48,6 @@ void Item_Inc_Life::give_power_up(Character & character)
 {
 	character.add_life(1);
 }
-
 
 void Item_Inc_Life::draw_graphics()
 {}

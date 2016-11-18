@@ -8,6 +8,9 @@ class Item_Inc_Exp_Time;
 class Item_Inc_Life;
 // #include "Game.h"
 #include "Character.h"
+#include <iostream>
+
+
 
 
 
@@ -16,7 +19,10 @@ class Item
 public:
     Item(int const & row, int const & col);
     virtual ~Item() = default;
-    // virtual void give_power_up(Character & character) = 0;    
+
+    virtual void give_power_up(Character & character) = 0;    
+
+
     virtual void draw_graphics() = 0;
     
     int item_row{};
@@ -30,7 +36,11 @@ class Item_Inc_Bombs:public Item
 {
 public:
     using Item::Item;
-    ~Item_Inc_Bombs() = default;
+
+    ~Item_Inc_Bombs()
+    {
+        std::cout << "Förstör item!" << std::endl;
+    }
     void give_power_up(Character & character) override;
     void draw_graphics() override;
 };

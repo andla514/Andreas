@@ -104,6 +104,12 @@ void Character::update()
 		}
     }
 }
+
+void Character::draw_graphics(sf::RenderWindow & our_window)
+{
+	// TODO
+}
+
 void Character::make_bomb()
 {
     if (sf::Keyboard::isKeyPressed(bomb) && bombs > 0 && !(is_immortal))
