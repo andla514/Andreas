@@ -201,11 +201,11 @@ void Character::smooth_move()
 	}
 	else if(move_dir == 3)
 	{
-		xpos += curr_step;
+		xpos -= curr_step;
 	}
 	else if(move_dir == 4)
 	{
-		xpos -= curr_step;
+		xpos += curr_step;
 	}
 
 	step -= curr_step;
@@ -242,46 +242,37 @@ void Character::move_player()
     {
 	is_moving = false;
     }
-	else if ((col_inc == 0 && row_inc != 0) && game_ptr->can_move_to(row + row_inc, col))
+	else if (col_inc == 0 && row_inc != 0 && game_ptr->can_move_to(row + row_inc, col))
     {
 	row += row_inc;
-	if(row_inc > 0)
-		move_dir = 2;
-	else 
-		move_dir = 1;
 	is_moving = true;
 	my_timer.restart();
     }
-	else if ((col_inc != 0 && row_inc == 0) && game_ptr->can_move_to(row, col + col_inc))
+	else if (col_inc != 0 && row_inc == 0 && game_ptr->can_move_to(row, col + col_inc))
     {
 	col += col_inc;
-	if(col_inc > 0)
-		move_dir = 4;
-	else 
-		move_dir = 3;
 	is_moving = true;
 	my_timer.restart();
     }
     else if (game_ptr->can_move_to(row + row_inc, col))
     {
 	row += row_inc;
-	if(row_inc > 0)
-		move_dir = 2;
-	else 
-		move_dir = 1;
 	is_moving = true;
 	my_timer.restart();
     }
     else if (game_ptr->can_move_to(row, col + col_inc))
     {
 	col += col_inc;
-	if(col_inc > 0)
-		move_dir = 4;
-	else 
-		move_dir = 3;
 	is_moving = true;
 	my_timer.restart();
     }
+	/*
+	move_dir: 
+	1 => up
+	2 => down
+	3 => left
+	4 => right
+	*/
 
 	if(col_inc > 0)
 		move_dir = 4;
