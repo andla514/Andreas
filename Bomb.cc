@@ -33,6 +33,10 @@ void Bomb::detonate()
 }
 
 /*
+* void explode (int row, int col, bool item_bool)
+*/
+
+/*
 * void spread_explosions(string direction, int distance)
 * Creates explosions in a given direction for a given distance.
 * The function handles several exceptions that requires different solutions
