@@ -88,7 +88,7 @@ int main()
         window2.draw(sprite2);
         sprite2.setPosition(i ,576);
         window2.draw(sprite2);
-        window2.display();
+       // window2.display();
         sf::sleep(sf::milliseconds(50));
         //texture.update(window);
     }
