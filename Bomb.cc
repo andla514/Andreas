@@ -97,9 +97,7 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		}	
 		else 
 		{
-			my_game->set_element(row, col, 4);
-			my_game->add_explosion(row, col, std::make_unique<Explosion>(Explosion(row, col, my_settings.explosion_delay,
-									false, my_game)));
+			explode(row, col, false);
 			distance --;
 		}
 		
