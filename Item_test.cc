@@ -22,11 +22,14 @@ TEST_CASE("Testa Items")
 	
 	CHECK(inc_bomb.item_row == 1);
 	CHECK(inc_bomb.item_col == 1);
+	
 	CHECK(inc_life.item_row == 1);
 	CHECK(inc_life.item_row == 2);
-	CHECK(inc_rad.item_row == 1);
-	CHECK(inc_rad.item_col == 1);
-	CHECK(inc_time.item_row == 1);
-	CHECK(inc_time.item_col == 1);
+	
+	CHECK(inc_rad.item_row == 2);
+	CHECK(inc_rad.item_col == 2);
+	
+	CHECK(inc_time.item_row == 4);
+	CHECK(inc_time.item_col == 5);
 	   
 }

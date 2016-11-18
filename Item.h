@@ -16,7 +16,7 @@ class Item
 public:
     Item(int const & row, int const & col);
     virtual ~Item() = default;
-    virtual void give_power_up(Character & character) = 0;    
+    // virtual void give_power_up(Character & character) = 0;    
     virtual void draw_graphics() = 0;
     
     int item_row{};
