@@ -1,6 +1,5 @@
 #include "Matrix_Map.h"
 #include <iostream>
-#include <windows.h>
 #include "SFML/Graphics.hpp"
 
 //-----------------CONSTRUCTOR-------------------
