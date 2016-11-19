@@ -1,4 +1,3 @@
-
 #ifndef CHARACTER_H
 #define CHARACTER_H
 class Character;
@@ -39,9 +38,9 @@ class Character
 	sf::Keyboard::Key bomb;
 	//sf::Keyboard::Key last_key;
 	std::shared_ptr<Game> game_ptr{};
-	int move_dir{};
+	int move_dir{1};
 	int life{2};
-	int bombs{1};
+	int bombs{2};
 	int col{1};
 	int row{1};
 	int xpos{};

@@ -23,6 +23,7 @@ Character::Character(std::shared_ptr<Game> our_game, int player_number)
 
 void Character::set_keys(int player_number)
 {
+	// bugg när inte alla har samma bomb_key
 /*
 move_dir: 
 1 => up
@@ -55,7 +56,7 @@ move_dir:
 	down = sf::Keyboard::Down;
 	left = sf::Keyboard::Left;
 	right = sf::Keyboard::Right;
-	bomb = sf::Keyboard::RShift;
+	bomb = sf::Keyboard::Tab;
 	move_dir = 1;
 	break;
 
@@ -68,7 +69,7 @@ move_dir:
 	down = sf::Keyboard::Numpad5;
 	left = sf::Keyboard::Numpad4;
 	right = sf::Keyboard::Numpad6;
-	bomb = sf::Keyboard::Add;
+	bomb = sf::Keyboard::Tab;
 	move_dir = 2;
 	break;
 
@@ -81,7 +82,7 @@ move_dir:
 	down = sf::Keyboard::G;
 	left = sf::Keyboard::F;
 	right = sf::Keyboard::H;
-	bomb = sf::Keyboard::Space;
+	bomb = sf::Keyboard::Tab;
 	move_dir = 1;
 	break;
     }
@@ -158,15 +159,11 @@ void Character::draw_graphics(sf::RenderWindow &our_window)
 
 void Character::make_bomb()
 {
-    if (sf::Keyboard::isKeyPressed(bomb) && bombs > 0 && !(is_immortal))
+    if (sf::Keyboard::isKeyPressed(bomb) && bombs > 0 && !(is_immortal) && !(game_ptr->is_bomb(row, col)))
     {
-		std::cout << "vi kom hit \n";
 		game_ptr->set_element(row, col, 3);
-		std::cout << "vi kom hit 2\n";
 		Bomb_settings bomb_setting{2, 2, 1};
-		std::cout << "vi kom hit 3\n";
 		game_ptr->add_bomb(row, col, std::make_unique<Bomb>(row, col, bomb_setting, game_ptr, player_number));
-		std::cout << "vi klarade det \n";
 		bombs -= 1;
 	//anropa bomb-construktor
     }
