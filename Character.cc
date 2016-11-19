@@ -55,8 +55,8 @@ move_dir:
 	up = sf::Keyboard::Up;
 	down = sf::Keyboard::Down;
 	left = sf::Keyboard::Left;
-	//right = sf::Keyboard::Right;
-	bomb = sf::Keyboard::Tab;
+	right = sf::Keyboard::Right;
+	//bomb = sf::Keyboard::Tab;
 	bomb = sf::Keyboard::RShift;
 	move_dir = 1;
 	break;
@@ -69,8 +69,8 @@ move_dir:
 	up = sf::Keyboard::Numpad8;
 	down = sf::Keyboard::Numpad5;
 	left = sf::Keyboard::Numpad4;
-	//right = sf::Keyboard::Numpad6;
-	bomb = sf::Keyboard::Tab;
+	right = sf::Keyboard::Numpad6;
+	//bomb = sf::Keyboard::Tab;
 	bomb = sf::Keyboard::Add;
 	move_dir = 2;
 	break;
@@ -84,8 +84,8 @@ move_dir:
 	down = sf::Keyboard::G;
 	left = sf::Keyboard::F;
 	right = sf::Keyboard::H;
-	bomb = sf::Keyboard::Tab;
-	//bomb = sf::Keyboard::Space;
+	//bomb = sf::Keyboard::Tab;
+	bomb = sf::Keyboard::Space;
 	move_dir = 1;
 	break;
     }
