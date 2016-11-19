@@ -48,6 +48,7 @@ class Character
 	//int curr_step{}; 
 	int step{64};
 	double walk_time {0.3};
+	double vel{step/walk_time};
 	Timer my_timer{walk_time}; 
 	int player_number{};
 	//Bomb_settings bomb_setting{3, 5, 3};
