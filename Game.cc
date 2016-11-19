@@ -16,7 +16,6 @@ Game::Game()
 //-----------------Physics-----------------------
 void Game::update()
 {
-    our_matrix.update();
     for(auto it = bomb_list.begin(); it != bomb_list.end(); ++it)
     {
         it->second->update();

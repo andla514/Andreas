@@ -1,25 +1,26 @@
 #include "Timer.h"
+#include <chrono>
 
-void Timer::stop()
+void Timer::stop() noexcept
 {
     is_stopped = true;
     end_time = std::chrono::system_clock::now();
 }
-void Timer::restart()
+void Timer::restart() noexcept
 {
     is_stopped = false;
     start_time = std::chrono::system_clock::now();
 }
-bool Timer::is_done()
+bool Timer::is_done() noexcept
 {
     return elapsed_time() > duration;
 }
 
-int Timer::fraction_of_completion()
+int Timer::fraction_of_completion() noexcept
 {
-    return static_cast<int>(fraction * completion());
+    return static_cast<int>(fraction * elapsed_time() / duration) % fraction;
 }
-double Timer::completion()
+double Timer::completion() noexcept
 {
     double to_return{elapsed_time() / duration};
     if(to_return >= 1)
@@ -29,7 +30,7 @@ double Timer::completion()
     return to_return;
 }
 
-double Timer::elapsed_time()
+double Timer::elapsed_time() noexcept
 {
     if(!is_stopped)
     {
@@ -39,7 +40,7 @@ double Timer::elapsed_time()
     return elapsed_seconds.count();
 }
 
-int Timer::time_left()
+int Timer::time_left() noexcept
 {
     if(is_done())
     {

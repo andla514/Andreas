@@ -1,28 +1,14 @@
 #include "Matrix_Map.h"
 #include <iostream>
 #include "SFML/Graphics.hpp"
+#include <cstdlib>
+#include <ctime>
 
 //-----------------CONSTRUCTOR-------------------
 Matrix_Map::Matrix_Map()
 : max_rows{sizeof our_map / sizeof our_map[0]}, max_cols{sizeof our_map[0] / sizeof(int)}
 {
     initialize_map();
-}
-//-----------------UPDATE------------------------
-void Matrix_Map::update() noexcept
-{
-    if(sprite_changer.is_done())
-    {
-        sprite_changer.restart();
-        if(++current_explosion >= 5)
-        {
-            current_explosion = 0;
-        }
-        if(++current_bomb >= 3)
-        {
-            current_bomb = 0;
-        }
-    }
 }
 
 //-----------------GET/SET-----------------------
@@ -52,13 +38,13 @@ int Matrix_Map::get_columns() const noexcept
 }
 
 //-----------------Graphics----------------------
-void Matrix_Map::draw_graphics(sf::RenderWindow & our_window) const
+void Matrix_Map::draw_graphics(sf::RenderWindow & our_window)
 {
     // Draws standard background
     our_window.draw(sf::Sprite{background});
     // Creates the sprites needed
-    sf::Sprite explosion_sprite{explosions[current_explosion]};
-    sf::Sprite bomb_sprite{bombs[current_bomb]};
+    sf::Sprite explosion_sprite{explosions[explosion_changer.fraction_of_completion()]};
+    sf::Sprite bomb_sprite{bombs[bomb_changer.fraction_of_completion()]};
     sf::Sprite box_sprite{box};
     
     // Draws all bomb-, explosion- and box-tiles
@@ -130,7 +116,8 @@ void Matrix_Map::initialize_map() noexcept
     ///////////////////////////////////////////////////
 
     load_permanent_textures();
-    
+    srand(time(NULL));
+
     for(int r = 0; r < max_rows; r++)
     {
         for(int c = 0; c < max_cols; c++)

@@ -16,8 +16,7 @@ class Matrix_Map
     public:
     Matrix_Map();
 
-    void update() noexcept;
-    void draw_graphics(sf::RenderWindow &) const;
+    void draw_graphics(sf::RenderWindow &);
 
     int get_element(int row, int col) const;
     void set_element(int row, int col, int new_value);
@@ -32,13 +31,12 @@ class Matrix_Map
     int max_rows;
     int max_cols;
     int our_map[15][21] = {{0}};
-    Timer sprite_changer{0.2};
+    Timer bomb_changer{0.6, 3};
+    Timer explosion_changer{1, 5};
     sf::Texture background;
     sf::Texture box;
     std::vector<sf::Texture> bombs{std::vector<sf::Texture>(3, sf::Texture{})};
     std::vector<sf::Texture> explosions{std::vector<sf::Texture>(5, sf::Texture{})};
-    int current_explosion{0};
-    int current_bomb{0};
 };
 
 #endif
