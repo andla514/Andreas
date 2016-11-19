@@ -182,25 +182,31 @@ void Character::update()
 void Character::load_textures(int player_number)
 {
 	//Skriv en switch som ändrar spelarfärg beroende på nummer
-	for(int i = 0; i <= 7; i++)
-    {
-            if(!back[i].loadFromFile("Textures/Bomberman/Back/Bman_B_f0" + std::to_string(i) + ".png"))
-            {
-                throw std::logic_error("Can't load chacaters back texture");
-            }
-			if(!front[i].loadFromFile("Textures/Bomberman/Front/Bman_F_f0" + std::to_string(i) + ".png"))
-            {
-                throw std::logic_error("Can't load chacaters front texture");
-            }
-			if(!side_right[i].loadFromFile("Textures/Bomberman/Right/Bman_F_f0" + std::to_string(i) + ".png"))
-            {
-                throw std::logic_error("Can't load chacaters right texture");
-            }
-			if(!side_left[i].loadFromFile("Textures/Bomberman/Left/Bman_F_f0" + std::to_string(i) + ".png"))
-            {
-                throw std::logic_error("Can't load chacaters left texture");
-            }
-    }
+	switch (player_number)
+	{
+	case 1:
+		for(int i = 0; i <= 7; i++)
+   		{
+            	if(!back[i].loadFromFile("Textures/Bomberman/Back/Bman_B_f0" + std::to_string(i) + ".png"))
+            	{
+                	throw std::logic_error("Can't load chacaters back texture");
+            	}
+				if(!front[i].loadFromFile("Textures/Bomberman/Front/Bman_F_f0" + std::to_string(i) + ".png"))
+            	{
+                	throw std::logic_error("Can't load chacaters front texture");
+            	}
+				if(!side_right[i].loadFromFile("Textures/Bomberman/Right/Bman_F_f0" + std::to_string(i) + ".png"))
+            	{
+                	throw std::logic_error("Can't load chacaters right texture");
+            	}
+				if(!side_left[i].loadFromFile("Textures/Bomberman/Left/Bman_F_f0" + std::to_string(i) + ".png"))
+            	{
+                	throw std::logic_error("Can't load chacaters left texture");
+            	}
+    	}
+		break;
+	case 2:
+	}
 }
 
 void Character::draw_graphics(sf::RenderWindow &our_window)

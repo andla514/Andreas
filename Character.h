@@ -56,7 +56,7 @@ class Character
 	int const step{64};
 	double walk_time {0.3};
 	double vel{step/walk_time};
-	Timer my_timer{walk_time}; 
+	Timer my_timer{walk_time, 7}; 
 	int player_number{};
 	//Bomb_settings bomb_setting{3, 5, 3};
 	bool is_moving{false};
