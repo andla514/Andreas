@@ -46,12 +46,12 @@ class Character
 	int row{1};
 	int xpos{};
 	int ypos{};
-	int curr_step{}; 
+	//int curr_step{}; 
 	int step{64};
 	double walk_time {0.3};
 	Timer my_timer{walk_time}; 
 	int player_number{};
-	//struct Bomb_settings{3, 5, 3};
+	//Bomb_settings bomb_setting{3, 5, 3};
 	bool is_moving{false};
 	bool is_immortal{false};
 };

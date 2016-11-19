@@ -1,6 +1,7 @@
 #ifndef BOMB_H
 #define BOMB_H
 class Bomb;
+struct Bomb_settings;
 #include "Game.h"
 #include "Character.h"
 #include "Explosion.h"

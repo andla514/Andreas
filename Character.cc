@@ -104,12 +104,12 @@ void Character::add_bomb(int number)
 
 void Character::increase_exp_rad(int number)
 {
-    //Bomb_settings.radius += number;
+    //bomb_setting.radius += number;
 }
 
 void Character::increase_exp_time(int number)
 {
-    //bomb_settings.explosion_delay += number;
+    //bomb_setting.explosion_delay += number;
 }
 
 void Character::update()
@@ -161,8 +161,8 @@ void Character::make_bomb()
     if (sf::Keyboard::isKeyPressed(bomb) )//&& bombs > 0 && !(is_immortal))
     {
 		game_ptr->set_element(row, col, 3);
-		Bomb_settings settings{2, 2, 1};
-		game_ptr->add_bomb(row, col, std::make_unique<Bomb>(row, col, settings, game_ptr, player_number));
+		Bomb_settings bomb_setting{2, 2, 1};
+		game_ptr->add_bomb(row, col, std::make_unique<Bomb>(row, col, bomb_setting, game_ptr, player_number));
 	//anropa bomb-construktor
     }
 }
@@ -210,7 +210,8 @@ void Character::smooth_move()
 	}
 	else
 	{
-*/	curr_step = my_timer.elapsed_time() / walk_time;
+*/	
+	int curr_step = step * (my_timer.elapsed_time() / walk_time);
 
 	if(my_timer.is_done())
 	{
