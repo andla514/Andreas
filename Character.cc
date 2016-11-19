@@ -257,10 +257,6 @@ void Character::move_player()
 		std::cout << "fall 1";
 		row += row_inc;
 		is_moving = true;
-		if(row > 0)
-			move_dir = 2;
-		else
-			move_dir = 1;
 		my_timer.restart();
 
     }
@@ -269,33 +265,21 @@ void Character::move_player()
 		std::cout << "fall 2";
 		col += col_inc;
 		is_moving = true;
-		if(col_inc > 0)
-			move_dir = 4;
-		else 
-			move_dir = 3;
 		my_timer.restart();
 
     }
-    else if (game_ptr->can_move_to(row + row_inc, col))
+    else if (game_ptr->can_move_to(row + row_inc, col) && !(game_ptr->can_move_to(row, col + col_inc)))
     {
 		std::cout << "row_inc: " << row_inc << " col_inc: " << col_inc << " fall 3 \n";
 		row += row_inc;
 		is_moving = true;
-		if(row > 0)
-			move_dir = 2;
-		else
-			move_dir = 1;
 		my_timer.restart();
     }
-    else if (game_ptr->can_move_to(row, col + col_inc))
+    else if (game_ptr->can_move_to(row, col + col_inc) && !(game_ptr->can_move_to(row + row_inc, col)))
     {
 		std::cout << "fall 4";
 		col += col_inc;
 		is_moving = true;
-		if(col_inc > 0)
-			move_dir = 4;
-		else 
-			move_dir = 3;
 		my_timer.restart();
     }
 	else
@@ -310,7 +294,7 @@ void Character::move_player()
 	4 => right
 	*/
 
-	/*
+
 	if(col_inc > 0)
 	{
 		move_dir = 4;
@@ -332,5 +316,5 @@ void Character::move_player()
 		move_dir = 1;
 		//last_key = sf::Keyboard::Key(up);
 	}
-	*/
+
 }
