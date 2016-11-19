@@ -13,7 +13,7 @@ EXTRA_TAGS += -DSFML_STATIC -I SFML\include -L SFML\lib -lsfml-graphics-s -lsfml
 
 # Objektkodsmoduler som ingår i den kompletta boombox.
 
-OBJECTS = Main.o Bomb.o Matrix_Map.o Character.o Game.o Main_game.cpp Explosion.o Timer.o Item.o
+OBJECTS = Main.o Bomb.o Matrix_Map.o Character.o Game.o Main_game.cc Explosion.o Timer.o Item.o
 
 #OBJECTS = Character.o Item.o Bomb.o Matrix_Map.o Game.o Main_game.o Explosion.o Timer.o
 
@@ -57,8 +57,8 @@ Explosion.o: Explosion.h Explosion.cc
 Game.o: Game.h Game.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Game.cc $(EXTRA_TAGS)
 	
-Main_game.o: Main_game.cpp
-	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Main_game.cpp $(EXTRA_TAGS)
+Main_game.o: Main_game.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Main_game.cc $(EXTRA_TAGS)
 	
 Main.o: Main.h Main.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c Main.cc $(EXTRA_TAGS)

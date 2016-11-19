@@ -46,7 +46,6 @@ void Main::start()
             graphics_timer.restart();
         }
 
-
         sf::sleep(sf::milliseconds(1));
     }
 }

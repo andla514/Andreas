@@ -181,19 +181,37 @@ void Character::smooth_move()
 	3 => left
 	4 => right
 	*/
-	double time{my_timer.elapsed_time() / walk_time};
-	int curr_step = step * time;
+	
 
-/*
-	if(my_timer.is_done() && sf::Keyboard::isKeyPressed(last_key))
+
+/*	if(my_timer.is_done() && sf::Keyboard::isKeyPressed(last_key))
 	{
 		is_moving = true;
 		my_timer.restart();
 		xpos = 64 * col;
 		ypos = 64 * row;
-		step = 64;
+		step = 64- curr_step;
+		if(move_dir == 1)
+		{
+			ypos -= curr_step;
+		}
+		else if(move_dir == 2)
+		{
+			ypos += curr_step;
+		}
+		else if(move_dir == 3)
+		{
+			xpos  -= curr_step;
+		}
+		else if(move_dir == 4)
+		{
+			xpos += curr_step;
+		}
 	}
-	*/
+	else
+	{
+*/	curr_step = my_timer.elapsed_time() / walk_time;
+
 	if(my_timer.is_done())
 	{
 		is_moving = false;
@@ -230,6 +248,8 @@ void Character::move_player()
 {
     int col_inc{0};
     int row_inc{0};
+	int curr_col{col};
+	int curr_row{row};
 
     if (sf::Keyboard::isKeyPressed(up))
     {
@@ -291,23 +311,23 @@ void Character::move_player()
 	*/
 
 
-	if(col_inc > 0)
+	if(col > curr_col)
 	{
 		move_dir = 4;
 		//last_key = sf::Keyboard::Key(right);
 	}
-	else if(col_inc < 0)
+	else if(col < curr_col)
 	{
 		move_dir = 3;
 		//last_key = sf::Keyboard::Key(left);
 	}
-	else if(row_inc > 0)
+	else if(row > curr_row)
 	{
 		move_dir = 2;
 		//last_key = sf::Keyboard::Key(down);
 		
 	}
-	else if(row_inc < 0)
+	else if(row < curr_row)
 	{
 		move_dir = 1;
 		//last_key = sf::Keyboard::Key(up);

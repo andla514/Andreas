@@ -46,6 +46,7 @@ class Character
 	int row{1};
 	int xpos{};
 	int ypos{};
+	int curr_step{}; 
 	int step{64};
 	double walk_time {0.3};
 	Timer my_timer{walk_time}; 
