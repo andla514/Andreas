@@ -158,11 +158,16 @@ void Character::draw_graphics(sf::RenderWindow &our_window)
 
 void Character::make_bomb()
 {
-    if (sf::Keyboard::isKeyPressed(bomb) )//&& bombs > 0 && !(is_immortal))
+    if (sf::Keyboard::isKeyPressed(bomb) && bombs > 0 && !(is_immortal))
     {
+		std::cout << "vi kom hit \n";
 		game_ptr->set_element(row, col, 3);
+		std::cout << "vi kom hit 2\n";
 		Bomb_settings bomb_setting{2, 2, 1};
+		std::cout << "vi kom hit 3\n";
 		game_ptr->add_bomb(row, col, std::make_unique<Bomb>(row, col, bomb_setting, game_ptr, player_number));
+		std::cout << "vi klarade det \n";
+		bombs -= 1;
 	//anropa bomb-construktor
     }
 }
