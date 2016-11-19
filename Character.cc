@@ -7,7 +7,7 @@
 #include "Item.h"
 #include "Timer.h"
 
-#include <iostream> //Används ej? felsökning
+//#include <iostream> //Används ej?
 //#include <utility>  //bara för move i testkonstruktorn
 
 //-----------------CONSTRUCTOR--------------
@@ -254,7 +254,6 @@ void Character::move_player()
     }
 	else if (col_inc == 0 && row_inc != 0 && game_ptr->can_move_to(row + row_inc, col))
     {
-		std::cout << "fall 1" << " move_dir " << move_dir << " row_inc: " << row_inc << " col_inc: " << col_inc << "\n";
 		row += row_inc;
 		is_moving = true;
 		my_timer.restart();
@@ -262,7 +261,6 @@ void Character::move_player()
     }
 	else if (col_inc != 0 && row_inc == 0 && game_ptr->can_move_to(row, col + col_inc))
     {
-		std::cout << "fall 2";
 		col += col_inc;
 		is_moving = true;
 		my_timer.restart();
@@ -270,14 +268,12 @@ void Character::move_player()
     }
     else if (game_ptr->can_move_to(row + row_inc, col) && row_inc != 0)
     {
-		std::cout << "row_inc: " << row_inc << " col_inc: " << col_inc << " fall 3 \n";
 		row += row_inc;
 		is_moving = true;
 		my_timer.restart();
     }
     else if (game_ptr->can_move_to(row, col + col_inc) && col_inc != 0)
     {
-		std::cout << "fall 4";
 		col += col_inc;
 		is_moving = true;
 		my_timer.restart();
