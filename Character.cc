@@ -55,8 +55,9 @@ move_dir:
 	up = sf::Keyboard::Up;
 	down = sf::Keyboard::Down;
 	left = sf::Keyboard::Left;
-	right = sf::Keyboard::Right;
+	//right = sf::Keyboard::Right;
 	bomb = sf::Keyboard::Tab;
+	bomb = sf::Keyboard::RShift;
 	move_dir = 1;
 	break;
 
@@ -68,8 +69,9 @@ move_dir:
 	up = sf::Keyboard::Numpad8;
 	down = sf::Keyboard::Numpad5;
 	left = sf::Keyboard::Numpad4;
-	right = sf::Keyboard::Numpad6;
+	//right = sf::Keyboard::Numpad6;
 	bomb = sf::Keyboard::Tab;
+	bomb = sf::Keyboard::Add;
 	move_dir = 2;
 	break;
 
@@ -83,6 +85,7 @@ move_dir:
 	left = sf::Keyboard::F;
 	right = sf::Keyboard::H;
 	bomb = sf::Keyboard::Tab;
+	//bomb = sf::Keyboard::Space;
 	move_dir = 1;
 	break;
     }
@@ -183,7 +186,7 @@ void Character::smooth_move()
 	3 => left
 	4 => right
 	*/
-	double progress = my_timer.elapsed_time()* 0.001 * vel;
+	double progress = my_timer.elapsed_time() * vel;
 	xpos = 64 * col;
 	ypos = 64 * row;
 
@@ -214,7 +217,7 @@ void Character::smooth_move()
 	else
 	{
 */	
-	int curr_step = step * (my_timer.elapsed_time() / walk_time);
+	//int curr_step = step * (my_timer.elapsed_time() / walk_time);
 
 	if(my_timer.is_done())
 	{
@@ -231,15 +234,18 @@ void Character::smooth_move()
 	else if(move_dir == 2)
 	{
 		//ypos += curr_step;
+		ypos = ypos - 64 + progress;
 
 	}
 	else if(move_dir == 3)
 	{
 		//xpos -= curr_step;
+		xpos =  xpos + 64 - progress; 
 	}
 	else if(move_dir == 4)
 	{
 		//xpos += curr_step;
+		xpos = xpos - 64 + progress;
 	}
 
 	//step -= curr_step;
