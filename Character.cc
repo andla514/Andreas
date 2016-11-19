@@ -6,6 +6,7 @@
 #include "Bomb.h"
 #include "Item.h"
 #include "Timer.h"
+#include <stdexcept>
 
 //#include <iostream> //Används ej?
 //#include <utility>  //bara för move i testkonstruktorn
@@ -121,6 +122,28 @@ void Character::hurt_player()
     life -= 1;
 }
 
+int Character::index_cal(double percent, bool moving)
+{
+	if(!moving)
+		return 0;
+	else if(percent < 0 || percent > 1)
+		throw std::logic_error("Percent is not in index");
+	else if(percent <= 0.143)
+		return 1;
+	else if(percent < 0.286)
+		return 2;
+	else if(percent <= 0.429)
+		return 3;
+	else if(percent <= 0.571)
+		return 4;
+	else if(percent <= 0.714)
+		return 5;
+	else if(percent <= 0.857)
+		return 6;
+	else
+		return 7;
+}
+
 //-----------------Update/Graphics--------------
 void Character::update()
 {
@@ -173,7 +196,7 @@ void Character::load_textures(int player_number)
             {
                 throw std::logic_error("Can't load chacaters right texture");
             }
-			if(!side_left[i].loadFromFile("Textures/Bomberman/Right/Bman_F_f0" + std::to_string(i) + ".png"))
+			if(!side_left[i].loadFromFile("Textures/Bomberman/Left/Bman_F_f0" + std::to_string(i) + ".png"))
             {
                 throw std::logic_error("Can't load chacaters left texture");
             }
@@ -183,12 +206,32 @@ void Character::load_textures(int player_number)
 void Character::draw_graphics(sf::RenderWindow &our_window)
 {
     // TODO
-	if(!is_moving && move_dir == 1)
+	sf::Sprite charcter_sprite;
+	int index{index_cal(my_timer.completion(), is_moving)};
+	switch(move_dir)
 	{
-		sf::Sprite charcter_sprite{back[0]};
+	case 1:
+		charcter_sprite.setTexture(back[index]);
+		break;
+	case 2:
+		charcter_sprite.setTexture(front[index]);
+		break;
+	case 3:
+		charcter_sprite.setTexture(side_left[index]);
+		break;
+	case 4:
+		charcter_sprite.setTexture(side_right[index]);
+		break;
+	}
+
+	charcter_sprite.setPosition(xpos, ypos - 64);
+	our_window.draw(charcter_sprite);
+
+/*
+	if(!is_moving && move_dir == 1)
+			charcter_sprite = sf::Sprite {back[0]};
 		charcter_sprite.setPosition(xpos, ypos - 64);
 		our_window.draw(charcter_sprite);
-	}
 	else if(!is_moving && move_dir == 2)
 	{
 		sf::Sprite charcter_sprite{front[0]};
@@ -207,6 +250,22 @@ void Character::draw_graphics(sf::RenderWindow &our_window)
 		charcter_sprite.setPosition(xpos, ypos - 64);
 		our_window.draw(charcter_sprite);
 	}
+	else if(move_dir == 1)
+	{
+
+	}
+	else if(move_dir == 2)
+	{
+
+	}
+	else if(move_dir == 3)
+	{
+
+	}
+	else if(move_dir == 4)
+	{
+		
+	}
 	else
 	{
 	sf::CircleShape ball{32};
@@ -215,6 +274,7 @@ void Character::draw_graphics(sf::RenderWindow &our_window)
 	ball.setPosition(xpos, ypos);
 	our_window.draw(ball);
 	}
+	*/
 }
 
 //-----------------Make/Use--------------

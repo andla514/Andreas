@@ -33,6 +33,7 @@ class Character
 	
 	private:
 	void init_character(int player_number);
+	int index_cal(double percent, bool moving);
 	sf::Keyboard::Key up;
 	sf::Keyboard::Key down;
 	sf::Keyboard::Key left;
