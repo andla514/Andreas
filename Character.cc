@@ -278,7 +278,7 @@ void Character::move_player()
     }
     else if (game_ptr->can_move_to(row + row_inc, col))
     {
-		std::cout << row_inc << " " << col_inc << " fall 3 \n";
+		std::cout << "row_inc: " << row_inc << " col_inc: " << col_inc << " fall 3 \n";
 		row += row_inc;
 		is_moving = true;
 		if(row > 0)
