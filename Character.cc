@@ -18,10 +18,10 @@ Character::Character()
 Character::Character(std::shared_ptr<Game> our_game, int player_number)
     : game_ptr{our_game}, player_number{player_number}
 {
-	set_keys(player_number);
+	init_character(player_number);
 }
 
-void Character::set_keys(int player_number)
+void Character::init_character(int player_number)
 {
 	// bugg när inte alla har samma bomb_key
 /*
@@ -31,7 +31,7 @@ move_dir:
 3 => left
 4 => right
 */
-
+	load_textures(player_number);
     switch (player_number)
     {
     case 1:
@@ -91,7 +91,7 @@ move_dir:
     }
 }
 
-//-----------------FUNCTION--------------
+//-----------------Get/Change--------------
 int Character::get_col() const
 {
     return col;
@@ -116,6 +116,12 @@ void Character::increase_exp_time(int number)
     //bomb_setting.explosion_delay += number;
 }
 
+void Character::hurt_player()
+{
+    life -= 1;
+}
+
+//-----------------Update/Graphics--------------
 void Character::update()
 {
     if (life > 0)
@@ -150,16 +156,68 @@ void Character::update()
     }
 }
 
+void Character::load_textures(int player_number)
+{
+	//Skriv en switch som ändrar spelarfärg beroende på nummer
+	for(int i = 0; i <= 7; i++)
+    {
+            if(!back[i].loadFromFile("Textures/Bomberman/Back/Bman_B_f0" + std::to_string(i) + ".png"))
+            {
+                throw std::logic_error("Can't load chacaters back texture");
+            }
+			if(!front[i].loadFromFile("Textures/Bomberman/Front/Bman_F_f0" + std::to_string(i) + ".png"))
+            {
+                throw std::logic_error("Can't load chacaters front texture");
+            }
+			if(!side_right[i].loadFromFile("Textures/Bomberman/Right/Bman_F_f0" + std::to_string(i) + ".png"))
+            {
+                throw std::logic_error("Can't load chacaters right texture");
+            }
+			if(!side_left[i].loadFromFile("Textures/Bomberman/Right/Bman_F_f0" + std::to_string(i) + ".png"))
+            {
+                throw std::logic_error("Can't load chacaters left texture");
+            }
+    }
+}
+
 void Character::draw_graphics(sf::RenderWindow &our_window)
 {
     // TODO
+	if(!is_moving && move_dir == 1)
+	{
+		sf::Sprite charcter_sprite{back[0]};
+		charcter_sprite.setPosition(xpos, ypos - 64);
+		our_window.draw(charcter_sprite);
+	}
+	else if(!is_moving && move_dir == 2)
+	{
+		sf::Sprite charcter_sprite{front[0]};
+		charcter_sprite.setPosition(xpos, ypos - 64);
+		our_window.draw(charcter_sprite);
+	}
+	else if(!is_moving && move_dir == 3)
+	{
+		sf::Sprite charcter_sprite{side_left[0]};
+		charcter_sprite.setPosition(xpos, ypos - 64);
+		our_window.draw(charcter_sprite);
+	}
+	else if(!is_moving && move_dir == 4)
+	{
+		sf::Sprite charcter_sprite{side_right[0]};
+		charcter_sprite.setPosition(xpos, ypos - 64);
+		our_window.draw(charcter_sprite);
+	}
+	else
+	{
 	sf::CircleShape ball{32};
 	ball.setFillColor(sf::Color::Blue);
 	ball.setTextureRect(sf::IntRect{0, 0, 64, 64});
 	ball.setPosition(xpos, ypos);
 	our_window.draw(ball);
+	}
 }
 
+//-----------------Make/Use--------------
 void Character::make_bomb()
 {
     if (sf::Keyboard::isKeyPressed(bomb) && bombs > 0 && !(is_immortal) && !(game_ptr->is_bomb(row, col)))
@@ -177,6 +235,7 @@ void Character::use_item(Item &pickup)
     //pickup.give_power_up(*this)
 }
 
+//-----------------Movement--------------
 void Character::smooth_move()
 {
 	/*
@@ -186,10 +245,17 @@ void Character::smooth_move()
 	3 => left
 	4 => right
 	*/
+
+/*
+	if(my_timer.is_done() && sf::Keyboard::isKeyPressed(last_key))
+	{
+		my_timer.restart();
+	}
+	*/
+
 	double progress = my_timer.elapsed_time() * vel;
 	xpos = 64 * col;
 	ypos = 64 * row;
-
 /*	if(my_timer.is_done() && sf::Keyboard::isKeyPressed(last_key))
 	{
 		is_moving = true;
@@ -249,11 +315,6 @@ void Character::smooth_move()
 	}
 
 	//step -= curr_step;
-}
-
-void Character::hurt_player()
-{
-    life -= 1;
 }
 
 void Character::move_player()
@@ -326,23 +387,23 @@ void Character::move_player()
 	if(col > curr_col)
 	{
 		move_dir = 4;
-		//last_key = sf::Keyboard::Key(right);
+		last_key = sf::Keyboard::Key(right);
 	}
 	else if(col < curr_col)
 	{
 		move_dir = 3;
-		//last_key = sf::Keyboard::Key(left);
+		last_key = sf::Keyboard::Key(left);
 	}
 	else if(row > curr_row)
 	{
 		move_dir = 2;
-		//last_key = sf::Keyboard::Key(down);
+		last_key = sf::Keyboard::Key(down);
 		
 	}
 	else if(row < curr_row)
 	{
 		move_dir = 1;
-		//last_key = sf::Keyboard::Key(up);
+		last_key = sf::Keyboard::Key(up);
 	}
 
 }

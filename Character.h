@@ -6,6 +6,7 @@ class Character;
 #include "Item.h"
 #include <string>
 #include <memory>
+#include <vector>
 #include "Timer.h"
 #include "SFML/Graphics.hpp"
 
@@ -28,16 +29,21 @@ class Character
 	void use_item(Item & pickup);
 	void make_bomb();
 	void move_player();
+	void load_textures(int player_number);
 	
 	private:
-	void set_keys(int player_number);
+	void init_character(int player_number);
 	sf::Keyboard::Key up;
 	sf::Keyboard::Key down;
 	sf::Keyboard::Key left;
 	sf::Keyboard::Key right;
 	sf::Keyboard::Key bomb;
-	//sf::Keyboard::Key last_key;
+	sf::Keyboard::Key last_key;
 	std::shared_ptr<Game> game_ptr{};
+	std::vector<sf::Texture> back{std::vector<sf::Texture>(8, sf::Texture{})};
+    std::vector<sf::Texture> front{std::vector<sf::Texture>(8, sf::Texture{})};
+	std::vector<sf::Texture> side_left{std::vector<sf::Texture>(8, sf::Texture{})};
+    std::vector<sf::Texture> side_right{std::vector<sf::Texture>(8, sf::Texture{})};
 	int move_dir{1};
 	int life{2};
 	int bombs{2};
