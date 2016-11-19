@@ -314,8 +314,8 @@ void Character::smooth_move()
 	*/
 
 	double progress = my_timer.elapsed_time() * vel;
-	xpos = 64 * col;
-	ypos = 64 * row;
+	xpos = step * col;
+	ypos = step * row;
 /*	if(my_timer.is_done() && sf::Keyboard::isKeyPressed(last_key))
 	{
 		is_moving = true;
@@ -355,23 +355,23 @@ void Character::smooth_move()
 	else if(move_dir == 1)
 	{
 		//ypos -= curr_step;
-		ypos = ypos + 64 - progress;
+		ypos = ypos + step - progress;
 	}
 	else if(move_dir == 2)
 	{
 		//ypos += curr_step;
-		ypos = ypos - 64 + progress;
+		ypos = ypos - step + progress;
 
 	}
 	else if(move_dir == 3)
 	{
 		//xpos -= curr_step;
-		xpos =  xpos + 64 - progress; 
+		xpos =  xpos + step - progress; 
 	}
 	else if(move_dir == 4)
 	{
 		//xpos += curr_step;
-		xpos = xpos - 64 + progress;
+		xpos = xpos - step + progress;
 	}
 
 	//step -= curr_step;
