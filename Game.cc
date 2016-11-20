@@ -79,14 +79,17 @@ bool Game::can_move_to(int row, int col) const
 void Game::add_item(int row, int col, std::unique_ptr<Item> && new_item) noexcept
 {
     item_list.insert(std::pair<std::string, std::unique_ptr<Item>>(std::to_string(row) + "," + std::to_string(col), std::move(new_item)));
+    set_element(row, col, 2);
 }
 void Game::add_bomb(int row, int col, std::unique_ptr<Bomb> && new_bomb) noexcept
 {
     bomb_list.insert(std::pair<std::string, std::unique_ptr<Bomb>>(std::to_string(row) + "," + std::to_string(col), std::move(new_bomb)));
+    set_element(row, col, 3);
 }
 void Game::add_explosion(int row, int col, std::unique_ptr<Explosion> && new_explosion) noexcept
 {
     explosion_list.insert(std::pair<std::string, std::unique_ptr<Explosion>>(std::to_string(row) + "," + std::to_string(col), std::move(new_explosion)));
+    set_element(row, col, 4);
 }
 void Game::add_characters(int number_of_players, std::shared_ptr<Game> our_game) noexcept
 {

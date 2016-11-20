@@ -35,11 +35,10 @@ void Bomb::detonate()
 
 /*
 * void explode (int row, int col, bool item_bool)
-* Creates a Explosion object
+* Creates an Explosion object
 */
 void Bomb::explode(int row, int col, bool item_bool)
 {
-	my_game->set_element(row, col, 4);
 	my_game->add_explosion(row, col, (std::make_unique<Explosion>(row, col, my_settings.explosion_delay,
 										item_bool, my_game)));
 }
@@ -85,12 +84,12 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		// Current place is an explosion
 		else if (my_game->is_standing_in_fire(row, col))
 		{
+			// The explotion with the longest remaining time on its timer, stays
 			if ((my_game->get_explosion_reference(row, col)).time_left() <= 1000 * my_settings.explosion_delay)
 			{
 				bool temp = (my_game->get_explosion_reference(row, col)).get_was_box();
 				my_game->remove_explosion(row, col);
-				my_game->add_explosion(row, col, std::make_unique<Explosion>(Explosion(row, col, my_settings.explosion_delay,
-									temp, my_game)));
+				explode(row, col, temp);
 				distance --;
 			}
 			else

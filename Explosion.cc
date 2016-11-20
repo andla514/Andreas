@@ -35,7 +35,6 @@ void Explosion::make_item()
 		my_game->add_item(row, col, std::make_unique<Item_Inc_Exp_Time>(row, col));
 	}
 	
-	my_game->set_element(row, col, 2);
 	std::cout << "Lägger ett item";
 }
 
@@ -45,14 +44,11 @@ void Explosion::make_item()
 */
 void Explosion::update()
 {
-	std::cout << "Timer: " << explosion_timer.time_left() << std::endl;
 	if (explosion_timer.is_done())
 	{
-		std::cout << "Tar bort" << std::endl;
 		int random_value {rand() % 100};
 		if (was_box && random_value <= 30)
 		{
-			my_game->set_element(row, col, 2);
 			make_item();
 		}
 		else

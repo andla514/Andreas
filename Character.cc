@@ -132,7 +132,6 @@ void Character::make_bomb()
 {
     if (sf::Keyboard::isKeyPressed(bomb) )//&& bombs > 0 && !(is_immortal))
     {
-		game_ptr->set_element(row, col, 3);
 		Bomb_settings settings{2, 2, 1};
 		game_ptr->add_bomb(row, col, std::make_unique<Bomb>(row, col, settings, game_ptr, player_number));
 	//anropa bomb-construktor
