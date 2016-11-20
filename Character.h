@@ -51,14 +51,13 @@ class Character
 	int col{1};
 	int row{1};
 	int xpos{};
-	int ypos{};
-	//int curr_step{}; 
+	int ypos{}; 
 	int const step{64};
-	double walk_time {0.3};
-	double vel{step/walk_time};
+	double walk_time {0.15};
 	Timer my_timer{walk_time, 7}; 
 	int player_number{};
-	//Bomb_settings bomb_setting{3, 5, 3};
+	Bomb_settings bomb_setting{2, 2, 1};
+
 	bool is_moving{false};
 	bool is_immortal{false};
 };

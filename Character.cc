@@ -6,10 +6,7 @@
 #include "Item.h"
 #include "Timer.h"
 #include <stdexcept>
-
 //#include <stdio.h>
-//#include <iostream> //Används ej?
-//#include <utility>  //bara för move i testkonstruktorn
 
 //-----------------CONSTRUCTOR--------------
 Character::Character()
@@ -56,7 +53,6 @@ move_dir:
 	down = sf::Keyboard::Down;
 	left = sf::Keyboard::Left;
 	right = sf::Keyboard::Right;
-	//bomb = sf::Keyboard::Tab;
 	bomb = sf::Keyboard::RShift;
 	move_dir = 1;
 	break;
@@ -70,7 +66,6 @@ move_dir:
 	down = sf::Keyboard::Numpad5;
 	left = sf::Keyboard::Numpad4;
 	right = sf::Keyboard::Numpad6;
-	//bomb = sf::Keyboard::Tab;
 	bomb = sf::Keyboard::Add;
 	move_dir = 2;
 	break;
@@ -84,7 +79,6 @@ move_dir:
 	down = sf::Keyboard::G;
 	left = sf::Keyboard::F;
 	right = sf::Keyboard::H;
-	//bomb = sf::Keyboard::Tab;
 	bomb = sf::Keyboard::Space;
 	move_dir = 1;
 	break;
@@ -148,14 +142,20 @@ void Character::update()
 {
     if (life > 0)
     {
-		if (is_moving)
+		if ((my_timer.is_done() && sf::Keyboard::isKeyPressed(last_key)) || !is_moving)
+		{
+			move_player();
+		}
+		else //if(is_moving)
 		{
 			smooth_move();
 		}
+		/*
 		else
 		{
 			move_player();
 		}
+		*/
 			
 		if (game_ptr->is_standing_in_fire(row, col) && !(is_immortal))
 		{
@@ -271,7 +271,8 @@ void Character::load_textures(int player_number)
 
 void Character::draw_graphics(sf::RenderWindow &our_window)
 {
-    // TODO
+	if(life > 0)
+	{
 	sf::Sprite charcter_sprite;
 	int index{index_cal(my_timer.completion(), is_moving)};
 	switch(move_dir)
@@ -292,55 +293,8 @@ void Character::draw_graphics(sf::RenderWindow &our_window)
 
 	charcter_sprite.setPosition(xpos, ypos - step);
 	our_window.draw(charcter_sprite);
+	}
 
-/*
-	if(!is_moving && move_dir == 1)
-			charcter_sprite = sf::Sprite {back[0]};
-		charcter_sprite.setPosition(xpos, ypos - 64);
-		our_window.draw(charcter_sprite);
-	else if(!is_moving && move_dir == 2)
-	{
-		sf::Sprite charcter_sprite{front[0]};
-		charcter_sprite.setPosition(xpos, ypos - 64);
-		our_window.draw(charcter_sprite);
-	}
-	else if(!is_moving && move_dir == 3)
-	{
-		sf::Sprite charcter_sprite{side_left[0]};
-		charcter_sprite.setPosition(xpos, ypos - 64);
-		our_window.draw(charcter_sprite);
-	}
-	else if(!is_moving && move_dir == 4)
-	{
-		sf::Sprite charcter_sprite{side_right[0]};
-		charcter_sprite.setPosition(xpos, ypos - 64);
-		our_window.draw(charcter_sprite);
-	}
-	else if(move_dir == 1)
-	{
-
-	}
-	else if(move_dir == 2)
-	{
-
-	}
-	else if(move_dir == 3)
-	{
-
-	}
-	else if(move_dir == 4)
-	{
-		
-	}
-	else
-	{
-	sf::CircleShape ball{32};
-	ball.setFillColor(sf::Color::Blue);
-	ball.setTextureRect(sf::IntRect{0, 0, 64, 64});
-	ball.setPosition(xpos, ypos);
-	our_window.draw(ball);
-	}
-	*/
 }
 
 //-----------------Make/Use--------------
@@ -348,11 +302,9 @@ void Character::make_bomb()
 {
     if (sf::Keyboard::isKeyPressed(bomb) && bombs > 0 && !(is_immortal) && !(game_ptr->is_bomb(row, col)))
     {
-
+		//Bomb_settings bomb_setting{2, 2, 1};
 		game_ptr->add_bomb(row, col, std::make_unique<Bomb>(row, col, bomb_setting, game_ptr, player_number));
 		bombs -= 1;
-
-	//anropa bomb-construktor
     }
 }
 
@@ -372,75 +324,40 @@ void Character::smooth_move()
 	4 => right
 	*/
 
-/*
+	/*
 	if(my_timer.is_done() && sf::Keyboard::isKeyPressed(last_key))
 	{
 		my_timer.restart();
+		move_player();
 	}
 	*/
 
+	double vel{step/walk_time};
 	double progress = my_timer.elapsed_time() * vel;
 	xpos = step * col;
 	ypos = step * row;
-/*	if(my_timer.is_done() && sf::Keyboard::isKeyPressed(last_key))
-	{
-		is_moving = true;
-		my_timer.restart();
-		xpos = 64 * col;
-		ypos = 64 * row;
-		step = 64- curr_step;
-		if(move_dir == 1)
-		{
-			ypos -= curr_step;
-		}
-		else if(move_dir == 2)
-		{
-			ypos += curr_step;
-		}
-		else if(move_dir == 3)
-		{
-			xpos  -= curr_step;
-		}
-		else if(move_dir == 4)
-		{
-			xpos += curr_step;
-		}
-	}
-	else
-	{
-*/	
-	//int curr_step = step * (my_timer.elapsed_time() / walk_time);
 
 	if(my_timer.is_done())
 	{
 		is_moving = false;
-		//xpos = 64 * col;
-		//ypos = 64 * row;
-		//step = 64;
 	}
 	else if(move_dir == 1)
 	{
-		//ypos -= curr_step;
 		ypos = ypos + step - progress;
 	}
 	else if(move_dir == 2)
 	{
-		//ypos += curr_step;
 		ypos = ypos - step + progress;
 
 	}
 	else if(move_dir == 3)
 	{
-		//xpos -= curr_step;
 		xpos =  xpos + step - progress; 
 	}
 	else if(move_dir == 4)
 	{
-		//xpos += curr_step;
 		xpos = xpos - step + progress;
 	}
-
-	//step -= curr_step;
 }
 
 void Character::move_player()
@@ -509,7 +426,6 @@ void Character::move_player()
 	4 => right
 	*/
 
-
 	if(col > curr_col)
 	{
 		move_dir = 4;
@@ -531,5 +447,4 @@ void Character::move_player()
 		move_dir = 1;
 		last_key = sf::Keyboard::Key(up);
 	}
-
 }
