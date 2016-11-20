@@ -87,13 +87,13 @@ void Bomb::spread_explosions (std::string direction, int distance)
 			// The explotion with the longest remaining time on its timer, stays
 			if ((my_game->get_explosion_reference(row, col)).time_left() <= 1000 * my_settings.explosion_delay)
 			{
-				bool temp = (my_game->get_explosion_reference(row, col)).get_was_box();
-				my_game->remove_explosion(row, col);
-				explode(row, col, temp);
+				(my_game->get_explosion_reference(row, col)).set_time_left(my_settings.explosion_delay);
 				distance --;
 			}
 			else
+			{
 				distance --;
+			}
 		}	
 		else 
 		{

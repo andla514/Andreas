@@ -17,6 +17,7 @@ class Explosion
 	void update();
 	int time_left();
 	bool get_was_box() const; 
+	void set_time_left(double time_left);
 
 	private:
 	int row{};

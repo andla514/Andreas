@@ -16,17 +16,39 @@ Game::Game()
 //-----------------Physics-----------------------
 void Game::update()
 {
-    for(auto it = bomb_list.begin(); it != bomb_list.end(); ++it)
+    for(auto it = bomb_list.begin(); it != bomb_list.end();)
     {
-        it->second->update();
+        if(it->second.get() == nullptr)
+        {
+            it = bomb_list.erase(it);
+        }
+        else
+        {
+            (it++)->second->update();
+        }
     }
-    for(auto it = item_list.begin(); it != item_list.end(); ++it)
+    /*
+    for(auto it = item_list.begin(); it != item_list.end();)
     {
-        //it->second.update();
-    }
-    for(auto it = explosion_list.begin(); it != explosion_list.end(); ++it)
+        if(it->second.get() == nullptr)
+        {
+            it = item_list.erase(it);
+        }
+        else
+        {
+            (it++)->second->update();
+        }
+    }*/
+    for(auto it = explosion_list.begin(); it != explosion_list.end();)
     {
-        it->second->update();
+        if(it->second.get() == nullptr)
+        {
+            it = explosion_list.erase(it);
+        }
+        else
+        {
+            (it++)->second->update();
+        }
     }
     for(auto it = character_list.begin(); it != character_list.end(); ++it)
     {
@@ -38,10 +60,18 @@ void Game::update()
 void Game::draw_graphics(sf::RenderWindow & our_window)
 {
     our_matrix.draw_graphics(our_window);
-    for(auto it = item_list.begin(); it != item_list.end(); ++it)
+    /*
+    for(auto it = item_list.begin(); it != item_list.end();)
     {
-        //it->draw_graphics(our_window)
-    }
+        if(it->second.get() == nullptr)
+        {
+            it = item_list.erase(it);
+        }
+        else
+        {
+            (it++)->second->draw_graphics(our_window);
+        }
+    }*/
     for(auto it = character_list.begin(); it != character_list.end(); ++it)
     {
         it->second.draw_graphics(our_window);
@@ -102,15 +132,27 @@ void Game::add_characters(int number_of_players, std::shared_ptr<Game> our_game)
 //-----------------REMOVE_OBJECT-----------------
 void Game::remove_bomb(int row, int col) noexcept
 {
-    bomb_list.erase(std::to_string(row) + "," + std::to_string(col));
+    bomb_list.at(std::to_string(row) + "," + std::to_string(col)).reset();
+    if(is_bomb(row, col))
+    {
+        set_element(row, col, 0);
+    }
 }
 void Game::remove_explosion(int row, int col) noexcept
 {
-    explosion_list.erase(std::to_string(row) + "," + std::to_string(col));
+    explosion_list.at(std::to_string(row) + "," + std::to_string(col)).reset();
+    if(is_standing_in_fire(row, col))
+    {
+        set_element(row, col, 0);
+    }
 }
 void Game::remove_item(int row, int col) noexcept
 {
     item_list.erase(std::to_string(row) + "," + std::to_string(col));
+    if(is_standing_on_item(row, col))
+    {
+        set_element(row, col, 0);
+    }
 }
 
 //-----------------GET_REFERENCE-----------------
@@ -125,7 +167,7 @@ Character & Game::get_character_reference(int player_number)
 Bomb & Game::get_bomb_reference(int row, int col)
 {
     std::string our_key{std::to_string(row) + "," + std::to_string(col)};
-    if (bomb_list.find(our_key) == bomb_list.end())
+    if (bomb_list.find(our_key) == bomb_list.end() || !bomb_list.at(our_key))
     {
         throw std::logic_error("No bomb at these coordinates");
     }
@@ -134,7 +176,7 @@ Bomb & Game::get_bomb_reference(int row, int col)
 Item & Game::get_item_reference(int row, int col)
 {
     std::string our_key{std::to_string(row) + "," + std::to_string(col)};
-    if (item_list.find(our_key) == item_list.end())
+    if (item_list.find(our_key) == item_list.end() || !item_list.at(our_key))
     {
         throw std::logic_error("No item at these coordinates");
     }
@@ -143,7 +185,7 @@ Item & Game::get_item_reference(int row, int col)
 Explosion & Game::get_explosion_reference(int row, int col)
 {
     std::string our_key{std::to_string(row) + "," + std::to_string(col)};
-    if (explosion_list.find(our_key) == explosion_list.end())
+    if (explosion_list.find(our_key) == explosion_list.end() || !explosion_list.at(our_key))
     {
         throw std::logic_error("No explosion at these coordinates");
     }

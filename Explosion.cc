@@ -51,10 +51,6 @@ void Explosion::update()
 		{
 			make_item();
 		}
-		else
-		{
-			my_game->set_element(row, col, 0);
-		}
 		my_game->remove_explosion(row, col);
 	}
 }
@@ -66,6 +62,11 @@ void Explosion::update()
 int Explosion::time_left()
 {
 	return explosion_timer.time_left();
+}
+
+void Explosion::set_time_left(double time_left)
+{
+	explosion_timer = Timer{time_left};
 }
 
 /*

@@ -114,7 +114,6 @@ void Character::update()
 		{
 	    	use_item(game_ptr->get_item_reference(row, col));
 			game_ptr->remove_item(row, col);
-			game_ptr->set_element(row, col, 0);
 		}
     }
 }
