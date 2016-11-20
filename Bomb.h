@@ -1,7 +1,12 @@
 #ifndef BOMB_H
 #define BOMB_H
 class Bomb;
-struct Bomb_settings;
+struct Bomb_settings
+{
+	int radius;
+	int detonation_delay;
+	int explosion_delay;
+};
 #include "Game.h"
 #include "Character.h"
 #include "Explosion.h"
@@ -9,12 +14,6 @@ struct Bomb_settings;
 #include <memory>
 #include <string>
 #include <stdexcept>
-struct Bomb_settings
-{
-	int radius;
-	int detonation_delay;
-	int explosion_delay;
-};
 
 class Bomb
 {
