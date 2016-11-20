@@ -184,9 +184,72 @@ void Character::load_textures(int player_number)
 	//Skriv en switch som ändrar spelarfärg beroende på nummer
 	switch (player_number)
 	{
-	case 1:
-		for(int i = 0; i <= 7; i++)
-   		{
+		case 1:
+			for(int i = 0; i <= 7; i++)
+			{
+					if(!back[i].loadFromFile("Textures/Bomberman/Back/Bman_B_f0" + std::to_string(i) + ".png"))
+					{
+						throw std::logic_error("Can't load chacaters back texture");
+					}
+					if(!front[i].loadFromFile("Textures/Bomberman/Front/Bman_F_f0" + std::to_string(i) + ".png"))
+					{
+						throw std::logic_error("Can't load chacaters front texture");
+					}
+					if(!side_right[i].loadFromFile("Textures/Bomberman/Right/Bman_F_f0" + std::to_string(i) + ".png"))
+					{
+						throw std::logic_error("Can't load chacaters right texture");
+					}
+					if(!side_left[i].loadFromFile("Textures/Bomberman/Left/Bman_F_f0" + std::to_string(i) + ".png"))
+					{
+						throw std::logic_error("Can't load chacaters left texture");
+					}
+			}
+			break;
+		case 2:
+			for(int i = 0; i <= 7; i++)
+			{
+					if(!back[i].loadFromFile("Textures/Bomberman/Back/Bman_B_f0" + std::to_string(i) + ".png"))
+					{
+						throw std::logic_error("Can't load chacaters back texture");
+					}
+					if(!front[i].loadFromFile("Textures/Bomberman/Front/Bman_F_f0" + std::to_string(i) + ".png"))
+					{
+						throw std::logic_error("Can't load chacaters front texture");
+					}
+					if(!side_right[i].loadFromFile("Textures/Bomberman/Right/Bman_F_f0" + std::to_string(i) + ".png"))
+					{
+						throw std::logic_error("Can't load chacaters right texture");
+					}
+					if(!side_left[i].loadFromFile("Textures/Bomberman/Left/Bman_F_f0" + std::to_string(i) + ".png"))
+					{
+						throw std::logic_error("Can't load chacaters left texture");
+					}
+			}
+			break;
+		case 3:
+			for(int i = 0; i <= 7; i++)
+			{
+					if(!back[i].loadFromFile("Textures/Bomberman/Back/Bman_B_f0" + std::to_string(i) + ".png"))
+					{
+						throw std::logic_error("Can't load chacaters back texture");
+					}
+					if(!front[i].loadFromFile("Textures/Bomberman/Front/Bman_F_f0" + std::to_string(i) + ".png"))
+					{
+						throw std::logic_error("Can't load chacaters front texture");
+					}
+					if(!side_right[i].loadFromFile("Textures/Bomberman/Right/Bman_F_f0" + std::to_string(i) + ".png"))
+					{
+						throw std::logic_error("Can't load chacaters right texture");
+					}
+					if(!side_left[i].loadFromFile("Textures/Bomberman/Left/Bman_F_f0" + std::to_string(i) + ".png"))
+					{
+						throw std::logic_error("Can't load chacaters left texture");
+					}
+			}
+			break;
+		case 4:
+			for(int i = 0; i <= 7; i++)
+   			{
             	if(!back[i].loadFromFile("Textures/Bomberman/Back/Bman_B_f0" + std::to_string(i) + ".png"))
             	{
                 	throw std::logic_error("Can't load chacaters back texture");
@@ -203,9 +266,8 @@ void Character::load_textures(int player_number)
             	{
                 	throw std::logic_error("Can't load chacaters left texture");
             	}
-    	}
-		break;
-	case 2:
+    		}
+			break;
 	}
 }
 
