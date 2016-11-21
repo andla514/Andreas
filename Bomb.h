@@ -1,6 +1,12 @@
 #ifndef BOMB_H
 #define BOMB_H
 class Bomb;
+struct Bomb_settings
+{
+	int radius;
+	int detonation_delay;
+	int explosion_delay;
+};
 #include "Game.h"
 #include "Character.h"
 #include "Game.h"
@@ -10,12 +16,6 @@ class Bomb;
 #include <memory>
 #include <string>
 #include <stdexcept>
-struct Bomb_settings
-{
-	int radius;
-	int detonation_delay;
-	int explosion_delay;
-};
 
 class Bomb
 {
@@ -38,8 +38,9 @@ class Bomb
 	int my_creator{};
 	
 	// Private functions
+	void explode(int row, int col, bool item_bool);
 	void spread_explosions(std::string direction, int distance);
-	//Character& get_creator();	
+	Character& get_creator();	
 };
 
 

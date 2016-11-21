@@ -2,13 +2,13 @@
 #ifndef GAME_H
 #define GAME_H
 class Game;
-#include <map>
 #include "Bomb.h"
 #include "Item.h"
-#include "Character.h"
-#include <string>
 #include "Explosion.h"
+#include "Character.h"
 #include "Matrix_Map.h"
+#include <map>
+#include <string>
 #include <memory>
 #include "SFML/Graphics.hpp"
 /*
@@ -23,27 +23,38 @@ class Game
 {
     public:
     Game();
+<<<<<<< HEAD
     void update() noexcept;
 	void draw_graphics(sf::RenderWindow &);
     int get_element(int row, int col) const noexcept;
     void set_element(int row, int col, int new_value) noexcept;
+=======
+
+    void update();
+    void draw_graphics(sf::RenderWindow &);
+
+    int get_element(int row, int col) const;
+    void set_element(int row, int col, int new_value);
+>>>>>>> 99dd3e0e606f8e90ed20559bd60ff2a2ca232ce0
     int get_rows() const noexcept;
     int get_columns() const noexcept;
     // Bools
-    bool is_standing_in_fire(int row, int col) const noexcept;
-    bool is_standing_on_item(int row, int col) const noexcept;
-    bool can_move_to(int row, int col) const noexcept;
-    bool is_wall(int row, int col) const noexcept;
-    bool is_box(int row, int col) const noexcept;
-    bool is_bomb(int row, int col) const noexcept;
-    // Handle reference lists
-    void add_item(int row, int col, std::unique_ptr<Item> && new_item);
-    void add_bomb(int row, int col, std::unique_ptr<Bomb> && new_bomb);
-    void add_explosion(int row, int col, std::unique_ptr<Explosion> && new_explosion);
+    bool is_standing_in_fire(int row, int col) const;
+    bool is_standing_on_item(int row, int col) const;
+    bool can_move_to(int row, int col) const;
+    bool is_wall(int row, int col) const;
+    bool is_box(int row, int col) const;
+    bool is_bomb(int row, int col) const;
+    // Add object
+    void add_item(int row, int col, std::unique_ptr<Item> && new_item) noexcept;
+    void add_bomb(int row, int col, std::unique_ptr<Bomb> && new_bomb) noexcept;
+    void add_explosion(int row, int col, std::unique_ptr<Explosion> && new_explosion) noexcept;
+    void add_characters(int number_of_players, std::shared_ptr<Game> our_game) noexcept;
+    // Remove object
     void remove_item(int row, int col) noexcept;
     void remove_bomb(int row, int col) noexcept;
     void remove_explosion(int row, int col) noexcept;
-    void add_characters(int number_of_players, std::shared_ptr<Game> our_game);
+    // Get reference to object
     Character & get_character_reference(int player_number);
     Bomb & get_bomb_reference(int row, int col);
     Item & get_item_reference(int row, int col);
