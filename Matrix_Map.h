@@ -37,6 +37,7 @@ class Matrix_Map
     sf::Texture box;
     std::vector<sf::Texture> bombs{std::vector<sf::Texture>(3, sf::Texture{})};
     std::vector<sf::Texture> explosions{std::vector<sf::Texture>(5, sf::Texture{})};
+	std::vector<sf::Texture> items{std::vector<sf::Texture>(2, sf::Texture{})};
 };
 
 #endif

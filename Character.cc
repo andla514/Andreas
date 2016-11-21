@@ -4,13 +4,15 @@
 #include "Character.h"
 #include "Bomb.h"
 #include "Item.h"
-//#include <iostream> //Används ej?
-//#include <utility>  //bara för move i testkonstruktorn
+#include "Timer.h"
+#include <stdexcept>
+//#include <stdio.h>
 
 //-----------------CONSTRUCTOR--------------
 Character::Character()
 {
 }
+
 Character::Character(std::shared_ptr<Game> our_game, int player_number)
     : game_ptr{our_game}, player_number{player_number}
 {
@@ -41,6 +43,7 @@ move_dir:
 	bomb = sf::Keyboard::Tab;
 	move_dir = 2;
 	break;
+
     case 2:
 	col = game_ptr->get_columns() - 2;
 	row = game_ptr->get_rows() - 2;
@@ -53,6 +56,7 @@ move_dir:
 	bomb = sf::Keyboard::RShift;
 	move_dir = 1;
 	break;
+
     case 3:
 	col = game_ptr->get_columns() - 2;
 	row = 1;
@@ -65,6 +69,7 @@ move_dir:
 	bomb = sf::Keyboard::Add;
 	move_dir = 2;
 	break;
+
     case 4:
 	col = 1;
 	row = game_ptr->get_rows() - 2;
@@ -79,8 +84,8 @@ move_dir:
 	break;
     }
 }
-//-----------------FUNCTION--------------
 
+//-----------------Get/Change--------------
 int Character::get_col() const
 {
     return col;
@@ -89,19 +94,54 @@ int Character::get_row() const
 {
     return row;
 }
+
 void Character::add_bomb(int number)
 {
     bombs += number;
 }
+void Character::add_life(int number)
+{
+	life += number;
+}
+
 void Character::increase_exp_rad(int number)
 {
     //bomb_setting.radius += number;
 }
+
 void Character::increase_exp_time(int number)
 {
     //bomb_setting.explosion_delay += number;
 }
 
+void Character::hurt_player()
+{
+    life -= 1;
+}
+
+int Character::index_cal(double percent, bool moving)
+{
+	if(!moving)
+		return 0;
+	else if(percent < 0 || percent > 1)
+		throw std::logic_error("Percent is not in index");
+	else if(percent <= 0.143)
+		return 1;
+	else if(percent < 0.286)
+		return 2;
+	else if(percent <= 0.429)
+		return 3;
+	else if(percent <= 0.571)
+		return 4;
+	else if(percent <= 0.714)
+		return 5;
+	else if(percent <= 0.857)
+		return 6;
+	else
+		return 7;
+}
+
+//-----------------Update/Graphics--------------
 void Character::update()
 {
     if (life > 0)
@@ -130,7 +170,9 @@ void Character::update()
 		{
 	   		is_immortal = false;
 		}
+
 		make_bomb();
+
 		if (game_ptr->is_standing_on_item(row, col))
 		{
 	    	use_item(game_ptr->get_item_reference(row, col));
@@ -269,25 +311,65 @@ void Character::make_bomb()
 		bombs -= 1;
     }
 }
-void Character::use_item(Item& pickup)
 
+void Character::use_item(Item &pickup)
 {
-    //pickup.give_power_up(*this);
+    //pickup.give_power_up(*this)
 }
 
+//-----------------Movement--------------
 void Character::smooth_move()
 {
-    is_moving = false;
-}
-void Character::hurt_player()
-{
-    life -= 1;
+	/*
+	move_dir: 
+	1 => up
+	2 => down
+	3 => left
+	4 => right
+	*/
 
+	/*
+	if(my_timer.is_done() && sf::Keyboard::isKeyPressed(last_key))
+	{
+		my_timer.restart();
+		move_player();
+	}
+	*/
+
+	double vel{step/walk_time};
+	double progress = my_timer.elapsed_time() * vel;
+	xpos = step * col;
+	ypos = step * row;
+
+	if(my_timer.is_done())
+	{
+		is_moving = false;
+	}
+	else if(move_dir == 1)
+	{
+		ypos = ypos + step - progress;
+	}
+	else if(move_dir == 2)
+	{
+		ypos = ypos - step + progress;
+
+	}
+	else if(move_dir == 3)
+	{
+		xpos =  xpos + step - progress; 
+	}
+	else if(move_dir == 4)
+	{
+		xpos = xpos - step + progress;
+	}
 }
+
 void Character::move_player()
 {
     int col_inc{0};
-	int row_inc{0};
+    int row_inc{0};
+	int curr_col{col};
+	int curr_row{row};
 
     if (sf::Keyboard::isKeyPressed(up))
     {
@@ -305,6 +387,7 @@ void Character::move_player()
     {
 		col_inc += 1;
     }
+
     if (col_inc == 0 && row_inc == 0)
     {
 		is_moving = false;
@@ -339,5 +422,33 @@ void Character::move_player()
 	{
 			is_moving = false;
 	}
+	/*
+	move_dir: 
+	1 => up
+	2 => down
+	3 => left
+	4 => right
+	*/
 
+	if(col > curr_col)
+	{
+		move_dir = 4;
+		last_key = sf::Keyboard::Key(right);
+	}
+	else if(col < curr_col)
+	{
+		move_dir = 3;
+		last_key = sf::Keyboard::Key(left);
+	}
+	else if(row > curr_row)
+	{
+		move_dir = 2;
+		last_key = sf::Keyboard::Key(down);
+		
+	}
+	else if(row < curr_row)
+	{
+		move_dir = 1;
+		last_key = sf::Keyboard::Key(up);
+	}
 }

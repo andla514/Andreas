@@ -46,6 +46,7 @@ void Matrix_Map::draw_graphics(sf::RenderWindow & our_window)
     sf::Sprite explosion_sprite{explosions[explosion_changer.fraction_of_completion()]};
     sf::Sprite bomb_sprite{bombs[bomb_changer.fraction_of_completion()]};
     sf::Sprite box_sprite{box};
+	//sf::Sprite item_sprite{items[/*Implementera platsen i vektorn*/]};
     
     // Draws all bomb-, explosion- and box-tiles
     for(int r = 0; r < max_rows; r++)
@@ -59,6 +60,10 @@ void Matrix_Map::draw_graphics(sf::RenderWindow & our_window)
                     box_sprite.setPosition(64 * c, 64 * r);
                     our_window.draw(box_sprite);
                     break;
+				/*case 2;
+					item_sprite.setPosition(64 * c, 64 * r);
+					our_window.draw(item_sprite);
+					break;				*/
                 case 3:
                     bomb_sprite.setPosition(64 * c + 9, 64 * r + 9);
                     our_window.draw(bomb_sprite);

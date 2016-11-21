@@ -23,21 +23,15 @@ class Game
 {
     public:
     Game();
-<<<<<<< HEAD
-    void update() noexcept;
-	void draw_graphics(sf::RenderWindow &);
-    int get_element(int row, int col) const noexcept;
-    void set_element(int row, int col, int new_value) noexcept;
-=======
 
     void update();
     void draw_graphics(sf::RenderWindow &);
 
     int get_element(int row, int col) const;
     void set_element(int row, int col, int new_value);
->>>>>>> 99dd3e0e606f8e90ed20559bd60ff2a2ca232ce0
     int get_rows() const noexcept;
     int get_columns() const noexcept;
+
     // Bools
     bool is_standing_in_fire(int row, int col) const;
     bool is_standing_on_item(int row, int col) const;
@@ -68,4 +62,5 @@ class Game
     std::map<std::string, std::unique_ptr<Explosion>> explosion_list{};
     std::map<int, Character> character_list{};
 };
+
 #endif

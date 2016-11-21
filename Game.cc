@@ -119,6 +119,14 @@ void Game::add_bomb(int row, int col, std::unique_ptr<Bomb> && new_bomb) noexcep
 void Game::add_explosion(int row, int col, std::unique_ptr<Explosion> && new_explosion) noexcept
 {
     explosion_list.insert(std::pair<std::string, std::unique_ptr<Explosion>>(std::to_string(row) + "," + std::to_string(col), std::move(new_explosion)));
+    set_element(row, col, 4);
+}
+void Game::add_characters(int number_of_players, std::shared_ptr<Game> our_game) noexcept
+{
+    for(int i = 0; i < number_of_players; i++)
+    {
+        character_list.insert(std::pair<int, Character>(i + 1, Character{our_game, i + 1}));
+    }
 }
 
 //-----------------REMOVE_OBJECT-----------------

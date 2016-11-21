@@ -9,8 +9,6 @@ struct Bomb_settings
 };
 #include "Game.h"
 #include "Character.h"
-#include "Game.h"
-#include "Character.h"
 #include "Explosion.h"
 #include "Timer.h"
 #include <memory>

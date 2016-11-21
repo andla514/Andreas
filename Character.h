@@ -18,6 +18,7 @@ class Character
 	Character(std::shared_ptr<Game> our_game, int player_number);
 	
 	void add_bomb(int number);
+	void add_life(int number);
 	int get_col() const;
 	int get_row() const;
 	void increase_exp_rad(int number);
