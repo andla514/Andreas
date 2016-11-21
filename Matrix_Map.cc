@@ -1,8 +1,13 @@
 #include "Matrix_Map.h"
+#include "Tile.h"
+#include "Item.h"
+#include "Bomb.h"
+#include "Explosion.h"
 #include <iostream>
 #include "SFML/Graphics.hpp"
 #include <cstdlib>
 #include <ctime>
+#include <memory>
 
 //-----------------CONSTRUCTOR-------------------
 Matrix_Map::Matrix_Map()
@@ -12,21 +17,13 @@ Matrix_Map::Matrix_Map()
 }
 
 //-----------------GET/SET-----------------------
-int Matrix_Map::get_element(int row, int col) const
+Tile & Matrix_Map::get_reference(int row, int col)
 {
-    if(row >= max_rows || col >= max_cols || row < 0 || col < 0)
+    if(our_map[row][col].get() == nullptr)
     {
-        throw std::out_of_range("Getting element out of range in Matrix_Map!");
+        throw std::logic_error("There is no object at that position!");
     }
-    return our_map[row][col];
-}
-void Matrix_Map::set_element(int row, int col, int new_value)
-{
-    if(row >= max_rows || col >= max_cols || row < 0 || col < 0)
-    {
-        throw std::out_of_range("Setting element out of range in Matrix_Map!");
-    }
-    our_map[row][col] = new_value;
+    return *our_map[row][col];
 }
 int Matrix_Map::get_rows() const noexcept
 {
@@ -36,130 +33,87 @@ int Matrix_Map::get_columns() const noexcept
 {
     return max_cols;
 }
-
-//-----------------Graphics----------------------
-void Matrix_Map::draw_graphics(sf::RenderWindow & our_window)
+//-----------------BOOLS-------------------------
+bool Matrix_Map::is_box(int row, int col) const
 {
-    // Draws standard background
-    our_window.draw(sf::Sprite{background});
-    // Creates the sprites needed
-    sf::Sprite explosion_sprite{explosions[explosion_changer.fraction_of_completion()]};
-    sf::Sprite bomb_sprite{bombs[bomb_changer.fraction_of_completion()]};
-    sf::Sprite box_sprite{box};
-    
-    // Draws all bomb-, explosion- and box-tiles
-    for(int r = 0; r < max_rows; r++)
-    {
-        for(int c = 0; c < max_cols; c++)
-        {
-            int element = get_element(r, c);
-            switch(element)
-            {
-                case 1:
-                    box_sprite.setPosition(64 * c, 64 * r);
-                    our_window.draw(box_sprite);
-                    break;
-                case 3:
-                    bomb_sprite.setPosition(64 * c + 9, 64 * r + 9);
-                    our_window.draw(bomb_sprite);
-                    break;
-                case 4:
-                    explosion_sprite.setPosition(64 * c + 9, 64 * r + 9);
-                    our_window.draw(explosion_sprite);
-                    break;
-            }
-        }
-    }
+    return dynamic_cast<Box*>(our_map[row][col].get());
+}
+bool Matrix_Map::is_item(int row, int col) const
+{
+    return dynamic_cast<Item*>(our_map[row][col].get());
+}
+bool Matrix_Map::is_bomb(int row, int col) const
+{
+    return dynamic_cast<Bomb*>(our_map[row][col].get());
+}
+bool Matrix_Map::is_explosion(int row, int col) const
+{
+    return dynamic_cast<Explosion*>(our_map[row][col].get());
+}
+bool Matrix_Map::is_wall(int row, int col) const
+{
+    return dynamic_cast<Wall*>(our_map[row][col].get());
+}
+bool Matrix_Map::is_null(int row, int col) const
+{
+    return our_map[row][col].get() == nullptr;
+}
+bool Matrix_Map::can_move_to(int row, int col) const
+{
+    return !is_bomb(row, col) && !is_wall(row, col) && !is_box(row, col);
+}
+//-----------------ADD/REMOVE_OBJECT-------------
+void Matrix_Map::make_object(int row, int col, std::unique_ptr<Tile> && new_object)
+{
+    remove_object(row, col);
+    our_map[row][col] = std::move(new_object);
+}
+void Matrix_Map::remove_object(int row, int col)
+{
+    our_map[row][col].reset();
 }
 
 //-----------------INITIALIZATION----------------
-
-void Matrix_Map::load_permanent_textures()
-{
-    for(int i = 0; i <= 4; i++ )
-    {
-            if(!explosions[i].loadFromFile("Textures/Flame/Flame_F0" + std::to_string(i) + ".png"))
-            {
-                throw std::logic_error("Can't load explosion texture");
-            }
-    }
-    for(int i = 0; i <= 2; i++)
-    {
-            if(!bombs[i].loadFromFile("Textures/Bomb/Bomb_f0" + std::to_string(i + 1) + ".png"))
-            {
-                throw std::logic_error("Can't load bomb texture");
-            }
-    }
-    if(!box.loadFromFile("Textures/Blocks/ExplodableBlock.png"))
-    {
-        throw std::logic_error("Can't load box texture");
-    }
-}
-
 void Matrix_Map::initialize_map() noexcept
 {
-    // CREATE BACKGROUND
-    sf::Texture wall_texture, ground_texture;
-    if(!wall_texture.loadFromFile("Textures/Blocks/SolidBlock.png"))
-    {
-        throw std::logic_error("Can't load wall texture");
-    }
-    if(!ground_texture.loadFromFile("Textures/Blocks/BackgroundTile.png"))
-    {
-        throw std::logic_error("Can't load ground texture");
-    }
-    sf::Sprite wall{wall_texture};
-    sf::Sprite ground{ground_texture};
-
-    sf::RenderTexture temp_texture;
-    temp_texture.create(max_cols * 64, max_rows * 64);
-    ///////////////////////////////////////////////////
-
-    load_permanent_textures();
     srand(time(NULL));
 
     for(int r = 0; r < max_rows; r++)
     {
         for(int c = 0; c < max_cols; c++)
         {
-            ground.setPosition(64 * c, 64 * r);
-            temp_texture.draw(ground);
             // Make Wall-tile
             if((r == 0 || c == 0  || r == max_rows - 1 || c == max_cols - 1)
                 || (r % 2 == 0 && c % 2 == 0))
             {
-                set_element(r, c, 5);
-                wall.setPosition(64 * c, 64 * r);
-                temp_texture.draw(wall);
+                make_object(r, c, std::make_unique<Wall>());
             }
             // Make Box-tile
             else if(rand() % 100 + 1 < 70)
             {
-                set_element(r, c, 1);
+                make_object(r, c, std::make_unique<Box>());
             }
         }
     }
-    // Save background texture
-    temp_texture.display();
-    background = temp_texture.getTexture();
 
     //  Clear Player 1 spawn
-    set_element(1, 1, 0);
-    set_element(1, 2, 0);
-    set_element(2, 1, 0);
+    make_object(1, 1, std::unique_ptr<Tile>());
+    make_object(1, 2, std::unique_ptr<Tile>());
+    make_object(2, 1, std::unique_ptr<Tile>());
 
     // Clear Player 2 spawn
-    set_element(1, max_cols - 2, 0);
-    set_element(1, max_cols - 3, 0);
-    set_element(2, max_cols - 2, 0);
+    make_object(1, max_cols - 2, std::unique_ptr<Tile>());
+    make_object(1, max_cols - 3, std::unique_ptr<Tile>());
+    make_object(2, max_cols - 2, std::unique_ptr<Tile>());
 
     // Clear Player 3 spawn
-    set_element(max_rows - 2, max_cols - 2, 0);
-    set_element(max_rows - 2, max_cols - 3, 0);
-    set_element(max_rows - 3, max_cols - 2, 0);
+    make_object(max_rows - 2, max_cols - 2, std::unique_ptr<Tile>());
+    make_object(max_rows - 2, max_cols - 3, std::unique_ptr<Tile>());
+    make_object(max_rows - 3, max_cols - 2, std::unique_ptr<Tile>());
 
     // Clear Player 4 spawn
-    set_element(max_rows - 2, 1, 0);
-    set_element(max_rows - 2, 2, 0);
-    set_element(max_rows - 3, 1, 0);
+    make_object(max_rows - 2, 1, std::unique_ptr<Tile>());
+    make_object(max_rows - 2, 2, std::unique_ptr<Tile>());
+    make_object(max_rows - 3, 1, std::unique_ptr<Tile>());
+    
 }

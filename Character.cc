@@ -1,12 +1,12 @@
 //#include <stdio.h>
 #include <memory>
 #include "SFML/Graphics.hpp"
-#include "Game.h"
+#include "Matrix_Map.h"
 #include "Character.h"
 #include "Bomb.h"
 #include "Item.h"
 
-//#include <iostream> //Används ej?
+#include <iostream> //Används ej?
 //#include <utility>  //bara för move i testkonstruktorn
 
 //-----------------CONSTRUCTOR--------------
@@ -14,8 +14,8 @@ Character::Character()
 {
 }
 
-Character::Character(std::shared_ptr<Game> our_game, int player_number)
-    : game_ptr{our_game}, player_number{player_number}
+Character::Character(std::shared_ptr<Matrix_Map> our_map, int player_number)
+    : our_map{our_map}, player_number{player_number}
 {
     switch (player_number)
     {
@@ -30,17 +30,17 @@ Character::Character(std::shared_ptr<Game> our_game, int player_number)
 	break;
 
     case 2:
-	col = our_game->get_columns() - 2;
-	row = our_game->get_rows() - 2;
+	col = our_map->get_columns() - 2;
+	row = our_map->get_rows() - 2;
 	up = sf::Keyboard::Up;
 	down = sf::Keyboard::Down;
 	left = sf::Keyboard::Left;
 	right = sf::Keyboard::Right;
-	bomb = sf::Keyboard::Tab;
+	bomb = sf::Keyboard::L;
 	break;
 
     case 3:
-	col = our_game->get_columns() - 2;
+	col = our_map->get_columns() - 2;
 	row = 1;
 	up = sf::Keyboard::Numpad8;
 	down = sf::Keyboard::Numpad5;
@@ -51,7 +51,7 @@ Character::Character(std::shared_ptr<Game> our_game, int player_number)
 
     case 4:
 	col = 1;
-	row = our_game->get_rows() - 2;
+	row = our_map->get_rows() - 2;
 	up = sf::Keyboard::T;
 	down = sf::Keyboard::G;
 	left = sf::Keyboard::F;
@@ -98,22 +98,22 @@ void Character::update()
 			move_player();
 		}
 			
-		if (game_ptr->is_standing_in_fire(row, col) && !(is_immortal))
+		if (our_map->is_explosion(row, col) && !(is_immortal))
 		{
 	    	hurt_player();
 	    	is_immortal = true;
 		}
-		else if (!(game_ptr->is_standing_in_fire(row, col)))
+		else if (!(our_map->is_explosion(row, col)))
 		{
 	   		is_immortal = false;
 		}
 
 		make_bomb();
 
-		if (game_ptr->is_standing_on_item(row, col))
+		if (our_map->is_item(row, col))
 		{
-	    	use_item(game_ptr->get_item_reference(row, col));
-			game_ptr->remove_item(row, col);
+	    	use_item(dynamic_cast<Item&>(our_map->get_reference(row, col)));
+			our_map->remove_object(row, col);
 		}
     }
 }
@@ -132,7 +132,7 @@ void Character::make_bomb()
     if (sf::Keyboard::isKeyPressed(bomb) )//&& bombs > 0 && !(is_immortal))
     {
 		Bomb_settings settings{2, 2, 1};
-		game_ptr->add_bomb(row, col, std::make_unique<Bomb>(row, col, settings, game_ptr, player_number));
+		our_map->make_object(row, col, std::make_unique<Bomb>(row, col, settings, our_map, this));
 	//anropa bomb-construktor
     }
 }
@@ -178,16 +178,16 @@ void Character::move_player()
     {
 		is_moving = false;
     }
-    else if((col_inc == 0 || row_inc == 0) && game_ptr->can_move_to(row + row_inc, col + col_inc))
+    else if((col_inc == 0 || row_inc == 0) && our_map->can_move_to(row + row_inc, col + col_inc))
     {
 		row += row_inc;
 		col += col_inc;
 		is_moving = true;
-    } else if(game_ptr->can_move_to(row + row_inc, col))
+    } else if(our_map->can_move_to(row + row_inc, col))
 	{
 		row += row_inc;
 		is_moving = true;
-	} else if(game_ptr->can_move_to(row, col + col_inc))
+	} else if(our_map->can_move_to(row, col + col_inc))
 	{
 		col += col_inc;
 		is_moving = true;

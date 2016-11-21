@@ -6,19 +6,18 @@ class Item_Inc_Bombs;
 class Item_Inc_Exp_Rad;
 class Item_Inc_Exp_Time;
 class Item_Inc_Life;
-// #include "Game.h"
+#include "Tile.h"
 #include "Character.h"
 #include <iostream>
+#include "SFML/Graphics.hpp"
 
 
 
-class Item
+class Item: public Tile
 {
 public:
     Item(int const & row, int const & col);
-    virtual ~Item() = default;
     virtual void give_power_up(Character & character) = 0;    
-    virtual void draw_graphics() = 0;
     
     int item_row{};
     int item_col{};
@@ -31,12 +30,9 @@ class Item_Inc_Bombs:public Item
 {
 public:
     using Item::Item;
-    ~Item_Inc_Bombs()
-    {
-        std::cout << "Förstör item!" << std::endl;
-    }
+    ~Item_Inc_Bombs() override = default;
     void give_power_up(Character & character) override;
-    void draw_graphics() override;
+    void draw_graphics(sf::RenderWindow &) override;
 };
 
 
@@ -44,9 +40,9 @@ class Item_Inc_Exp_Rad:public Item
 {
 public:
     using Item::Item;
-    ~Item_Inc_Exp_Rad() = default;
+    ~Item_Inc_Exp_Rad() override = default;
     void give_power_up(Character & character) override;	    
-    void draw_graphics() override; 
+    void draw_graphics(sf::RenderWindow &) override; 
 };
 
 
@@ -54,18 +50,18 @@ class Item_Inc_Life:public Item
 {
 public:
     using Item::Item;
-    ~Item_Inc_Life() = default;
+    ~Item_Inc_Life() override = default;
     void give_power_up(Character & character) override;    
-    void draw_graphics() override;
+    void draw_graphics(sf::RenderWindow &) override;
 };
 
 class Item_Inc_Exp_Time:public Item
 {
 public:
     using Item::Item;
-    ~Item_Inc_Exp_Time() = default; 
+    ~Item_Inc_Exp_Time() override = default; 
     void give_power_up(Character & character) override;
-    void draw_graphics() override;
+    void draw_graphics(sf::RenderWindow &) override;
 };
 
 #endif

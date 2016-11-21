@@ -3,7 +3,7 @@
 #define CHARACTER_H
 class Character;
 #include "Bomb.h"
-#include "Game.h"
+#include "Matrix_Map.h"
 #include "Item.h"
 #include <string>
 #include <memory>
@@ -14,7 +14,7 @@ class Character
     public:
     Character();
 	~Character() = default;
-	Character(std::shared_ptr<Game> our_game, int player_number);
+	Character(std::shared_ptr<Matrix_Map> our_map, int player_number);
 	
 	void add_bomb(int number);
 	int get_col() const;
@@ -35,7 +35,7 @@ class Character
 	sf::Keyboard::Key left;
 	sf::Keyboard::Key right;
 	sf::Keyboard::Key bomb;
-	std::shared_ptr<Game> game_ptr{};
+	std::shared_ptr<Matrix_Map> our_map{};
 	int life{2};
 	int bombs{1};
 	int col{1};
