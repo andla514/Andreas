@@ -144,6 +144,7 @@ void Character::update()
 {
     if (life > 0)
     {
+		
 		if ((my_timer.is_done() && sf::Keyboard::isKeyPressed(last_key)) || !is_moving)
 		{
 			move_player();
@@ -152,7 +153,12 @@ void Character::update()
 		{
 			smooth_move();
 		}
+		
 		/*
+		if(is_moving)
+		{
+			smooth_move();
+		}
 		else
 		{
 			move_player();
@@ -302,10 +308,10 @@ void Character::draw_graphics(sf::RenderWindow &our_window)
 //-----------------Make/Use--------------
 void Character::make_bomb()
 {
-    if (sf::Keyboard::isKeyPressed(bomb) && bombs > 0 && !(is_immortal) && !(game_ptr->is_bomb(row, col)))
+    if (sf::Keyboard::isKeyPressed(bomb) && bombs > 0 && !(is_immortal) && !(our_map->is_bomb(row, col)))
     {
-		//Bomb_settings bomb_setting{2, 2, 1};
-		our_map->make_object(row, col, std::make_unique<Bomb>(row, col, settings, our_map, this));
+		Bomb_settings bomb_setting{2, 2, 1};
+		our_map->make_object(row, col, std::make_unique<Bomb>(row, col, bomb_setting, our_map, this));
 		bombs -= 1;
     }
 }
@@ -390,7 +396,7 @@ void Character::move_player()
     {
 		is_moving = false;
     }
-    else if((col_inc == 0 || row_inc == 0) && our_map->can_move_to(row + row_inc, col + col_inc))
+    else if(col_inc == 0 && row_inc != 0 && our_map->can_move_to(row + row_inc, col))
     {
 		row += row_inc;
 		is_moving = true;

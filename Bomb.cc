@@ -89,17 +89,17 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		{
 			if(!dynamic_cast<Bomb&>(our_map->get_reference(row, col)).detonation_timer.is_done())
 			{
-				dynamic_cast<Bomb&>(our_map->get_reference(row, col)).detonation_timer = Timer{-1};
+				//dynamic_cast<Bomb&>(our_map->get_reference(row, col)).detonation_timer = Timer{-1};
 				dynamic_cast<Bomb&>(our_map->get_reference(row, col)).detonate();
 			}
 			distance --;
 		}
 		// Current place is an item
-		else if (our_map->is_item(row, col))
+		/*else if (our_map->is_item(row, col))
 		{
 			explode(row, col, false);
 			distance --;
-		}
+		}*/
 		// Current place is an explosion
 		else if (our_map->is_explosion(row, col))
 		{
@@ -113,7 +113,8 @@ void Bomb::spread_explosions (std::string direction, int distance)
 			{
 				distance --;
 			}
-		}	
+		}
+		// Current place is item or empty tile
 		else 
 		{
 			explode(row, col, false);
