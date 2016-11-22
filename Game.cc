@@ -1,6 +1,7 @@
 #include "Matrix_Map.h"
 #include "Character.h"
 #include "Game.h"
+#include "Item.h"
 #include <map>
 #include <string>
 #include <memory>
@@ -34,7 +35,7 @@ void Game::update()
 }
 
 //-----------------Graphics----------------------
-void Game::draw_graphics(sf::RenderWindow & our_window)
+void Game::draw_graphics(sf::RenderTexture & our_window)
 {
     // Draws standard background
     our_window.draw(sf::Sprite{background});
@@ -64,7 +65,7 @@ void Game::draw_graphics(sf::RenderWindow & our_window)
             }
             else if(our_matrix->is_item(r, c))
             {
-                our_matrix->get_reference(r, c).draw_graphics(our_window);
+                dynamic_cast<Item&>(our_matrix->get_reference(r, c)).draw_graphics(our_window);
             }
         }
     }
