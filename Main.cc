@@ -11,6 +11,7 @@ Main::Main()
 {
     our_game.add_characters(3);
     our_window.create(sf::VideoMode{1344, 960}, "Boombox");
+    our_texture.create(1344, 960);
 }
 
 void Main::start()
@@ -39,8 +40,11 @@ void Main::start()
         // Update Graphics
         if(graphics_timer.is_done())
         {
+            our_texture.clear();
+            our_game.draw_graphics(our_texture);
+            our_texture.display();
             our_window.clear();
-            our_game.draw_graphics(our_window);
+            our_window.draw(sf::Sprite(our_texture.getTexture()));
             our_window.display();
             graphics_timer.restart();
         }

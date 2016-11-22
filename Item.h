@@ -18,6 +18,7 @@ class Item: public Tile
 public:
     Item(int const & row, int const & col);
     virtual void give_power_up(Character & character) = 0;    
+    virtual void draw_graphics(sf::RenderTexture &) = 0;
     
     int item_row{};
     int item_col{};
@@ -32,7 +33,7 @@ public:
     using Item::Item;
     ~Item_Inc_Bombs() override = default;
     void give_power_up(Character & character) override;
-    void draw_graphics(sf::RenderWindow &) override;
+    void draw_graphics(sf::RenderTexture &) override;
 };
 
 
@@ -42,7 +43,7 @@ public:
     using Item::Item;
     ~Item_Inc_Exp_Rad() override = default;
     void give_power_up(Character & character) override;	    
-    void draw_graphics(sf::RenderWindow &) override; 
+    void draw_graphics(sf::RenderTexture &) override; 
 };
 
 
@@ -52,7 +53,7 @@ public:
     using Item::Item;
     ~Item_Inc_Life() override = default;
     void give_power_up(Character & character) override;    
-    void draw_graphics(sf::RenderWindow &) override;
+    void draw_graphics(sf::RenderTexture &) override;
 };
 
 class Item_Inc_Exp_Time:public Item
@@ -61,7 +62,7 @@ public:
     using Item::Item;
     ~Item_Inc_Exp_Time() override = default; 
     void give_power_up(Character & character) override;
-    void draw_graphics(sf::RenderWindow &) override;
+    void draw_graphics(sf::RenderTexture &) override;
 };
 
 #endif

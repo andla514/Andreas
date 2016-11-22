@@ -277,7 +277,7 @@ void Character::load_textures(int player_number)
 	}
 }
 
-void Character::draw_graphics(sf::RenderWindow &our_window)
+void Character::draw_graphics(sf::RenderTexture &our_window)
 {
 	if(life > 0)
 	{

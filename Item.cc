@@ -23,7 +23,7 @@ void Item_Inc_Bombs::give_power_up(Character & character)
 	character.add_bomb(1);
 }
 
-void Item_Inc_Bombs::draw_graphics(sf::RenderWindow &)
+void Item_Inc_Bombs::draw_graphics(sf::RenderTexture &)
 {}
 
 
@@ -36,7 +36,7 @@ void Item_Inc_Exp_Rad::give_power_up(Character & character)
 	character.increase_exp_rad(2);
 }
 
-void Item_Inc_Exp_Rad::draw_graphics(sf::RenderWindow &)
+void Item_Inc_Exp_Rad::draw_graphics(sf::RenderTexture &)
 {}
 
 // --------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ void Item_Inc_Life::give_power_up(Character & character)
 }
 
 
-void Item_Inc_Life::draw_graphics(sf::RenderWindow &)
+void Item_Inc_Life::draw_graphics(sf::RenderTexture &)
 {}
 
 // --------------------------------------------------------------------------------------
@@ -61,5 +61,5 @@ void Item_Inc_Exp_Time::give_power_up(Character & character)
     character.increase_exp_time(1);
 }
 
-void Item_Inc_Exp_Time::draw_graphics(sf::RenderWindow &)
+void Item_Inc_Exp_Time::draw_graphics(sf::RenderTexture &)
 {}

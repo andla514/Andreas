@@ -15,7 +15,7 @@ class Game
     Game();
 
     void update();
-    void draw_graphics(sf::RenderWindow &);
+    void draw_graphics(sf::RenderTexture &);
 
     void add_characters(int number_of_players) noexcept;
 
