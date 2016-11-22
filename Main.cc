@@ -9,8 +9,7 @@
 //-----------------CONSTRUCTOR--------------
 Main::Main()
 {
-    our_game = std::make_unique<Game>();
-    our_game->add_characters(3, our_game);
+    our_game.add_characters(3);
     our_window.create(sf::VideoMode{1344, 960}, "Boombox");
 }
 
@@ -34,14 +33,14 @@ void Main::start()
         // Update physics
         if(physics_timer.is_done())
         {
-            our_game->update();
+            our_game.update();
             physics_timer.restart();
         }
         // Update Graphics
         if(graphics_timer.is_done())
         {
             our_window.clear();
-            our_game->draw_graphics(our_window);
+            our_game.draw_graphics(our_window);
             our_window.display();
             graphics_timer.restart();
         }

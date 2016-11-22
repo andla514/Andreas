@@ -15,7 +15,7 @@ class Main
 
     private:
     sf::RenderWindow our_window;
-    std::shared_ptr<Game> our_game;
+    Game our_game;
     bool is_running{true};
     Timer physics_timer{0.016};
     Timer graphics_timer{0.016};

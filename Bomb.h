@@ -8,32 +8,33 @@ struct Bomb_settings
 	int explosion_delay;
 };
 #include "Game.h"
+#include "Tile.h"
 #include "Character.h"
 #include "Explosion.h"
+#include "Matrix_Map.h"
 #include "Timer.h"
 #include <memory>
 #include <string>
 #include <stdexcept>
 
-class Bomb
+class Bomb: public Tile
 {
     public:
 	// Constructor/destructor
-    Bomb(int row, int col, Bomb_settings our_settings, std::shared_ptr<Game> ourgame,
-	int my_creator);
-	~Bomb() = default;
+    Bomb(int row, int col, Bomb_settings our_settings, std::shared_ptr<Matrix_Map> our_map,
+	Character* my_creator);
+	~Bomb() override = default;
 	
-	void update();
+	void update() override;
 	void detonate();
-	
 	
 	private:
 	int row_pos{};
 	int col_pos{};
 	Bomb_settings my_settings;
 	Timer detonation_timer;
-	std::shared_ptr<Game> my_game{nullptr};
-	int my_creator{};
+	std::shared_ptr<Matrix_Map> our_map{nullptr};
+	Character* my_creator;
 	
 	// Private functions
 	void explode(int row, int col, bool item_bool);

@@ -2,7 +2,7 @@
 #define CHARACTER_H
 class Character;
 #include "Bomb.h"
-#include "Game.h"
+#include "Matrix_Map.h"
 #include "Item.h"
 #include <string>
 #include <memory>
@@ -15,7 +15,7 @@ class Character
     public:
     Character();
 	~Character() = default;
-	Character(std::shared_ptr<Game> our_game, int player_number);
+	Character(std::shared_ptr<Matrix_Map> our_map, int player_number);
 	
 	void add_bomb(int number);
 	int get_col() const;
@@ -40,12 +40,12 @@ class Character
 	sf::Keyboard::Key right;
 	sf::Keyboard::Key bomb;
 	sf::Keyboard::Key last_key;
-	std::shared_ptr<Game> game_ptr{};
 	std::vector<sf::Texture> back{std::vector<sf::Texture>(8, sf::Texture{})};
     std::vector<sf::Texture> front{std::vector<sf::Texture>(8, sf::Texture{})};
 	std::vector<sf::Texture> side_left{std::vector<sf::Texture>(8, sf::Texture{})};
     std::vector<sf::Texture> side_right{std::vector<sf::Texture>(8, sf::Texture{})};
 	int move_dir{1};
+	std::shared_ptr<Matrix_Map> our_map{};
 	int life{2};
 	int bombs{2};
 	int col{1};
