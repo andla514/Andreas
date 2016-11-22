@@ -65,7 +65,6 @@ bool Matrix_Map::can_move_to(int row, int col) const
 //-----------------ADD/REMOVE_OBJECT-------------
 void Matrix_Map::make_object(int row, int col, std::unique_ptr<Tile> && new_object)
 {
-    remove_object(row, col);
     our_map[row][col] = std::move(new_object);
 }
 void Matrix_Map::remove_object(int row, int col)
