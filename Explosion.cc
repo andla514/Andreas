@@ -44,7 +44,7 @@ void Explosion::update()
 	if (explosion_timer.is_done())
 	{
 		int random_value {rand() % 100};
-		if (was_box && random_value <= 30)
+		if (was_box && random_value <= 60)
 		{
 			make_item();
 		}

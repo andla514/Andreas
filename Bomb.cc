@@ -89,10 +89,10 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		{
 			if(!dynamic_cast<Bomb&>(our_map->get_reference(row, col)).detonation_timer.is_done())
 			{
-				//dynamic_cast<Bomb&>(our_map->get_reference(row, col)).detonation_timer = Timer{-1};
+				dynamic_cast<Bomb&>(our_map->get_reference(row, col)).detonation_timer = Timer{-1};
 				dynamic_cast<Bomb&>(our_map->get_reference(row, col)).detonate();
 			}
-			distance --;
+			distance--;
 		}
 		// Current place is an item
 		/*else if (our_map->is_item(row, col))
@@ -103,7 +103,7 @@ void Bomb::spread_explosions (std::string direction, int distance)
 		// Current place is an explosion
 		else if (our_map->is_explosion(row, col))
 		{
-			// The explotion with the longest remaining time on its timer, stays
+			// The explosion with the longest remaining time on its timer, stays
 			if (dynamic_cast<Explosion&>(our_map->get_reference(row, col)).time_left() <= 1000 * my_settings.explosion_delay)
 			{
 				dynamic_cast<Explosion&>(our_map->get_reference(row, col)).set_time_left(my_settings.explosion_delay);
